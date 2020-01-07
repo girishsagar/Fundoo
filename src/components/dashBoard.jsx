@@ -18,12 +18,12 @@ class Dashboard extends Component {
       isDeleted: false,
       trash: false,
       getNotesProps: false,
-      listView:false,
+      listView: false,
 
     };
   }
-  handleView=()=>{
-    this.setState({listView:!this.state.listView})
+  handleView = () => {
+    this.setState({ listView: !this.state.listView })
   }
   handleNote = () => {
     this.setState({ note: true, archive: false, trash: false })
@@ -49,23 +49,28 @@ class Dashboard extends Component {
     })
   }
   render() {
+let noteStyle=this.state.listView?"girdnotes":"listcss"
     return (
       (!this.state.archive) && (!this.state.trash) ?
         <div>
           <Navigation handleArchive={this.handleArchive} handleNote={this.handleNote}
-            handleTrash={this.handleTrash} 
-            handleView={this.handleView}/>
+            handleTrash={this.handleTrash}
+            handleView={this.handleView}
+            view={this.state.listView} />
           <Notes initiateGetNotes={this.initiateGetNotes} colorChange={this.colorChange} color={this.state.color} />
-          <Getnote getNotes={this.state.getNotesProps} color={this.state.color} />
+          <Getnote getNotes={this.state.getNotesProps} color={this.state.color} noteStyle={noteStyle} />
         </div>
         : (this.state.archive) && (!this.state.trash) ?
           <div>
-            <Navigation handleArchive={this.handleArchive} handleNote={this.handleNote} handleTrash={this.handleTrash} />
+            <Navigation handleArchive={this.handleArchive} handleNote={this.handleNote}
+             handleTrash={this.handleTrash} handleView={this.handleView}
+             view={this.state.listView}  />
             <Archive />
           </div>
           :
           <div>
-            <Navigation handleArchive={this.handleArchive} handleNote={this.handleNote} handleTrash={this.handleTrash} />
+            <Navigation  handleView={this.handleView}
+            view={this.state.listView} handleArchive={this.handleArchive} handleNote={this.handleNote} handleTrash={this.handleTrash} />
             <Trash />
           </div>
     );

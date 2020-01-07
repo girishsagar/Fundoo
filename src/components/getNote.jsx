@@ -203,7 +203,7 @@ class Getnote extends Component {
   }
 
   render() {
-    let view=this.props.iconChoose?"gridview":"listview"
+    // let view=this.props.iconChoose?"gridview":"listview"
     let archieveIcon = !this.archive ? (
       <IconButton onClick={this.archiveNote}>
         <Tooltip title="Archieve">
@@ -228,7 +228,8 @@ class Getnote extends Component {
       : "getNote-icons";
 
     return (
-      <div className="_notes">
+      <div className={this.props.noteStyle}>
+      <div className="_notes" >
         {!this.state.open ? (
           <div className="_notes_">
             {this.state.notes.map(key => {
@@ -241,11 +242,11 @@ class Getnote extends Component {
 
                 return (
                   <div className="notes_">
-                    <Card className={view}
+                    <Card 
                       style={{ backgroundColor: this.props.color }}
                       // className="get_Nottes_card"
                       style={{
-                        width: "250px",
+                         width: "250px",
                         minHeight: "135px",
                         height: "auto",
                         margin: "5px",
@@ -432,6 +433,7 @@ class Getnote extends Component {
             </div>
           )}
        
+      </div>
       </div>
     );
   }

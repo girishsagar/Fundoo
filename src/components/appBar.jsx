@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { IconButton, AppBar, Toolbar,Tooltip } from "@material-ui/core";
+import { IconButton, AppBar, Toolbar, Tooltip } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import { withRouter } from "react-router-dom";
@@ -14,6 +14,7 @@ import Avatar from "@material-ui/core/Avatar";
 import SvgGrid from "../icons/grid";
 import SvgSetting from "../icons/setting"
 import SvgList from "../icons/grid"
+import ViewStreamOutlinedIcon from '@material-ui/icons/ViewStreamOutlined';
 const thm = createMuiTheme({
   overrides: {
     MuiAppBar: {
@@ -76,19 +77,21 @@ class Navigation extends Component {
     window.location.reload();
   };
   showListView = () => {
-    this.props.listView();
+    this.props.handleView();
   };
   render() {
+    
     let viewIcon = !this.props.view ? (
       <Tooltip title="List View">
-        <SvgList />
+        <ViewStreamOutlinedIcon />
       </Tooltip>
     ) : (
-      <Tooltip title="Grid View">
-        <SvgGrid />
-      </Tooltip>
-    );
- 
+        <Tooltip title="Grid View">
+          <SvgGrid />
+
+        </Tooltip>
+      );
+
     return (
       <div className="nav">
         <MuiThemeProvider theme={thm}>
@@ -103,7 +106,7 @@ class Navigation extends Component {
                 <div >
                   <img src={require("../assets/keep.png")} className="keep_image" />
                 </div>
-                <div>FUNDOO</div>
+                <div>FUNDOO </div>
               </div>
               <div className="search_main_div">
                 <div className="Search_Base">
@@ -123,7 +126,7 @@ class Navigation extends Component {
                     <ShoppingCartOutlinedIcon />
                   </div>
                   <div>
-                  <IconButton onClick={this.showListView}>
+                    <IconButton onClick={this.showListView}>
                       {viewIcon}
                     </IconButton>
                     <IconButton>
@@ -141,8 +144,8 @@ class Navigation extends Component {
               </div>
             </Toolbar>
           </AppBar>
-          <DrawerNav open={this.state.open} handleArchive={this.props.handleArchive} 
-          handleNote={this.props.handleNote} handleTrash={this.props.handleTrash} />
+          <DrawerNav open={this.state.open} handleArchive={this.props.handleArchive}
+            handleNote={this.props.handleNote} handleTrash={this.props.handleTrash} />
           <Dropdown
             anchorEl={this.state.anchorEl}
             closeMenu={this.handleClose} />
