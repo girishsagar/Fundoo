@@ -1,0 +1,143 @@
+loginPage css
+.loge {
+  font-size: 30px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-display: bold;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+.loginpage {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-display: bold;
+  backface-visibility: inherit;
+  font-size: 25px;
+  margin-top: 10%;
+}
+.login-card {
+  width: 350px;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+.avatar {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+/* registerPage css */
+
+.SignUp {
+  margin-top: 25px;
+  width: 50%;
+  height: 75vh;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}.new
+.sign-card {
+  width: 400px;
+  /* height: 60vh;
+  margin-top: 25px; */
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  display: flex;
+  top: 25px;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+/* .loged {
+  border-radius: 25px;
+  width: 320px;
+  padding: 80px;
+} */
+.loginbutton {
+  align-content: center;
+  align-items: flex;
+  margin-top: 30px;
+}
+.regbutton {
+  margin-top: 10px;
+  background-color: blue;
+}
+.lfbutton {
+  top: 30px;
+  margin-top: 15px;
+  align-content: flex-start;
+}
+.regbutton1 {
+  align-content: center;
+  align-items: flex;
+  margin-top: 20px;
+  width: 50%;
+  
+}
+.regbutton2 {
+  align-content: center;
+  align-items: flex;
+  margin-top: 20px;
+  width: 50%;
+  margin-left: 60%;
+  margin-top: -35px;
+  grid-auto-flow: inherit;
+}
+/* reset button css property */
+.resetbutton {
+  align-content: center;
+  align-items: flex;
+  margin-top: 20px;
+  width: 100%;
+  margin-top: -35px;
+  grid-auto-flow: inherit;
+  padding: 20px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+.resetbutton span {
+  cursor: pointer;
+  display: inline-block;
+  transition: 0.5s;
+}
+
+.resetbutton span:after {
+  content: "\00bb";
+  position: relative;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.resetbutton:hover span {
+  padding-right: 20px;
+}
+
+.resetbutton:hover span:after {
+  opacity: 1px;
+  right: -1px;
+}
+.forgot-card {
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  display: flex;
+  top: 25px;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+
