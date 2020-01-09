@@ -48,7 +48,8 @@ class Getnote extends Component {
       isPinned: false,
       pin_open: false,
       showIcon: false,
-      anchorEl: null
+      anchorEl: null,
+      reminder:""
     };
   }
 
@@ -92,6 +93,56 @@ class Getnote extends Component {
       this.handleGetNotes();
     })
   };
+
+
+
+  handleGetNotes = () => {
+    getNote()
+      .then(res => {
+        this.setState({
+
+          notes: res
+        });
+        console.log("res in notesData", this.state.notes);
+      })
+      .catch(err => {
+        console.log("err", err);
+      });
+  };
+
+  handleOpenDialogue = () => {
+    this.setState({
+      open: !this.state.open
+    });
+  };
+
+  handleEditNote = async (noteId, title, description, color) => {
+    await this.setState({
+      noteId: noteId,
+      open: false,
+      title: title,
+      description: description,
+      color: color
+    });
+
+  };
+  saveEditNote = () => {
+    let data = {
+      noteId: this.state.noteId,
+      title: this.state.title,
+      description: this.state.description
+    };
+    console.log("result of editData", data);
+    editNote(data)
+      .then(res => {
+        console.log("result of  editNote", res);
+        this.setState({ open: false })
+        this.handleGetNotes();
+      })
+      .catch(err => {
+        console.log("err in editNote component ", err);
+      });
+  }
   archiveNote = async (noteId) => {
     await this.setState({
       archieve: !this.state.archieve
@@ -110,52 +161,6 @@ class Getnote extends Component {
 
       })
   }
-
-  handleGetNotes = () => {
-    getNote()
-      .then(res => {
-        this.setState({
-         
-          notes: res
-        });
-        console.log("res in notesData", this.state.notes);
-      })
-      .catch(err => {
-        console.log("err", err);
-      });
-  };
-
-  handleOpenDialogue = () => {
-    this.setState({
-      open: !this.state.open
-    });
-  };
-
-  handleEditNote = (noteId, title, description, color) => {
-    this.setState({
-      noteId: noteId,
-      open: false,
-      title: title,
-      description: description,
-      color: color
-    });
-    let data = {
-      noteId: this.state.noteId,
-      title: this.state.title,
-      description: this.state.description,
-      color: this.state.color
-    };
-    console.log("result of editData", data);
-    editNote(data)
-      .then(res => {
-        console.log("result of  editNote", res);
-        this.handleGetNotes();
-      })
-      .catch(err => {
-        console.log("err in editNote component ", err);
-      });
-  };
-
   handleTitle = event => {
     let title = event.target.value;
     this.setState({
@@ -180,7 +185,7 @@ class Getnote extends Component {
   componentWillReceiveProps(nextProps) {
     console.log("nextProps", nextProps);
     if (nextProps.getNotes) {
-      this.handleGetNotes();
+      this.handleGetNotes(); 
     }
   }
   handlePin(noteId) {
@@ -203,7 +208,6 @@ class Getnote extends Component {
   }
 
   render() {
-    // let view=this.props.iconChoose?"gridview":"listview"
     let archieveIcon = !this.archive ? (
       <IconButton onClick={this.archiveNote}>
         <Tooltip title="Archieve">
@@ -229,211 +233,211 @@ class Getnote extends Component {
 
     return (
       <div className={this.props.noteStyle}>
-      <div className="_notes" >
-        {!this.state.open ? (
-          <div className="_notes_">
-            {this.state.notes.map(key => {
-              // key.isArchived === false &&
-              //   key.isDeleted === false &&
-              if((key.data().archieve === false) &&(key.data().isDeleted === false)){
-                console.log("the dele is ", key.data().isDeleted);
-                console.log("data", key.data().isPinned);
-                console.log("The archive js ", key.data().archive);
+        <div className="_notes" >
+          {!this.state.open ? (
+            <div className="_notes_">
+              {this.state.notes.map(key => {
+                if ((key.data().archieve === false) && (key.data().isDeleted === false)) {
+                  console.log("the dele is ", key.data().isDeleted);
+                  console.log("data", key.data().isPinned);
+                  console.log("The archive js ", key.data().archive);
 
-                return (
-                  <div className="notes_">
-                    <Card 
-                      style={{ backgroundColor: this.props.color }}
-                      // className="get_Nottes_card"
-                      style={{
-                         width: "250px",
-                        minHeight: "135px",
-                        height: "auto",
-                        margin: "5px",
-                        padding: "10px",
-                        boxShadow: "0px 1px 7px 0px",
-                        marginTop: "10%",
-                        borderRadius: "15px",
-                        background: key.data().color
-                      }}
-                    >
-                      {/* {svg} */}
-                      <div
+                  return (
+                    <div className="notes_">
+                      <Card
+                        style={{ backgroundColor: this.props.color }}
+                        // className="get_Nottes_card"
                         style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          padding: "5px"
+                          width: "250px",
+                          minHeight: "135px",
+                          height: "auto",
+                          margin: "5px",
+                          padding: "10px",
+                          boxShadow: "0px 1px 7px 0px",
+                          marginTop: "10%",
+                          borderRadius: "15px",
+                          background: key.data().color
                         }}
                       >
-                        <div>
+                        {/* {svg} */}
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            padding: "5px"
+                          }}
+                        >
                           <div>
-                            {key.data().title}
-                            {/* <RoomOutlinedIcon onClick={() => this.handlePin(key.id)} /> */}
-                          </div>
-                          <div style={{ marginTop: "25px" }}>
-                            {key.data().description}
-                          </div>
-                     
-                        </div>
-                        <div>
-                          <Avatar style={{ background: "#d2cece" }}>
-                            <img
-                              src={require("../assets/unpin.svg")}
-                              style={{ width: "20px" }}
-                              onClick={() => this.handlePin(key.id)}
-                            />
-                          </Avatar>
+                            <div>
+                              {key.data().title}
+                              {/* <RoomOutlinedIcon onClick={() => this.handlePin(key.id)} /> */}
+                            </div>
+                            <div style={{ marginTop: "25px" }}>
+                              {key.data().description}
+                            </div>
 
-                        </div>
-                      </div>
-                      <div onClick={this.handleOpenDialogue}>
-                        <div className="base">
-                          <InputBase
-                            multiline
-                            onClick={() =>
-                              this.handleEditNote(
-                                key.id,
-                                key.data().title,
-                                key.data().description
-                              )
-                            }
-                          />
+                          </div>
+                          <div>
+                            <Avatar style={{ background: "#d2cece" }}>
+                              <img
+                                src={require("../assets/unpin.svg")}
+                                style={{ width: "20px" }}
+                                onClick={() => this.handlePin(key.id)}
+                              />
+                            </Avatar>
 
-                          <div onClick={this.handleOpenDialogue}>
+                          </div>
+                        </div>
+                        <div onClick={this.handleOpenDialogue}>
+                          <div className="base">
                             <InputBase
-                              value={key.description}
                               multiline
                               onClick={() =>
                                 this.handleEditNote(
                                   key.id,
                                   key.data().title,
-                                  key.data().description
+                                  key.data().description,
+                                  key.data().color
                                 )
                               }
                             />
+
+                            <div onClick={this.handleOpenDialogue}>
+                              <InputBase
+                                value={key.description}
+                                multiline
+                                onClick={() =>
+                                  this.handleEditNote(
+                                    key.id,
+                                    key.data().title,
+                                    key.data().description
+                                  )
+                                }
+                              />
+                            </div>
                           </div>
                         </div>
+                        <div className="getnoteicons">
+                          <div>
+                            <Tooltip title="Reminder">
+                              <AddAlertOutlinedIcon />
+                            </Tooltip>
+                          </div>
+                          <div>
+                            <Tooltip title="Collbrate">
+                              <PersonAddOutlinedIcon />
+                            </Tooltip>
+                          </div>
+                          <div>
+                            <ColorComponent paletteProps={this.paletteProps}
+                              id={key.id} />
+                          </div>
+                          <div>
+                            <Tooltip title="Add image">
+                              <ImageOutlinedIcon />
+                            </Tooltip>
+                          </div>
+                          <div>
+                            <Tooltip title="Archive">
+                              <div
+                                style={{ cursor: "pointer" }}
+                                onClick={() => this.archiveNote(key.id)}
+                              >
+                                {archieveIconShow}
+                                <ArchiveOutlinedIcon />
+                              </div>
+                            </Tooltip>
+                          </div>
+
+                          <div>
+                            <Tooltip title="More">
+                              <MoreVertOutlinedIcon
+                                onClick={this.menuItem}
+                                aria-owns="simple-menu"
+
+                              />
+                            </Tooltip>
+                            <More
+                              anchorEl={this.state.anchorEl}
+                              closeMenu={this.handleClose} id={key.id}
+                              handleGetNotes={this.handleGetNotes}
+                            />
+                          </div>
+
+                        </div>
+                      </Card>
+                    </div>
+
+                  );
+                }
+              })}
+
+            </div>
+          ) : (
+              <div className="cd">
+                <Dialog
+                  open={this.state.open}
+                  onClose={this.handleOpenDialogue}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <Card className="dialogCard"  >
+                    <div className="editcard" >
+                      <div>
+                        <InputBase
+                          multiline
+                          placeholder="Title"
+                          value={this.state.title}
+                          onChange={this.handleTitle}
+
+                        />
                       </div>
-                      <div className="getnoteicons">
+                      <div className="inputNote">
+                        <InputBase
+                          multiline
+                          placeholder="Take a note..."
+                          value={this.state.description}
+                          onChange={this.handleDescription}
+                        />
+                      </div>
+                    </div>
+                    <div className="imageAndClose">
+                      <div className="dialogIcon">
                         <div>
-                          <Tooltip title="Reminder">
-                            <AddAlertOutlinedIcon />
-                          </Tooltip>
+                          <AddAlertOutlinedIcon />
                         </div>
                         <div>
-                          <Tooltip title="Collbrate">
-                            <PersonAddOutlinedIcon />
-                          </Tooltip>
+                          <PersonAddOutlinedIcon />
                         </div>
                         <div>
                           <ColorComponent paletteProps={this.paletteProps}
-                            id={key.id} />
+                          />
                         </div>
                         <div>
-                          <Tooltip title="Add image">
-                            <ImageOutlinedIcon />
-                          </Tooltip>
+                          <ImageOutlinedIcon />
                         </div>
                         <div>
-                          <Tooltip title="Archive">
-                            <div
-                              style={{ cursor: "pointer" }}
-                              onClick={() => this.archiveNote(key.id)}
-                            >
-                              {archieveIconShow}
-                              <ArchiveOutlinedIcon />
-                            </div>
-                          </Tooltip>
+                          <ArchiveOutlinedIcon />
                         </div>
-
                         <div>
-                          <Tooltip title="More">
-                            <MoreVertOutlinedIcon
-                              onClick={this.menuItem}
-                              aria-owns="simple-menu"
-
-                            />
-                          </Tooltip>
-                          <More
-          anchorEl={this.state.anchorEl}
-          closeMenu={this.handleClose} id={key.id}
-          handleGetNotes={this.handleGetNotes}
-          />
+                          <MoreVertOutlinedIcon />
                         </div>
-
-                      </div>
-                    </Card>
-                  </div>
-
-                );
-              }
-            })}
-
-          </div>
-        ) : (
-            <div className="cd">
-              <Dialog
-
-                open={this.state.open}
-                onClose={this.handleOpenDialogue}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <Card className="dialogCard">
-                  <div className="editcard">
-                    <div>
-                      <InputBase
-                        multiline
-                        placeholder="Title"
-                        value={this.state.title}
-                        onChange={this.handleTitle}
-                      />
-                    </div>
-                    <div className="inputNote">
-                      <InputBase
-                        multiline
-                        placeholder="Take a note..."
-                        value={this.state.description}
-                        onChange={this.handleDescription}
-                      />
-                    </div>
-                  </div>
-                  <div className="imageAndClose">
-                    <div className="dialogIcon">
-                      <div>
-                        <AddAlertOutlinedIcon />
-                      </div>
-                      <div>
-                        <PersonAddOutlinedIcon />
-                      </div>
-                      <div>
-                        <ColorComponent onChange={this.paletteProps} />
-                      </div>
-                      <div>
-                        <ImageOutlinedIcon />
-                      </div>
-                      <div>
-                        <ArchiveOutlinedIcon />
-                      </div>
-                      <div>
-                        <MoreVertOutlinedIcon />
-                      </div>
-                      <Button
-                        className="button"
-                        color="Primary"
-                        onClick={this.handleEditNote}
-                        style={{ cursor: "pointer" }}
-                      >
-                        Close
+                        <Button
+                          className="button"
+                          color="Primary"
+                          onClick={this.saveEditNote}
+                          style={{ cursor: "pointer" }}
+                        >
+                          Close
                     </Button>
+                      </div>
                     </div>
-                  </div>
-                </Card>
-              </Dialog>
-            </div>
-          )}
-       
-      </div>
+                  </Card>
+                </Dialog>
+              </div>
+            )}
+
+        </div>
       </div>
     );
   }

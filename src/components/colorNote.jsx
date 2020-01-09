@@ -8,7 +8,7 @@ const colorPalette = [{ name: "default", colorCode: "#FDFEFE" },
 { name: "Blue", colorCode: "#2196f3" },
 { name: "Indigo", colorCode: "#9fa8da" },
 { name: "LightBlue", colorCode: "#90caf9" },
-{ name: "Purple", colorCode: "#b39ddb" },
+{ name: "Purple", colorCode: " RGB(102, 102, 153)" },
 { name: "Yellow", colorCode: "#c5e1a5" },
 { name: "Lime", colorCode: "#e6ee9c" },
 { name: "Pink", colorCode: "#f48fb1" },
@@ -31,7 +31,7 @@ class ColorComponent extends Component {
 
     handleChangeColor = (e) => {
         console.log("hiii" + e);
-        this.props.paletteProps(e.target.value,this.props.id)
+        this.props.paletteProps(e.target.value, this.props.id)
     }
     handleClose = () => {
         this.setState({
@@ -51,25 +51,27 @@ class ColorComponent extends Component {
             return (
                 <div className="color-map" >
                     <Tooltip title={key.name}>
-    
+
                         <IconButton style={{ backgroundColor: key.colorCode, border: "silver 2px solid" }}
                             value={key.colorCode}
                             onClick={this.handleChangeColor}>
                         </IconButton>
-                
+
                     </Tooltip>
                 </div>
             )
         })
         return (
-            <div className="colorpalette-div">
+            <div className="colorpalette-div"  >
                 <Tooltip title="change color">
                     <ClickAwayListener onClickAway={this.handleClickAway}>
                         <ColorLensOutlinedIcon onClick={(event) => this.handleClick(event)} cursor="pointer" />
                     </ClickAwayListener>
                 </Tooltip>
-                <div className="Change">
-                    <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl} className="paint" 
+                
+                <div className="Change" Style={{width: "25em", display: "flex", flexDirection: "row", margin: "25px"}}>
+
+                    <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl} className="paint"
                         style={{
                             zIndex: "9999", width: "25em", display: "flex", flexDirection: "row", margin: "25px"
                         }}

@@ -1,5 +1,5 @@
 import React from "react";
-import {Divider, Drawer,List, ListItem, ListItemIcon,  ListItemText } from "@material-ui/core";
+import {Divider, Drawer,List, ListItem, ListItemIcon,  ListItemText, } from "@material-ui/core";
 import AddAlertIcon from "@material-ui/icons/AddAlert";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import { withRouter } from "react-router-dom";
@@ -22,6 +22,7 @@ class DrawerNav extends React.Component {
     super(props);
     this.state = {
       open:false,
+      anchorEl:null
     };
   }
   handleArchive =()=>{
@@ -35,7 +36,7 @@ class DrawerNav extends React.Component {
 }
 
  render() {
-    return (
+    return (        
       <div className="draw_dash ">
         <Drawer
           variant="persistent"

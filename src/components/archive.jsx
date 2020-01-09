@@ -13,13 +13,13 @@ import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import ColorComponent from "./colorNote";
-import DrawerNav from "./drawerNavigation";
-import { getNote, archiveTheNote } from "../controller/userController";
+import { getNote, archiveTheNote,editNote,colorChange} from "../controller/userController";
 import colorNote from "./colorNote";
 import Dialog from "@material-ui/core/Dialog";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
+import More from "./more";
 const thm = createMuiTheme({
   overrides: {
     MuiDrawer: {
@@ -46,9 +46,20 @@ class Archive extends Component {
       archieve: false,
       isPinned: false,
       pin_open: false,
-      showIcon: false
+      showIcon: false,
+      anchorEl: null
     };
   }
+  menuOpen = () => {
+    this.setState({ open: !this.state.open });
+  };
+  menuItem = e => {
+    this.setState({ anchorEl: e.currentTarget });
+  };
+
+  handleClose = event => {
+    this.setState({ anchorEl: null });
+  };
   openDrawer = () => {
     this.setState({
       drawerOpen: !this.state.drawerOpen
@@ -63,22 +74,33 @@ class Archive extends Component {
   componentDidMount() {
     this.handleGetNotes();
   }
-
-  handleEditNote = (noteId, title, description, color) => {
-    this.setState({
+  handleEditNote = async (noteId, title, description, color) => {
+    await this.setState({
       noteId: noteId,
       open: false,
       title: title,
       description: description,
       color: color
     });
+
+  };
+  saveEditNote = () => {
     let data = {
       noteId: this.state.noteId,
       title: this.state.title,
-      description: this.state.description,
-      color: this.state.color
+      description: this.state.description
     };
-  };
+    console.log("result of editData", data);
+    editNote(data)
+      .then(res => {
+        console.log("result of  editNote", res);
+        this.setState({ open: false })
+        this.handleGetNotes();
+      })
+      .catch(err => {
+        console.log("err in editNote component ", err);
+      });
+  }
   handleGetNotes = () => {
     getNote()
       .then(res => {
@@ -105,7 +127,19 @@ class Archive extends Component {
       description: description
     });
   };
-
+  paletteProps = async (e, id) => {
+    console.log(e);
+    await this.setState({
+      color: e
+    });
+    const data = {
+      id: id,
+      color: this.state.color
+    }
+    colorChange(data).then(res => {
+      this.handleGetNotes();
+    })
+  };
   archiveNote = async (noteId) => {
     await this.setState({
       archieve: !this.state.archieve
@@ -146,21 +180,18 @@ class Archive extends Component {
     let iconDispaly = !this.state.showIcon
       ? "getNote-icons-hide"
       : "getNote-icons";
-        return (
+    return (
+      <div className={this.props.noteStyle}>
+        <div className="_notes"  >
 
-          <div className="_notes"  >
-
-            {!this.state.open ? (
-              <div className="_notes_"  style={{marginTop:"95px",flexWrap:"wrap",}}>
-                {this.state.notes.map(key => {
-                  // key.isArchived === false &&
-                  //   key.isDeleted === false &&
-                  console.log("data", key.data().isPinned);
-                  console.log("The archive js ", key.data().archive);
-                  if (key.data().archieve === true) {
+          {!this.state.open ? (
+            <div className="_notes_" style={{ marginTop: "95px", flexWrap: "wrap", }}>
+              {this.state.notes.map(key => {
+                console.log("data", key.data().isPinned);
+                console.log("The archive js ", key.data().archive);
+                if ((key.data().archieve === true) &&  (key.data().isDeleted === false)){
                   return (
                     <div className="notes_" >
-
                       <Card
                         style={{ backgroundColor: this.props.color }}
                         className="get_Nottes_card"
@@ -240,7 +271,7 @@ class Archive extends Component {
                             </Tooltip>
                           </div>
                           <div>
-                              <ColorComponent paletteProps={this.paletteProps} />
+                            <ColorComponent paletteProps={this.paletteProps} id={key.id} />
                           </div>
                           <div>
                             <Tooltip title="Add image">
@@ -259,84 +290,91 @@ class Archive extends Component {
                           </div>
                           <div>
                             <Tooltip title="More">
-                              <MoreVertOutlinedIcon noteId={key.id} />
+                              <MoreVertOutlinedIcon
+                                onClick={this.menuItem}
+                                aria-owns="simple-menu" />
                             </Tooltip>
+                            <More
+                              anchorEl={this.state.anchorEl}
+                              closeMenu={this.handleClose} id={key.id}
+                              handleGetNotes={this.handleGetNotes}
+                            />
                           </div>
                         </div>
                       </Card>
                     </div>
                   );
-                }})
+                }
+              })
               }
-              </div>
-            ) : (
-                <div className="cd">
-                  <Dialog
-                    // className="dialog"
-                    open={this.state.open}
-                    onClose={this.handleOpenDialogue}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                  >
-                    {/* <MuiThemeProvider theme={thm}> */}
-                    <Card className="dialogCard">
-                      <div className="editcard">
+            </div>
+          ) : (
+              <div className="cd">
+                <Dialog
+                  // className="dialog"
+                  open={this.state.open}
+                  onClose={this.handleOpenDialogue}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <Card className="dialogCard">
+                    <div className="editcard">
+                      <div>
+                        <InputBase
+                          multiline
+                          placeholder="Title"
+                          value={this.state.title}
+                          onChange={this.handleTitle}
+                        />
+                      </div>
+                      <div className="inputNote">
+                        <InputBase
+                          multiline
+                          placeholder="Take a note..."
+                          value={this.state.description}
+                          onChange={this.handleDescription}
+                        />
+                      </div>
+                    </div>
+                    <div className="imageAndClose">
+                      <div className="dialogIcon">
                         <div>
-                          <InputBase
-                            multiline
-                            placeholder="Title"
-                            value={this.state.title}
-                            onChange={this.handleTitle}
-                          />
+                          <AddAlertOutlinedIcon />
                         </div>
-                        <div className="inputNote">
-                          <InputBase
-                            multiline
-                            placeholder="Take a note..."
-                            value={this.state.description}
-                            onChange={this.handleDescription}
-                          />
+                        <div>
+                          <PersonAddOutlinedIcon />
                         </div>
-                      </div>
-                      <div className="imageAndClose">
-                        <div className="dialogIcon">
-                          <div>
-                            <AddAlertOutlinedIcon />
-                          </div>
-                          <div>
-                            <PersonAddOutlinedIcon />
-                          </div>
-                          <div>
-                            {/* <ColorComponent paletteProps={this.paletteProps} /> */}
-                            <ColorComponent onChange={this.paletteProps} />
-                          </div>
-                          <div>
-                            <ImageOutlinedIcon />
-                          </div>
-                          <div>
-                            <ArchiveOutlinedIcon />
-                          </div>
-                          <div>
-                            <MoreVertOutlinedIcon />
-                          </div>
-                          <Button
-                            className="button"
-                            color="Primary"
-                            onClick={this.handleEditNote}
-                            style={{ cursor: "pointer" }}
-                          >
-                            Close
+                        <div>
+                          <ColorComponent onChange={this.paletteProps}
+                          id={this.props.id} />
+                        </div>
+                        <div>
+                          <ImageOutlinedIcon />
+                        </div>
+                        <div>
+                          <ArchiveOutlinedIcon />
+                        </div>
+                        <div>
+                          <MoreVertOutlinedIcon />
+                        </div>
+                        <Button
+                          className="button"
+                          color="Primary"
+                          onClick={this.saveEditNote}
+                          style={{ cursor: "pointer" }}
+                        >
+                          Close
                         </Button>
-                        </div>
                       </div>
-                    </Card>
-                    {/* </MuiThemeProvider> */}
-                  </Dialog>
-                </div>
-              )}
-          </div>
-        );
-      }
-            }
+                    </div>
+                  </Card>
+                </Dialog>
+              </div>
+            )}
+        </div>
+      </div>
+    );
+  }
+}
 
 export default withRouter(Archive);

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
-import { Tooltip, Card } from "@material-ui/core";
+import { Tooltip, Card, IconButton } from "@material-ui/core";
 import { getNote, } from "../controller/userController";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
+import { deleteNote,restoreNote} from "../controller/userController"
 class Trash extends Component {
     constructor(props) {
         super(props)
@@ -30,68 +31,101 @@ class Trash extends Component {
                 console.log("err", err);
             });
     };
+    deleteForever = (id) => {
+        console.log("the deleteForever is ",id);
+        const data = {
+        noteId: id
+        }
+        console.log("the data is deleted id is ",data);
+        
+        deleteNote(data).then(res => {
+            console.log(res)
+            this.handleGetNotes()
+        })
+            .catch(err => {
+                console.log("err", err);
+            });
+    }
+
+      restoreFromTrash = (id) => {
+        const data = {
+        //   id: this.props.data.id
+        noteId:id
+        }
+        restoreNote(data).then(res => {
+          console.log(res)
+          this.handleGetNotes()
+        })
+        .catch(err => {
+            console.log("err", err);
+        });
+      } 
     render() {
         return (
             <div className="_notes"  >
-            <div className="_notes_" style={{marginTop:"95px",flexWrap:"wrap",}}>
-                {this.state.notes.map(key => {
-                    if( key.data().isDeleted === true) {
-                        console.log("the dele is ", key.data().isDeleted);
-                        return (
-                            <div className="notes_">
-                                <Card
-                                    style={{ backgroundColor: this.props.color }}
-                                    className="get_Nottes_card"
-                                    style={{
-                                        width: "250px",
-                                        minHeight: "135px",
-                                        height: "auto",
-                                        margin: "5px",
-                                        padding: "10px",
-                                        boxShadow: "0px 1px 7px 0px",
-                                        marginTop: "10%",
-                                        borderRadius: "15px",
-                                        background: key.data().color
-                                    }}
-                                >
-                                    <div
+                <div className="_notes_" style={{ marginTop: "95px", flexWrap: "wrap", }}>
+                    {this.state.notes.map(key => {
+                        if (key.data().isDeleted === true) {
+                            console.log("the dele is ", key.data().isDeleted);
+                            return (
+                                <div className="notes_">
+                                    <Card
+                                        style={{ backgroundColor: this.props.color }}
+                                        className="get_Nottes_card"
                                         style={{
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                            padding: "5px"
+                                            width: "250px",
+                                            minHeight: "135px",
+                                            height: "auto",
+                                            margin: "5px",
+                                            padding: "10px",
+                                            boxShadow: "0px 1px 7px 0px",
+                                            marginTop: "10%",
+                                            borderRadius: "15px",
+                                            background: key.data().color
                                         }}
                                     >
-                                        <div>
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                padding: "5px"
+                                            }}
+                                        >
                                             <div>
-                                                {key.data().title}
+                                                <div>
+                                                    {key.data().title}
+                                                </div>
+                                                <div style={{ marginTop: "25px" }}>
+                                                    {key.data().description}
+                                                </div>
+
                                             </div>
-                                            <div style={{ marginTop: "25px" }}>
-                                                {key.data().description}
+                                        </div>
+                                        <div className="getnoteicons_trash">
+                                            <div >
+                                                <Tooltip title="Delete forever">
+                                                    <IconButton onClick={()=>this.deleteForever(key.id)}>
+                                                    <DeleteForeverIcon />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </div>
+                                            <div>
+                                                <Tooltip title="Restore">
+                                                <IconButton onClick={()=>this.restoreFromTrash(key.id)}>
+                                                    <RestoreFromTrashIcon  />
+                                                </IconButton>
+                                                </Tooltip>
+                                                
                                             </div>
 
                                         </div>
-                                    </div>
-                                    <div className="getnoteicons_trash">
-                                        <div>
-                                            <Tooltip title="Delete forever">
-                                                <DeleteForeverIcon />
-                                            </Tooltip>
-                                        </div>
-                                        <div>
-                                            <Tooltip title="Restore">
-                                                <RestoreFromTrashIcon />
-                                            </Tooltip>
-                                        </div>
-
-                                    </div>
-                                </Card>
-                            </div>
-
-                        );
-                    }
-                })}
+                                    </Card>
+                                </div>
+                            );
+                        }
+                    })}
+                </div>
             </div>
-            </div>   
         )
     }
 }

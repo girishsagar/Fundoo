@@ -117,7 +117,7 @@ class Notes extends Component {
               cardOpen: false,
               color: "",
               archieve: "",
-              isDeleted: false 
+              isDeleted: false
 
             });
           } else {

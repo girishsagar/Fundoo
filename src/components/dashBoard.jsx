@@ -49,7 +49,7 @@ class Dashboard extends Component {
     })
   }
   render() {
-let noteStyle=this.state.listView?"girdnotes":"listcss"
+    let noteStyle = this.state.listView ? "girdnotes" : "listcss"
     return (
       (!this.state.archive) && (!this.state.trash) ?
         <div>
@@ -57,20 +57,23 @@ let noteStyle=this.state.listView?"girdnotes":"listcss"
             handleTrash={this.handleTrash}
             handleView={this.handleView}
             view={this.state.listView} />
-          <Notes initiateGetNotes={this.initiateGetNotes} colorChange={this.colorChange} color={this.state.color} />
-          <Getnote getNotes={this.state.getNotesProps} color={this.state.color} noteStyle={noteStyle} />
+          <Notes initiateGetNotes={this.initiateGetNotes} colorChange={this.colorChange}
+           color={this.state.color} />
+          <Getnote getNotes={this.state.getNotesProps} color={this.state.color} 
+          noteStyle={noteStyle} />
         </div>
         : (this.state.archive) && (!this.state.trash) ?
           <div>
             <Navigation handleArchive={this.handleArchive} handleNote={this.handleNote}
-             handleTrash={this.handleTrash} handleView={this.handleView}
-             view={this.state.listView}  />
-            <Archive />
+              handleTrash={this.handleTrash} handleView={this.handleView}
+              view={this.state.listView}    noteStyle={noteStyle} />
+            <Archive noteStyle={noteStyle} />
           </div>
           :
           <div>
-            <Navigation  handleView={this.handleView}
-            view={this.state.listView} handleArchive={this.handleArchive} handleNote={this.handleNote} handleTrash={this.handleTrash} />
+            <Navigation handleView={this.handleView}
+              view={this.state.listView} handleArchive={this.handleArchive} handleNote={this.handleNote} 
+              handleTrash={this.handleTrash} />
             <Trash />
           </div>
     );

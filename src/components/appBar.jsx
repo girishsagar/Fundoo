@@ -83,12 +83,12 @@ class Navigation extends Component {
     
     let viewIcon = !this.props.view ? (
       <Tooltip title="List View">
-        <ViewStreamOutlinedIcon />
+     
+        <SvgGrid/>
       </Tooltip>
     ) : (
         <Tooltip title="Grid View">
-          <SvgGrid />
-
+           <ViewStreamOutlinedIcon />
         </Tooltip>
       );
 
@@ -130,7 +130,7 @@ class Navigation extends Component {
                       {viewIcon}
                     </IconButton>
                     <IconButton>
-                      <SvgSetting />
+                      {/* <SvgSetting /> */}
                     </IconButton>
                   </div>
                 </div>

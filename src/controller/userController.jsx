@@ -122,7 +122,7 @@ export async function editNote(noteData) {
   await db.collection("notes").doc(noteData.noteId).update({
     "title": noteData.title,
     "description": noteData.description,
-    "color": noteData.color
+    // "color": noteData.color
   })
     .then(res => {
       res = true;
@@ -181,10 +181,32 @@ export async function archiveTheNote(noteData) {
 
 export async function addNoteToTrash(noteData){
   let data =noteData.noteId
-  console.log('the riyaz did ',noteData.isDeleted);
+  console.log('the addTrash did ',noteData.isDeleted);
   
   await db.collection("notes").doc(noteData.noteId).update({
     isDeleted:noteData.isDeleted,
+  })
+  .then(res=> {
+    res=true;
+    return res
+}).catch(function(error) {
+  return error.message
+});
+}
+export async function deleteNote(noteData){
+  let data=noteData.noteId
+  console.log("the deletefor os ",noteData.noteId);
+  await  db.collection("notes").doc(noteData.noteId).delete( )
+ .then(res=> {
+   res=true;
+   return res
+}).catch(function(error) {
+ return error.message
+});
+}
+export async function restoreNote(noteData){
+  await db.collection("notes").doc(noteData.noteId).update({
+    isDeleted:false
   })
   .then(res=> {
     res=true;
@@ -207,14 +229,4 @@ export async function colorChange(noteData){
 }
 
 
-// export async function deleteNote(data){
-//   await  serviceConstant.firestore.collection("notes").doc(data.id).delete()
-//   .then(res=> {
-//     res=true;
-//     return res
-// }).catch(function(error) {
-//   return error.message
-// });
-
-// }
 
