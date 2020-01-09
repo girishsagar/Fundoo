@@ -55,16 +55,15 @@ display: flex;
   
 }
 } */
+
   /* drawernavigation */
  .notes {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* width: 250px; */
   border-radius: 400px;
   font-display: block;
 }
-
 .notes:hover {
   background-color: rgb(233, 233, 10);
 }
@@ -104,7 +103,18 @@ margin-bottom: 10px;
 .Archive:hover {
   background-color: rgb(233, 233, 10);
 }
-@media only screen and (min-width: 200px) {
+.trash{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 250px;
+  border-radius: 400px;
+  font-display: block;
+}
+.Trash:hover{
+  background-color: rgb(233, 233, 10);
+}
+@media only screen and (max-width: 200px) {
 .name {
   color: green;
   display: flex;
@@ -117,15 +127,9 @@ margin-bottom: 10px;
   align-items: center;
   border-radius: 400px;
 }
+
+
 /* createNotes CSS */
-/* .card {
-  width: 25em;
-  margin-top: 250px;
-  align-items: center;
-  font-size: 20px;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  padding: 15px;
-} */
 .new_card{
   display: flex;
   justify-content:center;
@@ -146,12 +150,16 @@ margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
 }
+
 .card_open{
-  /* width: 95em; */
-  /* width: 95%; */
     margin-top: 125px;
     display: flex;
     justify-content: center;
+}
+
+.card1 {
+  width: 32em;
+  padding: 18px;
 }
 .pin {
   justify-content: flex-end;
@@ -174,12 +182,6 @@ margin-bottom: 10px;
   display: flex;
 }
 
-@media only screen and (min-width: 100px) {
-.card1 {
-    width: 32em;
-    padding: 18px;
-}
-}
 .icons2 {
   display: flex;
   align-items: center;
@@ -189,8 +191,14 @@ margin-bottom: 10px;
   padding: 15px;
   margin-left: -18px
 }
-/* 
-dashBoard CSS */
+/* --------------- mediaQuery for create note------------------- */
+
+@media screen and (max-width:360px){
+  .new_card{
+    max-width: 600px;
+  }
+}
+/* Getnote  */
 .getnoteicons {
   display: flex;
   align-items: center;
@@ -262,6 +270,7 @@ dashBoard CSS */
 ._notes{
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 /*More css*/
@@ -278,23 +287,20 @@ dashBoard CSS */
     padding: 11px;
 }
 .girdnotes{
-  width: 38%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  /* width: 38%; */
-  border-radius: 400px;
-  font-display: block;
-  flex-wrap: wrap;
-  margin-left: 22em;
-
+  width: 46em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 400px;
+    flex-wrap: wrap;
+    margin-left: 18em;
 }
 
 .listcss{
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  width:600px
+
 }
 .colorpalette-div{
 

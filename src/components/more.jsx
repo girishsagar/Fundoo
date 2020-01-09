@@ -4,24 +4,15 @@ import {
   MuiThemeProvider,
   createMuiTheme,
   Menu,
-  MenuItem,IconButton,
+  MenuItem
 } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import { Snackbar } from "@material-ui/core";
-import {addNoteToTrash,getNote } from "../controller/userController"
+import {addNoteToTrash,getNote} from "../controller/userController"
 
 class More extends Component {
-  constructor(props) { 
+  constructor(props) {
     super(props);
-    this.state={
-      snackbarOpen: false,
-      snackbarMsg: ""
-    }
     
   }
-  snackbarClose = e => {
-    this.setState({ snackbarOpen: false });
-  };
   handleDelete=  ()=>{
     let data ={
       // noteId:this.props.id,
@@ -30,22 +21,9 @@ class More extends Component {
     }
   console.log("delted using id " ,data);
   addNoteToTrash(data).then(res=>{
-    if(res===true){
-      this.setState({
-        snackbarMsg: " New Note Saved",
-        snackbarOpen: true,
-      })
-      console.log("result of deleted is ", res); 
+    console.log("result of deleted is ", res); 
     this.props.handleGetNotes();
-    }
-    else {
-      this.setState({
-        snackbarMsg: res,
-        snackbarOpen: true
-      })
-    }
   })
-  
   .catch(err=>{
     console.log("Error occured during deletion ",err);   
   })
@@ -66,24 +44,7 @@ class More extends Component {
             <MenuItem onClick={this.handleClose}>Add Label</MenuItem>
             <MenuItem onClick={this.handleClose}>Add Drawing</MenuItem>
           </div>
-          <Snackbar
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-            color: "white"
-          }}
-          open={this.state.snackbarOpen}
-          autoHideDuration={2000}
-          onClose={this.snackbarClose}
-          message={<span id="message-id">{this.state.snackbarMsg}</span>}
-          action={[
-            <IconButton onClick={this.handleClose}>
-              <CloseIcon onClick={this.snackbarClose} />
-            </IconButton>
-          ]}
-        />
         </div>
-       
       </Menu>
     );
 

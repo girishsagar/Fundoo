@@ -26,7 +26,8 @@ class DrawerNav extends React.Component {
     };
   }
   handleArchive =()=>{
-   this.props.handleArchive();
+  //  this.props.history.push('/archive');
+  this.props.handleArchive();
   }
  handleNote=()=>{
    this.props.handleNote(); 
@@ -37,7 +38,7 @@ class DrawerNav extends React.Component {
 
  render() {
     return (        
-      <div className="draw_dash ">
+      <div>
         <Drawer
           variant="persistent"
           overflow="auto"
@@ -48,7 +49,7 @@ class DrawerNav extends React.Component {
             <List>
               <div>
               <MuiThemeProvider theme={thm}>
-                <div className="dashNotesNotes" onClick={this.handleNote} >
+                <div className="notes" onClick={this.handleNote } >
                   <ListItem button key="Note">
                     <ListItemIcon>
                       <EmojiObjectsOutlinedIcon />

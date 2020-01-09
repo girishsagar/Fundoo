@@ -3,7 +3,11 @@ import {
   Tooltip, Card,
   InputBase,
   Button,
-  IconButton
+  IconButton,
+  Popper,
+  MenuList,
+  MenuItem,
+  Dialog
 } from "@material-ui/core";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import CloseIcon from "@material-ui/icons/Close";
@@ -19,7 +23,6 @@ import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import UndoTwoToneIcon from "@material-ui/icons/UndoTwoTone";
 import RedoTwoToneIcon from "@material-ui/icons/RedoTwoTone";
 import { saveNote, getNote, pinNotes } from "../controller/userController";
-
 class Notes extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +36,8 @@ class Notes extends Component {
       isDeleted: false,
       archieve: false,
       snackbarOpen: false,
-      snackbarMsg: ""
+      snackbarMsg: "",
+      anchorElPooper:false
     };
   }
   componentDidMount() {
@@ -117,7 +121,8 @@ class Notes extends Component {
               cardOpen: false,
               color: "",
               archieve: "",
-              isDeleted: false
+              isDeleted: false,
+              reminder: null
 
             });
           } else {
@@ -194,12 +199,13 @@ class Notes extends Component {
         />
       </div>
     ) : (
+      <div>
         <div className="card_open">
-
           <Card className="card1" style={{ backgroundColor: this.props.color }} >
             {!this.state.isPinned ? (
               <div className="unpin">
-                <img src={require('../assets/unpin.svg')} style={{ width: "25px" }} alt="unpin" onClick={this.handleOpenPin} />
+                <img src={require('../assets/unpin.svg')}
+                  style={{ width: "25px" }} alt="unpin" onClick={this.handleOpenPin} />
               </div>
             ) : (
                 <div className="pin" alt="pin" onClick={this.handleClosePin}>
@@ -212,7 +218,6 @@ class Notes extends Component {
                 placeholder="Ttitle"
                 onChange={this.changeTitle}
                 value={this.state.title}
-
               />
             </div>
             <div>
@@ -270,6 +275,42 @@ class Notes extends Component {
               </div>
             </div>
           </Card>
+        </div>
+<Popper open={this.state.anchorElPooper} anchorEl={this.state.anchorElPooper}>
+  <MenuList>
+    <MenuItem>Today</MenuItem>
+    <MenuItem>Tomrrow</MenuItem>
+    <MenuItem>Pic date&time</MenuItem>
+  </MenuList>
+</Popper>
+{/* <Dialog 
+open={this.state.anchorElPooper}
+onClose={this.handleOpenDialog}>
+  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+<KeyboardDatePicker
+          margin="normal"
+          id="date-picker-dialog"
+          label="Date picker dialog"
+          format="MM/dd/yyyy"
+          // value={selectedDate}
+          // onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+        <KeyboardTimePicker
+          margin="normal"
+          id="time-picker"
+          label="Time picker"
+          // value={selectedDate}
+          // onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change time',
+          }}
+        />
+
+</MuiPickersUtilsProvider>
+        </Dialog> */}
         </div>
       );
   }
