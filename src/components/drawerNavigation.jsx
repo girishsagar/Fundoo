@@ -35,7 +35,9 @@ class DrawerNav extends React.Component {
  handleTrash=()=>{
   this.props.handleTrash(); 
 }
-
+handleReminder=()=>{
+  this.props.handleReminder(); 
+}
  render() {
     return (        
       <div>
@@ -57,7 +59,7 @@ class DrawerNav extends React.Component {
                     <ListItemText primary="Note" />
                   </ListItem>
                 </div>
-                <div className="Reminder" >
+                <div className="Reminder"  onClick={this.handleReminder }>
                   <ListItem button key="Reminder">
                     <ListItemIcon>
                       <AddAlertIcon   />

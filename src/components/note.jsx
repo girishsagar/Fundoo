@@ -3,7 +3,7 @@ import {
   Tooltip, Card,
   InputBase,
   Button,
-  IconButton,
+  IconButton, Chip
 } from "@material-ui/core";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import CloseIcon from "@material-ui/icons/Close";
@@ -19,6 +19,7 @@ import UndoTwoToneIcon from "@material-ui/icons/UndoTwoTone";
 import RedoTwoToneIcon from "@material-ui/icons/RedoTwoTone";
 import { saveNote, getNote, pinNotes } from "../controller/userController";
 import Reminder from "./reminder"
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 class Notes extends Component {
   constructor(props) {
     super(props);
@@ -177,6 +178,12 @@ class Notes extends Component {
       console.log(error)
     }
   }
+  handleReminderDate = (date) => {
+    this.setState({ reminder: date })
+  }
+  removeReminder = () => {
+    this.setState({ reminder: null })
+}
 
   render() {
     return !this.state.cardOpen ? (
@@ -244,15 +251,23 @@ class Notes extends Component {
                   value={this.state.description}
                 />
               </div>
-
-              <div className="icon2">
-                <Reminder
+              <div><p>{this.state.reminder !== null ?
+                <Chip style={{ display: "flex", marginLeft: "-1em" }}
+                  icon={<AccessTimeIcon />}
+                  label={this.state.reminder}
+                  onDelete={this.removeReminder}
+                  variant="outlined"
+                />
+                : null}</p></div>
+              <div className="icons2">
+                <div>
+                  <Reminder
                     anchorEl={this.state.anchorEl}
                     closeMenu={this.handleClose}
-                    handleGetNotes={this.handleGetNotes} />
+                    handleGetNotes={this.handleGetNotes}
+                    handleReminderDate={this.handleReminderDate} />
                 </div>
-              <div className="icons2">
-           
+
                 <div>
                   <Tooltip title="Collbrate">
                     <PersonAddOutlinedIcon />
@@ -293,7 +308,7 @@ class Notes extends Component {
 
                 </div>
               </div>
-              
+
             </Card>
 
           </div>

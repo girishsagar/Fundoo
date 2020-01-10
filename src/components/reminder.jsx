@@ -1,27 +1,20 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Tooltip, Card, Button, Menu, MenuItem, Chip, IconButton, CardActions } from "@material-ui/core";
+import { Tooltip, Button, Menu, MenuItem, IconButton, } from "@material-ui/core";
 import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from "@material-ui/pickers";
-import AddAlertIcon from '@material-ui/icons/AddAlert';
 import DateFnsUtils from "@date-io/date-fns";
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
 class Reminder extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            reminder: null
+            reminder: "",
         }
     }
     reminderMenuOpen = (e) => {
         this.setState({ reminderAnchorEl: e.currentTarget });
     }
-    reminderMenuClose = () => {
-        this.setState({ reminderAnchorEl: null });
-    }
-    reminderMenuOpen = (e) => {
-        this.setState({ reminderAnchorEl: e.currentTarget });
-    }
+
     reminderMenuClose = () => {
         this.setState({ reminderAnchorEl: null });
     }
@@ -30,7 +23,8 @@ class Reminder extends Component {
         this.reminderMenuClose()
         let date = new Date().toDateString();
         let reminder = date + ", 8:00 PM";
-        await this.setState({ reminder: reminder })
+        // await this.setState({ reminder: reminder })
+        this.props.handleReminderDate(reminder)
     }
 
     handleTomorrowDate = async () => {
@@ -38,7 +32,8 @@ class Reminder extends Component {
         let tomorrow = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
         let date = tomorrow.toDateString();
         let reminder1 = date + ", 8:00 PM";
-        await this.setState({ reminder: reminder1 })
+        //await this.setState({ reminder: reminder1 })
+        this.props.handleReminderDate(reminder1)
     }
 
     handleNextWeekDate = async () => {
@@ -47,6 +42,7 @@ class Reminder extends Component {
         let date = nextweek.toDateString();
         let reminder1 = date + ", 8:00 PM";
         await this.setState({ reminder: reminder1 })
+        this.props.handleReminderDate(reminder1)
     }
 
     handleDate = (v, e) => {
@@ -68,6 +64,7 @@ class Reminder extends Component {
         let time = time1.toString().slice(15, 24);
         console.log(time);
         this.setState({ reminder: this.state.date + "," + time });
+        this.props.handleReminderDate(this.state.date + "," + time)
         this.setState({ openReminderMenu: !this.state.openReminderMenu });
     };
 
@@ -78,10 +75,6 @@ class Reminder extends Component {
     removeReminder = () => {
         this.setState({ reminder: null })
     }
-
-    setDateOpen = e => {
-        this.setState({ openReminderMenu: !this.state.openReminderMenu });
-    };
 
     render() {
         let reminderMenuItem = !this.state.openReminderMenu ?
@@ -137,39 +130,24 @@ class Reminder extends Component {
                     </div>
                     <div className="saveInReminder">
                         <Button
-                onClick={this.handleSave}
-                style={{ backgroundColor: "silver" }}>
-                Save
+                            onClick={this.handleSave}
+                            style={{ backgroundColor: "silver" }}>
+                            Save
             </Button>
                     </div>
                 </Menu>
             </div>
         return (
-            <div>
-                <div style={{display:"flex",marginLeft:"-1em"}}> 
-                    <p>{this.state.reminder !== null ?
-                        <Chip style={{display:"flex",marginLeft:"-1em"}}
-                            icon={<AccessTimeIcon />}
-                            label={this.state.reminder}
-                            onDelete={this.removeReminder}
-                            variant="outlined"
-                        />
-                        : null}</p>
-                    {/* <p>{labels !== '' && labels}</p> */}
-                    <CardActions disableSpacing>
 
-                    </CardActions>
-                </div>
-                <div>
-                    <IconButton style={{marginTop:"-29px"}}
-                        aria-haspopup="true"
-                        onClick={this.reminderMenuOpen}>
-                        <Tooltip title="Remind me">
-                            <AddAlertOutlinedIcon />
-                        </Tooltip>
-                    </IconButton>
-                    {reminderMenuItem}
-                </div>
+            <div>
+                <IconButton
+                    aria-haspopup="true"
+                    onClick={this.reminderMenuOpen}>
+                    <Tooltip title="Remind me">
+                        <AddAlertOutlinedIcon />
+                    </Tooltip>
+                </IconButton>
+                {reminderMenuItem}
             </div>
         )
     }

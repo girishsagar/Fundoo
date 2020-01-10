@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Tooltip, IconButton, Popper, Paper, ClickAwayListener, Menu } from '@material-ui/core'
+import { Tooltip, IconButton, Popper, Paper, ClickAwayListener, } from '@material-ui/core'
 import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
 import { withRouter } from 'react-router-dom';
 const colorPalette = [{ name: "default", colorCode: "#FDFEFE" },

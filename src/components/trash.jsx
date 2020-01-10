@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
-import { Tooltip, Card, CardActions,IconButton} from "@material-ui/core";
+import { Tooltip, Card, IconButton } from "@material-ui/core";
 import { getNote, } from "../controller/userController";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import { deleteNote, restoreNote } from "../controller/userController"
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
-
 import CloseIcon from '@material-ui/icons/Close';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
 class Trash extends Component {
     constructor(props) {
         super(props)
@@ -92,7 +90,7 @@ class Trash extends Component {
                             return (
                                 <div className="notes_">
                                     <Card
-                                        style={{ backgroundColor: this.props.color }}
+                                        // style={{ backgroundColor: this.props.color }}
                                         className="get_Nottes_card"
                                         style={{
                                             width: "250px",

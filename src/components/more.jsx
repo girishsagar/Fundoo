@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  Menu,
-  MenuItem
-} from "@material-ui/core";
-import {addNoteToTrash,getNote} from "../controller/userController"
+import {Menu, MenuItem} from "@material-ui/core";
+import {addNoteToTrash,} from "../controller/userController"
 
 class More extends Component {
   constructor(props) {
     super(props);
-    
+    this.state={}
   }
   handleDelete=  ()=>{
     let data ={

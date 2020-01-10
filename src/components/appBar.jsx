@@ -7,13 +7,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
-import ViewComfySharpIcon from "@material-ui/icons/ViewComfySharp";
 import DrawerNav from "./drawerNavigation";
 import Dropdown from "./dropDown";
 import Avatar from "@material-ui/core/Avatar";
 import SvgGrid from "../icons/grid";
-import SvgSetting from "../icons/setting"
-import SvgList from "../icons/grid"
 import ViewStreamOutlinedIcon from '@material-ui/icons/ViewStreamOutlined';
 const thm = createMuiTheme({
   overrides: {
@@ -104,7 +101,7 @@ class Navigation extends Component {
                   </IconButton>
                 </div>
                 <div >
-                  <img src={require("../assets/keep.png")} className="keep_image" />
+                  <img src={require("../assets/keep.png")} className="keep_image" alt={this.props.alt}/>
                 </div>
                 <div>FUNDOO </div>
               </div>
@@ -145,7 +142,7 @@ class Navigation extends Component {
             </Toolbar>
           </AppBar>
           <DrawerNav open={this.state.open} handleArchive={this.props.handleArchive}
-            handleNote={this.props.handleNote} handleTrash={this.props.handleTrash} />
+            handleNote={this.props.handleNote} handleTrash={this.props.handleTrash} handleReminder={this.props.handleReminder}/>
           <Dropdown
             anchorEl={this.state.anchorEl}
             closeMenu={this.handleClose} />

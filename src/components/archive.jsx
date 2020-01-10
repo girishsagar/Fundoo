@@ -11,25 +11,13 @@ import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import ColorComponent from "./colorNote";
 import { getNote, archiveTheNote,editNote,colorChange} from "../controller/userController";
-import colorNote from "./colorNote";
 import Dialog from "@material-ui/core/Dialog";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import More from "./more";
-const thm = createMuiTheme({
-  overrides: {
-    MuiDrawer: {
-      paperAnchorDockedLeft: {
-        marginTop: "66px"
-      }
-    }
-  }
-});
-
 class Archive extends Component {
   constructor(props) {
     super(props);
@@ -184,7 +172,6 @@ class Archive extends Component {
     return (
       <div className={this.props.noteStyle}>
         <div className="_notes"  >
-
           {!this.state.open ? (
             <div className="_notes_" style={{ marginTop: "95px", flexWrap: "wrap", }}>
               {this.state.notes.map(key => {

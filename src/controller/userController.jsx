@@ -181,8 +181,8 @@ export async function archiveTheNote(noteData) {
 }
 
 export async function addNoteToTrash(noteData) {
-  let data = noteData.noteId
-  console.log('the addTrash did ', noteData.isDeleted);
+  // let data = noteData.noteId
+  // console.log('the addTrash did ', noteData.isDeleted);
 
   await db.collection("notes").doc(noteData.noteId).update({
     isDeleted: noteData.isDeleted,
@@ -195,8 +195,6 @@ export async function addNoteToTrash(noteData) {
     });
 }
 export async function deleteNote(noteData) {
-  let data = noteData.noteId
-  console.log("the deletefor os ", noteData.noteId);
   await db.collection("notes").doc(noteData.noteId).delete()
     .then(res => {
       res = true;

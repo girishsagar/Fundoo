@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Tooltip, Card, InputBase, Button, Menu, IconButton, Avatar } from "@material-ui/core";
+import { Tooltip, Card, InputBase, Button, IconButton, Avatar, Chip } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
+import { createMuiTheme } from "@material-ui/core";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import ArchiveIcon from "@material-ui/icons/Archive";
@@ -13,11 +13,9 @@ import ColorComponent from "./colorNote";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import { editNote, getNote, pinNotes, archiveTheNote, colorChange } from "../controller/userController";
 import Dialog from "@material-ui/core/Dialog";
-import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
-import pin from "../assets/pin.png";
+// import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import More from "./more";
-import Notes from "./note"
-import Reminder from "./reminder"
+
 const thm = createMuiTheme({
   overrides: {
     MuiCard: {
@@ -54,6 +52,9 @@ class Getnote extends Component {
       anchorEl: null,
       reminder: "",
     };
+  }
+  handleReminderDate = (date) => {
+    this.setState({ reminder: date })
   }
   menuOpen = () => {
     this.setState({ open: !this.state.open });
@@ -130,7 +131,8 @@ class Getnote extends Component {
     let data = {
       noteId: this.state.noteId,
       title: this.state.title,
-      description: this.state.description
+      description: this.state.description,
+
     };
     console.log("result of editData", data);
     editNote(data)
@@ -176,7 +178,12 @@ class Getnote extends Component {
       description: description
     });
   };
-
+  handleTimeChange = event => {
+    let time = event.target.value
+    this.setState({
+      time: time
+    })
+  }
   componentWillReceiveProps(nextProps) {
     console.log("nextProps", nextProps);
     if (nextProps.getNotes) {
@@ -202,6 +209,9 @@ class Getnote extends Component {
       });
   }
 
+  removeReminder = () => {
+    this.setState({ reminder: null })
+  }
 
   render() {
     let archieveIcon = !this.archive ? (
@@ -241,7 +251,7 @@ class Getnote extends Component {
                   return (
                     <div className="notes_">
                       <Card
-                        style={{ backgroundColor: this.props.color }}
+                        // style={{ backgroundColor: this.props.color }}
                         // className="get_Nottes_card"
                         style={{
                           width: "250px",
@@ -268,13 +278,19 @@ class Getnote extends Component {
                               {key.data().title}
                               {/* <RoomOutlinedIcon onClick={() => this.handlePin(key.id)} /> */}
                             </div>
+
                             <div style={{ marginTop: "25px" }}>
                               {key.data().description}
                             </div>
-                            <div >
-                              {key.data().reminder}
-                            </div>
-
+                            <div>
+                              <p>{this.state.reminder !== null &&
+                                <Chip style={{ display: "flex", marginLeft: "-1em" }}
+                                  icon={<AccessTimeIcon />}
+                                  label={key.data().reminder}
+                                  onDelete={this.removeReminder}
+                                  variant="outlined"
+                                />
+                              }</p></div>
                           </div>
                           <div>
                             <Avatar style={{ background: "#d2cece" }}>
@@ -296,7 +312,6 @@ class Getnote extends Component {
                                   key.id,
                                   key.data().title,
                                   key.data().description,
-                                  key.data().color
                                 )
                               }
                             />
@@ -316,12 +331,14 @@ class Getnote extends Component {
                             </div>
                           </div>
                         </div>
+
                         <div className="getnoteicons">
-                          <div className={this.props.reminderMenuItem}>
+                          <div >
                             <Tooltip title="Reminder">
                               <AddAlertOutlinedIcon />
                             </Tooltip>
                           </div>
+
                           <div>
                             <Tooltip title="Collbrate">
                               <PersonAddOutlinedIcon />
@@ -361,17 +378,13 @@ class Getnote extends Component {
                               closeMenu={this.handleClose} id={key.id}
                               handleGetNotes={this.handleGetNotes}
                             />
-                          
                           </div>
-
                         </div>
                       </Card>
                     </div>
-
                   );
                 }
               })}
-
             </div>
           ) : (
               <div className="cd">

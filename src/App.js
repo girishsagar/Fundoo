@@ -16,8 +16,7 @@ import color from "./components/colorNote"
 import archive from "./components/archive"
 import more from "./components/more"
 import trash from "./components/trash";
-import reminder from "./components/reminder";
-
+import reminder from "./components/reminderComponent"
 class App extends Component {
   render() {
     return (
@@ -37,7 +36,7 @@ class App extends Component {
           <Route path="/archive" component={archive}></Route>
           <Route path="/more" component={more}></Route>
           <Route path="/trash" component={trash}></Route>
-          <Route path="/reminder" component={reminder}></Route>
+        <Route path="/reminder" component={reminder}></Route>
         </Switch>
       </Router>
     );

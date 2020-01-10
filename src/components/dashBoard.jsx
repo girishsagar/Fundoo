@@ -4,9 +4,8 @@ import Navigation from "./appBar";
 import Getnote from "./getNote";
 import Notes from "./note";
 import Archive from './archive'
-import note from "./note";
 import Trash from "./trash"
-
+import ReminderComponent from "./reminderComponent"
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +18,7 @@ class Dashboard extends Component {
       trash: false,
       getNotesProps: false,
       listView: false,
+      reminder: false,
 
     };
   }
@@ -26,17 +26,19 @@ class Dashboard extends Component {
     this.setState({ listView: !this.state.listView })
   }
   handleNote = () => {
-    this.setState({ note: true, archive: false, trash: false })
+    this.setState({ note: true, archive: false, trash: false, reminder: false })
   }
 
   handleArchive = () => {
-    this.setState({ archive: true, note: false, trash: false })
+    this.setState({ archive: true, note: false, trash: false, reminder: false })
   }
 
   handleTrash = () => {
-    this.setState({ trash: true, note: false, archive: false })
+    this.setState({ trash: true, note: false, archive: false, reminder: false })
   }
-
+  handleReminder = () => {
+    this.setState({ reminder: true, archive: false, note: false, trash: false })
+  }
   colorChange = (e) => {
     // console.log("aaaaaaaaaaa"+e)
     this.setState({ color: e })
@@ -51,30 +53,53 @@ class Dashboard extends Component {
   render() {
     let noteStyle = this.state.listView ? "girdnotes" : "listcss"
     return (
-      (!this.state.archive) && (!this.state.trash) ?
+      (!this.state.archive) && (!this.state.trash) && (!this.state.reminder) ?
         <div>
-          <Navigation handleArchive={this.handleArchive} handleNote={this.handleNote}
+          <Navigation handleArchive={this.handleArchive}
+            handleNote={this.handleNote}
             handleTrash={this.handleTrash}
             handleView={this.handleView}
-            view={this.state.listView} />
+            view={this.state.listView}
+            handleReminder={this.handleReminder} />
+
           <Notes initiateGetNotes={this.initiateGetNotes} colorChange={this.colorChange}
-           color={this.state.color} />
-          <Getnote getNotes={this.state.getNotesProps} color={this.state.color} 
-          noteStyle={noteStyle} />
+            color={this.state.color} />
+          <Getnote getNotes={this.state.getNotesProps} color={this.state.color}
+            noteStyle={noteStyle} />
         </div>
-        : (this.state.archive) && (!this.state.trash) ?
+
+        : (this.state.archive) && (!this.state.trash) && (!this.state.reminder) ?
+
           <div>
-            <Navigation handleArchive={this.handleArchive} handleNote={this.handleNote}
-              handleTrash={this.handleTrash} handleView={this.handleView}
-              view={this.state.listView}    noteStyle={noteStyle} />
+            <Navigation handleArchive={this.handleArchive}
+              handleNote={this.handleNote}
+              handleTrash={this.handleTrash}
+              handleView={this.handleView}
+              view={this.state.listView}
+              noteStyle={noteStyle}
+              handleReminder={this.handleReminder} />
             <Archive noteStyle={noteStyle} />
           </div>
-          :
+
+          :  (this.state.archive) && (!this.state.trash) && (!this.state.reminder) ?
           <div>
             <Navigation handleView={this.handleView}
-              view={this.state.listView} handleArchive={this.handleArchive} handleNote={this.handleNote} 
-              handleTrash={this.handleTrash} />
+              view={this.state.listView}
+              handleArchive={this.handleArchive}
+              handleNote={this.handleNote}
+              handleTrash={this.handleTrash}
+              handleReminder={this.handleReminder} />
             <Trash />
+          </div>
+          : 
+          <div>
+            <Navigation handleView={this.handleView}
+              view={this.state.listView}
+              handleArchive={this.handleArchive}
+              handleNote={this.handleNote}
+              handleTrash={this.handleTrash}
+              handleReminder={this.handleReminder} />
+            <ReminderComponent />
           </div>
     );
   }
