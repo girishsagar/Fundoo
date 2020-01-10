@@ -75,18 +75,19 @@ export async function Signout() {
 
 export async function saveNote(data) {
   try {
-    console.log("data in controller",data)
+    console.log("data in controller", data)
     const token = localStorage.usertoken;
     const decoded = jwt_decode(token);
     // console.log('kjdkjsdk')
-    console.log("color",data.color)
+    console.log("color", data.color)
     const noteData = {
       title: data.title,
       description: data.description,
       isPinned: data.isPinned,
       color: data.color,
       archieve: data.archieve,
-      isDeleted:data.isDeleted,
+      isDeleted: data.isDeleted,
+      reminder: data.reminder,
       user_id: decoded.user_id
     };
     db.collection("notes").doc().set(noteData);
@@ -163,69 +164,69 @@ export async function pinNotes(noteData) {
 
 }
 export async function archiveTheNote(noteData) {
-  console.log("n.lhjkljl",noteData);
-  let data =noteData.noteId
-  console.log("the databacj",data);
+  console.log("n.lhjkljl", noteData);
+  let data = noteData.noteId
+  console.log("the databacj", data);
   await db.collection("notes").doc(noteData.noteId).update({
     "archieve": noteData.archieve,
   })
     .then(res => {
       res = true
-     
+
       return res
     }).catch(error => {
       return error.message
     })
-   
+
 }
 
-export async function addNoteToTrash(noteData){
-  let data =noteData.noteId
-  console.log('the addTrash did ',noteData.isDeleted);
-  
+export async function addNoteToTrash(noteData) {
+  let data = noteData.noteId
+  console.log('the addTrash did ', noteData.isDeleted);
+
   await db.collection("notes").doc(noteData.noteId).update({
-    isDeleted:noteData.isDeleted,
+    isDeleted: noteData.isDeleted,
   })
-  .then(res=> {
-    res=true;
-    return res
-}).catch(function(error) {
-  return error.message
-});
+    .then(res => {
+      res = true;
+      return res
+    }).catch(function (error) {
+      return error.message
+    });
 }
-export async function deleteNote(noteData){
-  let data=noteData.noteId
-  console.log("the deletefor os ",noteData.noteId);
-  await  db.collection("notes").doc(noteData.noteId).delete( )
- .then(res=> {
-   res=true;
-   return res
-}).catch(function(error) {
- return error.message
-});
+export async function deleteNote(noteData) {
+  let data = noteData.noteId
+  console.log("the deletefor os ", noteData.noteId);
+  await db.collection("notes").doc(noteData.noteId).delete()
+    .then(res => {
+      res = true;
+      return res
+    }).catch(function (error) {
+      return error.message
+    });
 }
-export async function restoreNote(noteData){
+export async function restoreNote(noteData) {
   await db.collection("notes").doc(noteData.noteId).update({
-    isDeleted:false
+    isDeleted: false
   })
-  .then(res=> {
-    res=true;
-    return res
-}).catch(function(error) {
-  return error.message
-});
+    .then(res => {
+      res = true;
+      return res
+    }).catch(function (error) {
+      return error.message
+    });
 }
 
-export async function colorChange(noteData){
+export async function colorChange(noteData) {
   await db.collection("notes").doc(noteData.id).update({
-    color:noteData.color
+    color: noteData.color
   })
-  .then(res=> {
-    res=true;
-    return res
-}).catch(function(error) {
-  return error.message
-});
+    .then(res => {
+      res = true;
+      return res
+    }).catch(function (error) {
+      return error.message
+    });
 }
 
 

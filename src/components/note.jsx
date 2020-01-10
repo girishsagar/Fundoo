@@ -4,17 +4,12 @@ import {
   InputBase,
   Button,
   IconButton,
-  Popper,
-  MenuList,
-  MenuItem,
-  Dialog
 } from "@material-ui/core";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import CloseIcon from "@material-ui/icons/Close";
 import ColorComponent from './colorNote'
 import { withRouter } from "react-router-dom";
 import { Snackbar } from "@material-ui/core";
-import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
 import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
@@ -23,6 +18,7 @@ import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import UndoTwoToneIcon from "@material-ui/icons/UndoTwoTone";
 import RedoTwoToneIcon from "@material-ui/icons/RedoTwoTone";
 import { saveNote, getNote, pinNotes } from "../controller/userController";
+import Reminder from "./reminder"
 class Notes extends Component {
   constructor(props) {
     super(props);
@@ -35,14 +31,41 @@ class Notes extends Component {
       isPinned: false,
       isDeleted: false,
       archieve: false,
+      reminder: null,
       snackbarOpen: false,
       snackbarMsg: "",
-      anchorElPooper:false
+      anchorElPooper: false,
+      date: "",
+      time: "",
+      labels: []
     };
   }
+  snackbarClose = e => {
+    this.setState({ snackbarOpen: false });
+  };
+
+  openCard = () => {
+    this.setState({ cardOpen: true });
+  };
+  changeTitle = e => {
+    this.setState({ title: e.currentTarget.value });
+  };
+  changeDescription = e => {
+    this.setState({ description: e.currentTarget.value });
+  };
   componentDidMount() {
     this.handleGetNotes();
   }
+
+  handleClose = event => {
+    this.setState({ anchorEl: null });
+  };
+  menuOpen = () => {
+    this.setState({ open: !this.state.open });
+  };
+  menuItem = e => {
+    this.setState({ anchorEl: e.currentTarget });
+  };
 
   handleGetNotes = () => {
     getNote()
@@ -57,19 +80,7 @@ class Notes extends Component {
         console.log("err", err);
       });
   };
-  snackbarClose = e => {
-    this.setState({ snackbarOpen: false });
-  };
 
-  openCard = () => {
-    this.setState({ cardOpen: true });
-  };
-  changeTitle = e => {
-    this.setState({ title: e.currentTarget.value });
-  };
-  changeDescription = e => {
-    this.setState({ description: e.currentTarget.value });
-  };
   handleOpenPin = (noteId) => {
     this.setState({ isPinned: true })
     let data = {
@@ -85,15 +96,19 @@ class Notes extends Component {
         console.log("err in pinnote component ", err);
       });
   }
+
   handleColorClose = () => {
     this.setState({ color: true })
   }
+
   colorChange = () => {
     this.setState()
   }
+
   handleClosePin = () => {
     this.setState({ isPinned: false })
   }
+
   newNote = () => {
     console.log("yes im in")
     this.props.initiateGetNotes(true)
@@ -107,6 +122,7 @@ class Notes extends Component {
           color: this.state.color,
           archieve: this.state.archieve,
           isDeleted: this.state.isDeleted,
+          reminder: this.state.reminder,
           isPinned: true,
         };
         console.log("--------------", noteData);
@@ -161,9 +177,9 @@ class Notes extends Component {
       console.log(error)
     }
   }
+
   render() {
     return !this.state.cardOpen ? (
-
       <div className="new_card"
         onClick={this.handleOpen}>
         <Card className="create" style={{ boxShadow: "0px 0px 5px 1px" }}>
@@ -199,118 +215,88 @@ class Notes extends Component {
         />
       </div>
     ) : (
-      <div>
-        <div className="card_open">
-          <Card className="card1" style={{ backgroundColor: this.props.color }} >
-            {!this.state.isPinned ? (
-              <div className="unpin">
-                <img src={require('../assets/unpin.svg')}
-                  style={{ width: "25px" }} alt="unpin" onClick={this.handleOpenPin} />
-              </div>
-            ) : (
-                <div className="pin" alt="pin" onClick={this.handleClosePin}>
-                  <img src={require('../assets/pin.png')} style={{ width: "25px" }} />
+        <div>
+          <div className="card_open">
+            <Card className="card1" style={{ backgroundColor: this.props.color }} >
+              {!this.state.isPinned ? (
+                <div className="unpin">
+                  <img src={require('../assets/unpin.svg')}
+                    style={{ width: "25px" }} alt="unpin" onClick={this.handleOpenPin} />
                 </div>
-              )}
-            <div>
-              <InputBase
-                multiline
-                placeholder="Ttitle"
-                onChange={this.changeTitle}
-                value={this.state.title}
-              />
-            </div>
-            <div>
-              <InputBase
-                multiline
-                placeholder="Take a note..."
-                onChange={this.changeDescription}
-                value={this.state.description}
-              />
-            </div>
+              ) : (
+                  <div className="pin" alt="pin" onClick={this.handleClosePin}>
+                    <img src={require('../assets/pin.png')} style={{ width: "25px" }} />
+                  </div>
+                )}
+              <div>
+                <InputBase
+                  multiline
+                  placeholder="Ttitle"
+                  onChange={this.changeTitle}
+                  value={this.state.title}
+                />
+              </div>
+              <div>
+                <InputBase
+                  multiline
+                  placeholder="Take a note..."
+                  onChange={this.changeDescription}
+                  value={this.state.description}
+                />
+              </div>
 
-            <div className="icons2">
-              <div>
-                <Tooltip title="Reminder">
-                  <AddAlertOutlinedIcon />
-                </Tooltip>
-              </div>
-              <div>
-                <Tooltip title="Collbrate">
-                  <PersonAddOutlinedIcon />
-                </Tooltip>
-              </div>
-              <div>
-                <ColorComponent paletteProps={this.paletteProps} />
-              </div>
-              <div>
-                <Tooltip title="Add image">
-                  <ImageOutlinedIcon />
-                </Tooltip>
-              </div>
-              <div>
-                <Tooltip title="Archive">
-                  <ArchiveOutlinedIcon onClick={this.createArchieveNote} />
-                </Tooltip>
-              </div>
-              <div>
-                <Tooltip title="More">
-                  <MoreVertOutlinedIcon />
-                </Tooltip>
-              </div>
-              <div>
-                <Tooltip title="Undo">
-                  <UndoTwoToneIcon />
-                </Tooltip>
-              </div>
-              <div>
-                <Tooltip title="Redo">
-                  <RedoTwoToneIcon />
-                </Tooltip>
-              </div>
-              <div>
-                <Button color="primary" onClick={this.newNote}>
-                  Close
+              <div className="icon2">
+                <Reminder
+                    anchorEl={this.state.anchorEl}
+                    closeMenu={this.handleClose}
+                    handleGetNotes={this.handleGetNotes} />
+                </div>
+              <div className="icons2">
+           
+                <div>
+                  <Tooltip title="Collbrate">
+                    <PersonAddOutlinedIcon />
+                  </Tooltip>
+                </div>
+                <div>
+                  <ColorComponent paletteProps={this.paletteProps} />
+                </div>
+                <div>
+                  <Tooltip title="Add image">
+                    <ImageOutlinedIcon />
+                  </Tooltip>
+                </div>
+                <div>
+                  <Tooltip title="Archive">
+                    <ArchiveOutlinedIcon onClick={this.createArchieveNote} />
+                  </Tooltip>
+                </div>
+                <div>
+                  <Tooltip title="More">
+                    <MoreVertOutlinedIcon />
+                  </Tooltip>
+                </div>
+                <div>
+                  <Tooltip title="Undo">
+                    <UndoTwoToneIcon />
+                  </Tooltip>
+                </div>
+                <div>
+                  <Tooltip title="Redo">
+                    <RedoTwoToneIcon />
+                  </Tooltip>
+                </div>
+                <div>
+                  <Button color="primary" onClick={this.newNote}>
+                    Close
                 </Button>
-              </div>
-            </div>
-          </Card>
-        </div>
-<Popper open={this.state.anchorElPooper} anchorEl={this.state.anchorElPooper}>
-  <MenuList>
-    <MenuItem>Today</MenuItem>
-    <MenuItem>Tomrrow</MenuItem>
-    <MenuItem>Pic date&time</MenuItem>
-  </MenuList>
-</Popper>
-{/* <Dialog 
-open={this.state.anchorElPooper}
-onClose={this.handleOpenDialog}>
-  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-<KeyboardDatePicker
-          margin="normal"
-          id="date-picker-dialog"
-          label="Date picker dialog"
-          format="MM/dd/yyyy"
-          // value={selectedDate}
-          // onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-        <KeyboardTimePicker
-          margin="normal"
-          id="time-picker"
-          label="Time picker"
-          // value={selectedDate}
-          // onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change time',
-          }}
-        />
 
-</MuiPickersUtilsProvider>
-        </Dialog> */}
+                </div>
+              </div>
+              
+            </Card>
+
+          </div>
         </div>
       );
   }

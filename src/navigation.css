@@ -11,7 +11,7 @@
   width: 10em;
   align-items: center;
 }
-.keep_image{
+.keep_image {
   width: 55px;
 }
 .Search_Base {
@@ -22,7 +22,7 @@
   background-color: #d3d3d345;
   height: 48px;
 }
-.searchicon { 
+.searchicon {
   display: flex;
   margin-left: 20px;
 }
@@ -30,7 +30,7 @@
   background-color: rgba(252, 252, 252, 0.979);
   box-shadow: 10px;
 }
-.search_main_div{
+.search_main_div {
   display: flex;
   justify-content: space-around;
   width: 63em;
@@ -56,8 +56,8 @@ display: flex;
 }
 } */
 
-  /* drawernavigation */
- .notes {
+/* drawernavigation */
+.notes {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -84,10 +84,9 @@ display: flex;
   align-items: center;
   width: 250px;
   border-radius: 400px;
-margin-top: 10px;
-margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-display: block;
-
 }
 .labels:hover {
   background-color: rgb(233, 233, 10);
@@ -103,7 +102,7 @@ margin-bottom: 10px;
 .Archive:hover {
   background-color: rgb(233, 233, 10);
 }
-.trash{
+.trash {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -111,15 +110,15 @@ margin-bottom: 10px;
   border-radius: 400px;
   font-display: block;
 }
-.Trash:hover{
+.Trash:hover {
   background-color: rgb(233, 233, 10);
 }
 @media only screen and (max-width: 200px) {
-.name {
-  color: green;
-  display: flex;
-  justify-content: flex-end;
-}
+  .name {
+    color: green;
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 .pro {
   display: flexbox;
@@ -128,33 +127,32 @@ margin-bottom: 10px;
   border-radius: 400px;
 }
 
-
 /* createNotes CSS */
-.new_card{
+.new_card {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   margin-top: 100px;
 }
-.create{
+.create {
   padding: 18px;
   height: 18px;
   width: 30em;
 }
-.create1{
+.create1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.create_icon{
+.create_icon {
   width: 9em;
   display: flex;
   justify-content: space-between;
 }
 
-.card_open{
-    margin-top: 125px;
-    display: flex;
-    justify-content: center;
+.card_open {
+  margin-top: 125px;
+  display: flex;
+  justify-content: center;
 }
 
 .card1 {
@@ -165,18 +163,20 @@ margin-bottom: 10px;
   justify-content: flex-end;
   width: -14em;
   display: flex;
+  margin-top: -14px;
 }
-.unpin{
+.unpin {
   justify-content: flex-end;
   width: -14em;
   display: flex;
+  margin-top: -14px;
 }
-.unpin1{
+.unpin1 {
   justify-content: flex-end;
   width: 12em;
   display: flex;
 }
-.pin1{
+.pin1 {
   justify-content: flex-end;
   width: 12em;
   display: flex;
@@ -186,15 +186,22 @@ margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin-top: -13px;
   cursor: pointer;
-  padding: 15px;
-  margin-left: -18px
+  padding: 5px;
+}
+.icons23 {
+  left: 35px;
+  top: -8px;
+}
+.icons1{
+}
+.sip{
+
 }
 /* --------------- mediaQuery for create note------------------- */
 
-@media screen and (max-width:360px){
-  .new_card{
+@media screen and (max-width: 360px) {
+  .new_card {
     max-width: 600px;
   }
 }
@@ -207,28 +214,28 @@ margin-bottom: 10px;
   cursor: pointer;
   padding: 15px;
 }
-.all{
+.all {
   align-items: center;
-    height: 20vh;
-    display: flex;
-    flex-direction: row;
-    flex-direction: row;
-    padding: 0px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-left: 8em;
-    margin-top: 10px;
+  height: 20vh;
+  display: flex;
+  flex-direction: row;
+  flex-direction: row;
+  padding: 0px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 8em;
+  margin-top: 10px;
 }
-.dialogCard{
+.dialogCard {
   width: 20em;
-    height: 15vh;
-    align-items: center;
-    font-size: 20px;
-    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-    padding: 20px;
-    margin-top: -11px;
+  height: 15vh;
+  align-items: center;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  padding: 20px;
+  margin-top: -11px;
 }
-.dialogIcon{
+.dialogIcon {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -237,37 +244,36 @@ margin-bottom: 10px;
   padding: 15px;
   width: 20em;
 }
-.editcard{
+.editcard {
   margin-top: -27px;
-    margin-left: 20px;
-    font-weight: bold;
+  margin-left: 20px;
+  font-weight: bold;
 }
 
-.base{
+.base {
   display: flex;
 }
-.notes_dash{
-  display: flex;
-    width: 60%;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 100px;
-  
-}
-._notes_{
-  display: flex;
-    width: 76%;
-    flex-wrap: wrap;
-    justify-content: center;   
-}
-._notes_dash{
+.notes_dash {
   display: flex;
   width: 60%;
   flex-wrap: wrap;
-  justify-content: center;  
+  justify-content: center;
   margin-top: 100px;
 }
-._notes{
+._notes_ {
+  display: flex;
+  width: 76%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+._notes_dash {
+  display: flex;
+  width: 60%;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 100px;
+}
+._notes {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -275,34 +281,30 @@ margin-bottom: 10px;
 
 /*More css*/
 
-.drop{
+.drop {
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
 }
 
-.getnoteicons_trash{
+.getnoteicons_trash {
   display: flex;
-    justify-content: flex-start;
-    padding: 11px;
+  justify-content: flex-start;
+  padding: 11px;
 }
-.girdnotes{
+.girdnotes {
   width: 46em;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-radius: 400px;
-    flex-wrap: wrap;
-    margin-left: 18em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 400px;
+  flex-wrap: wrap;
+  margin-left: 18em;
 }
 
-.listcss{
+.listcss {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-
-}
-.colorpalette-div{
-
 }
 /* -------------->Media Query for appBar<-------------------- */

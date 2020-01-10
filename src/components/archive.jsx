@@ -140,6 +140,7 @@ class Archive extends Component {
       this.handleGetNotes();
     })
   };
+  
   archiveNote = async (noteId) => {
     await this.setState({
       archieve: !this.state.archieve

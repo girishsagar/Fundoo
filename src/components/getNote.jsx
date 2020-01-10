@@ -10,11 +10,14 @@ import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import ColorComponent from "./colorNote";
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import { editNote, getNote, pinNotes, archiveTheNote, colorChange } from "../controller/userController";
 import Dialog from "@material-ui/core/Dialog";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import pin from "../assets/pin.png";
 import More from "./more";
+import Notes from "./note"
+import Reminder from "./reminder"
 const thm = createMuiTheme({
   overrides: {
     MuiCard: {
@@ -49,13 +52,13 @@ class Getnote extends Component {
       pin_open: false,
       showIcon: false,
       anchorEl: null,
-      reminder:""
+      reminder: "",
     };
   }
-
   menuOpen = () => {
     this.setState({ open: !this.state.open });
   };
+
   menuItem = e => {
     this.setState({ anchorEl: e.currentTarget });
   };
@@ -94,13 +97,10 @@ class Getnote extends Component {
     })
   };
 
-
-
   handleGetNotes = () => {
     getNote()
       .then(res => {
         this.setState({
-
           notes: res
         });
         console.log("res in notesData", this.state.notes);
@@ -143,6 +143,7 @@ class Getnote extends Component {
         console.log("err in editNote component ", err);
       });
   }
+
   archiveNote = async (noteId) => {
     await this.setState({
       archieve: !this.state.archieve
@@ -161,6 +162,7 @@ class Getnote extends Component {
 
       })
   }
+
   handleTitle = event => {
     let title = event.target.value;
     this.setState({
@@ -175,17 +177,10 @@ class Getnote extends Component {
     });
   };
 
-  handleColor = event => {
-    let color = event.target.value;
-    this.setState({
-      color: color
-    });
-  };
-
   componentWillReceiveProps(nextProps) {
     console.log("nextProps", nextProps);
     if (nextProps.getNotes) {
-      this.handleGetNotes(); 
+      this.handleGetNotes();
     }
   }
   handlePin(noteId) {
@@ -206,6 +201,7 @@ class Getnote extends Component {
         console.log("err in pinnote component ", err);
       });
   }
+
 
   render() {
     let archieveIcon = !this.archive ? (
@@ -275,6 +271,9 @@ class Getnote extends Component {
                             <div style={{ marginTop: "25px" }}>
                               {key.data().description}
                             </div>
+                            <div >
+                              {key.data().reminder}
+                            </div>
 
                           </div>
                           <div>
@@ -318,7 +317,7 @@ class Getnote extends Component {
                           </div>
                         </div>
                         <div className="getnoteicons">
-                          <div>
+                          <div className={this.props.reminderMenuItem}>
                             <Tooltip title="Reminder">
                               <AddAlertOutlinedIcon />
                             </Tooltip>
@@ -343,7 +342,7 @@ class Getnote extends Component {
                                 style={{ cursor: "pointer" }}
                                 onClick={() => this.archiveNote(key.id)}
                               >
-                                {archieveIconShow}
+                                {/* {archieveIconShow} */}
                                 <ArchiveOutlinedIcon />
                               </div>
                             </Tooltip>
@@ -362,6 +361,7 @@ class Getnote extends Component {
                               closeMenu={this.handleClose} id={key.id}
                               handleGetNotes={this.handleGetNotes}
                             />
+                          
                           </div>
 
                         </div>
