@@ -99,7 +99,7 @@ class Dashboard extends Component {
               handleNote={this.handleNote}
               handleTrash={this.handleTrash}
               handleReminder={this.handleReminder} />
-            <ReminderComponent />
+            <ReminderComponent  />
           </div>
     );
   }

@@ -14,8 +14,11 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import { editNote, getNote, pinNotes, archiveTheNote, colorChange } from "../controller/userController";
 import Dialog from "@material-ui/core/Dialog";
 import Reminder from "./reminder"
+
 // import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import More from "./more";
+import SvgPin from "../icons/svgPin"
+import SvgPinned from "../icons/svgUnpin"
 
 const thm = createMuiTheme({
   overrides: {
@@ -54,12 +57,7 @@ class Getnote extends Component {
       reminder: "",
     };
   }
-  handleReminderDate = date => {
-    this.setState({ reminder: date });
-  };
-  removeReminder = () => {
-    this.setState({ reminder: null });
-  };
+
   menuOpen = () => {
     this.setState({ open: !this.state.open });
   };
@@ -121,13 +119,14 @@ class Getnote extends Component {
     });
   };
 
-  handleEditNote = async (noteId, title, description, color) => {
+  handleEditNote = async (noteId, title, description, color, reminder) => {
     await this.setState({
       noteId: noteId,
       open: false,
       title: title,
       description: description,
-      color: color
+      color: color,
+      reminder: reminder
     });
 
   };
@@ -136,7 +135,7 @@ class Getnote extends Component {
       noteId: this.state.noteId,
       title: this.state.title,
       description: this.state.description,
-      reminder: this.reminder
+      reminder: this.state.reminder
 
     };
     console.log("result of editData", data);
@@ -195,7 +194,6 @@ class Getnote extends Component {
       this.handleGetNotes();
     }
   }
-
   handlePin(noteId) {
     this.setState({
       isPinned: !this.state.isPinned
@@ -215,9 +213,12 @@ class Getnote extends Component {
       });
   }
 
+  handleReminderDate = date => {
+    this.setState({ reminder: date });
+  };
   removeReminder = () => {
-    this.setState({ reminder: null })
-  }
+    this.setState({ reminder: null });
+  };
 
   render() {
     let archieveIcon = !this.archive ? (
@@ -242,7 +243,7 @@ class Getnote extends Component {
     let iconDispaly = !this.state.showIcon
       ? "getNote-icons-hide"
       : "getNote-icons";
-
+      // let svgPin = !this.state.isPinned ? <SvgPin /> : <SvgPinned />
     return (
       <div className={this.props.noteStyle}>
         <div className="_notes" >
@@ -271,7 +272,6 @@ class Getnote extends Component {
                           background: key.data().color
                         }}
                       >
-                        {/* {svg} */}
                         <div
                           style={{
                             display: "flex",
@@ -289,9 +289,11 @@ class Getnote extends Component {
                               {key.data().description}
                             </div>
                             <div>
-                              {this.state.reminder !== null ?
+                              {/* {this.state.reminder !== null ? */}
+                              {key.data().reminder !== null ?
                                 <Chip
                                   icon={<AccessTimeIcon />}
+                                  id={key.id}
                                   label={key.data().reminder}
                                   onDelete={this.removeReminder}
                                   variant="outlined"
@@ -300,14 +302,19 @@ class Getnote extends Component {
                             </div>
                           </div>
                           <div>
-                            <Avatar style={{ background: "#d2cece" }}>
+                            {/* <Avatar style={{ background: "#d2cece", marginLeft: "-25px" }}>
                               <img
                                 src={require("../assets/unpin.svg")}
-                                style={{ width: "20px" }}
+                                style={{ width: "18px" }}
                                 onClick={() => this.handlePin(key.id)}
-                              />
-                            </Avatar>
+                              /> */}
+                            {/* </Avatar> */}
 
+                            <Avatar  style={{ background: "#d2cece", marginLeft: "-25px"}}
+                             onClick={()=>this.handlePin(key.id)}>
+                            {key.data().isPinned===true ?< SvgPinned/>:<SvgPin/> }
+                              
+                            </Avatar>
                           </div>
                         </div>
                         <div onClick={this.handleOpenDialogue}>
@@ -341,15 +348,9 @@ class Getnote extends Component {
 
                         <div className="getnoteicons">
                           <div >
-                            {/* <Tooltip title="Reminder">
+                            <Tooltip title="Reminder">
                               <AddAlertOutlinedIcon />
-                            </Tooltip> */}
-                            <Reminder
-                              anchorEl={this.state.anchorEl}
-                              closeMenu={this.handleClose}
-                              handleGetNotes={this.handleGetNotes}
-                              handleReminderDate={this.handleReminderDate}
-                            />
+                            </Tooltip>
 
                           </div>
 
@@ -431,7 +432,13 @@ class Getnote extends Component {
                     <div className="imageAndClose">
                       <div className="dialogIcon">
                         <div>
-                          <AddAlertOutlinedIcon />
+                          {/* <AddAlertOutlinedIcon /> */}
+                          <Reminder
+                            anchorEl={this.state.anchorEl}
+                            closeMenu={this.handleClose}
+                            handleGetNotes={this.handleGetNotes}
+                            handleReminderDate={this.handleReminderDate}
+                          />
                         </div>
                         <div>
                           <PersonAddOutlinedIcon />

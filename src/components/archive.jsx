@@ -4,7 +4,7 @@ import {
   Card,
   InputBase,
   Button,
-  IconButton
+  IconButton,Avatar
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
@@ -12,7 +12,7 @@ import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import ColorComponent from "./colorNote";
-import { getNote, archiveTheNote,editNote,colorChange} from "../controller/userController";
+import { getNote, archiveTheNote, editNote, colorChange } from "../controller/userController";
 import Dialog from "@material-ui/core/Dialog";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import UnarchiveIcon from "@material-ui/icons/Unarchive";
@@ -128,7 +128,7 @@ class Archive extends Component {
       this.handleGetNotes();
     })
   };
-  
+
   archiveNote = async (noteId) => {
     await this.setState({
       archieve: !this.state.archieve
@@ -177,7 +177,7 @@ class Archive extends Component {
               {this.state.notes.map(key => {
                 console.log("data", key.data().isPinned);
                 console.log("The archive js ", key.data().archive);
-                if ((key.data().archieve === true) &&  (key.data().isDeleted === false)){
+                if ((key.data().archieve === true) && (key.data().isDeleted === false)) {
                   return (
                     <div className="notes_" >
                       <Card
@@ -212,11 +212,13 @@ class Archive extends Component {
 
                           </div>
                           <div>
-                            <img
-                              src={require("../assets/unpin.svg")}
-                              style={{ width: "20px" }}
-                              onClick={() => this.handlePin(key.id)}
-                            />
+                            <Avatar style={{ background: "#d2cece", marginLeft: "-25px" }}>
+                              <img
+                                src={require("../assets/unpin.svg")}
+                                style={{ width: "18px" }}
+                                onClick={() => this.handlePin(key.id)}
+                              />
+                            </Avatar>
                           </div>
                         </div>
                         <div onClick={this.handleOpenDialogue}>
@@ -334,7 +336,7 @@ class Archive extends Component {
                         </div>
                         <div>
                           <ColorComponent onChange={this.paletteProps}
-                          id={this.props.id} />
+                            id={this.props.id} />
                         </div>
                         <div>
                           <ImageOutlinedIcon />

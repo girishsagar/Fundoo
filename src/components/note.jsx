@@ -202,8 +202,7 @@ class Notes extends Component {
               color: "",
               archieve: "",
               isDeleted: false,
-              reminder: null,
-              labels: ""
+              reminder: null
             });
           } else {
             this.setState({
@@ -232,6 +231,7 @@ class Notes extends Component {
       cardOpen: true
     });
   };
+
   createArchieveNote = async () => {
     try {
       await this.setState({ isPinned: false, archieve: true });
@@ -240,9 +240,11 @@ class Notes extends Component {
       console.log(error);
     }
   };
+
   handleReminderDate = date => {
     this.setState({ reminder: date });
   };
+
   removeReminder = () => {
     this.setState({ reminder: null });
   };
@@ -260,6 +262,7 @@ class Notes extends Component {
     const labels = this.state.labels.filter(item => item.id !== e.target.id);
     this.setState({ labels: labels });
   };
+
   render() {
     let labels = "";
     if (this.state.labels.length > 0) {

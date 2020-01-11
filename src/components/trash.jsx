@@ -60,13 +60,11 @@ class Trash extends Component {
                     snackbarOpen: true
                 })
             }
-
         })
             .catch(err => {
                 console.log("err", err);
             });
     }
-
     restoreFromTrash = (id) => {
         const data = {
             //   id: this.props.data.id
@@ -90,7 +88,6 @@ class Trash extends Component {
                             return (
                                 <div className="notes_">
                                     <Card
-                                        // style={{ backgroundColor: this.props.color }}
                                         className="get_Nottes_card"
                                         style={{
                                             width: "250px",
@@ -102,15 +99,13 @@ class Trash extends Component {
                                             marginTop: "10%",
                                             borderRadius: "15px",
                                             background: key.data().color
-                                        }}
-                                    >
+                                        }}>
                                         <div
                                             style={{
                                                 display: "flex",
                                                 justifyContent: "space-between",
                                                 padding: "5px"
-                                            }}
-                                        >
+                                            }}>
                                             <div>
                                                 <div>
                                                     {key.data().title}
@@ -118,7 +113,6 @@ class Trash extends Component {
                                                 <div style={{ marginTop: "25px" }}>
                                                     {key.data().description}
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div className="getnoteicons_trash">

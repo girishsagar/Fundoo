@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
     Tooltip,
-    Card, Chip
+    Card, Chip, Avatar
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
@@ -12,7 +12,7 @@ import ColorComponent from "./colorNote";
 import { getNote, archiveTheNote, colorChange } from "../controller/userController";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import More from "./more";
-
+import Reminder from "./reminder"
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 class ReminderComponent extends Component {
     constructor(props) {
@@ -90,6 +90,12 @@ class ReminderComponent extends Component {
                 console.log('the notearchive is edited ', err);
             })
     }
+    handleReminderDate = date => {
+        this.setState({ reminder: date });
+    };
+    removeReminder = () => {
+        this.setState({ reminder: null });
+    };
     render() {
         return (
             <div className={this.props.noteStyle}>
@@ -103,7 +109,7 @@ class ReminderComponent extends Component {
                                         <Card
                                             className="get_Nottes_card"
                                             style={{
-                                                width: "220px",
+                                                width: "250px",
                                                 minHeight: "100px",
                                                 height: "auto",
                                                 margin: "5px",
@@ -130,29 +136,36 @@ class ReminderComponent extends Component {
 
                                                 </div>
                                                 <div>
-                                                    {this.state.reminder !== null ? (
+                                                    {key.data().reminder !== null ?
                                                         <Chip
-                                                            style={{ display: "flex", marginLeft: "-1em" }}
+                                                            style={{ display: "flex", marginLeft: "-6em", marginTop: "5em" }}
                                                             icon={<AccessTimeIcon />}
-                                                            label={this.data().reminder}
+                                                            label={key.data().reminder}
                                                             onDelete={this.removeReminder}
-                                                            variant="outlined"
-                                                        />
-                                                    ) : null}
+                                                            variant="outlined" />
+                                                        : null}
                                                 </div>
+
                                                 <div>
-                                                    <img
-                                                        src={require("../assets/unpin.svg")}
-                                                        style={{ width: "20px" }}
-                                                        onClick={() => this.handlePin(key.id)}
-                                                    />
+                                                    <Avatar style={{ background: "#d2cece", marginLeft: "-25px" }}>
+                                                        <img
+                                                            src={require("../assets/unpin.svg")}
+                                                            style={{ width: "18px" }}
+                                                            onClick={() => this.handlePin(key.id)}
+                                                        />
+                                                    </Avatar>
+
                                                 </div>
                                             </div>
-                                            <div className="getnoteicons_remin">
+                                            <div className="icons2">
                                                 <div>
-                                                    <Tooltip title="Reminder">
-                                                        <AddAlertOutlinedIcon />
-                                                    </Tooltip>
+
+                                                    <Reminder
+                                                        anchorEl={this.state.anchorEl}
+                                                        closeMenu={this.handleClose}
+                                                        handleGetNotes={this.handleGetNotes}
+                                                        handleReminderDate={this.handleReminderDate}
+                                                    />
                                                 </div>
                                                 <div>
                                                     <Tooltip title="Collbrate">

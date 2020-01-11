@@ -80,7 +80,6 @@ class Navigation extends Component {
 
     let viewIcon = !this.props.view ? (
       <Tooltip title="List View">
-
         <SvgGrid />
       </Tooltip>
     ) : (
