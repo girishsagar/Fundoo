@@ -27,5 +27,6 @@ yarn-error.log*
 package-lock.json
 package.json
 README.md
+get.jsx
 
 

@@ -8,11 +8,6 @@ import Firebase from "../firebaseConfig";
 import { EventEmitter } from "events";
 import jwt_decode from "jwt-decode";
 const db = Firebase.firestore();
-/**
- *
- * @param {user} user
- * @function : regid
- */
 export async function registeration(user) {
   try {
     const data = {
@@ -21,8 +16,12 @@ export async function registeration(user) {
       Email: user.Email,
       password: user.password
     };
-    await firebase.auth().createUserWithEmailAndPassword(user.Email, data.password);
-    db.collection("user").doc(firebase.auth().currentUser.uid).set(data);
+    await firebase
+      .auth()
+      .createUserWithEmailAndPassword(user.Email, data.password);
+    db.collection("user")
+      .doc(firebase.auth().currentUser.uid)
+      .set(data);
     //passing an evnt emitter
     const emitter = new EventEmitter();
     function EmailVerification() {
@@ -36,10 +35,14 @@ export async function registeration(user) {
     return err.message;
   }
 }
-//userlogin firebase
+/**
+ * Login
+ */
 export async function userlogin(user, cb) {
   try {
-    let userlogin = await firebase.auth().signInWithEmailAndPassword(user.Email, user.password);
+    let userlogin = await firebase
+      .auth()
+      .signInWithEmailAndPassword(user.Email, user.password);
     const payload = {
       user_id: userlogin.user.uid,
       email: userlogin.user.email
@@ -55,7 +58,9 @@ export async function userlogin(user, cb) {
     cb(error.message);
   }
 }
-// Forget Password
+/**
+Forget Password
+ */
 export async function forgotPassword(Email) {
   try {
     await firebase.auth().sendPasswordResetEmail(Email);
@@ -66,20 +71,21 @@ export async function forgotPassword(Email) {
     return error.message;
   }
 }
-
-
+/**
+ * SignOut 
+ */
 export async function Signout() {
   await firebase.auth().firebaseAuthorization.signOut();
   localStorage.removeItem("usertoken");
 }
 
-export async function saveNote(data) {
+export async function saveNote1(data, labels) {
   try {
-    console.log("data in controller", data)
+    console.log("data in controller", data);
     const token = localStorage.usertoken;
     const decoded = jwt_decode(token);
     // console.log('kjdkjsdk')
-    console.log("color", data.color)
+    console.log("color", data.color);
     const noteData = {
       title: data.title,
       description: data.description,
@@ -90,7 +96,42 @@ export async function saveNote(data) {
       reminder: data.reminder,
       user_id: decoded.user_id
     };
-    db.collection("notes").doc().set(noteData);
+    db.collection("notes")
+      .doc()
+      .set(noteData);
+    let result = true;
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+export async function saveNote(data, labels) {
+  try {
+    const token = localStorage.usertoken;
+    const decoded = jwt_decode(token);
+    const noteData = {
+      title: data.title,
+      description: data.description,
+      isPinned: data.isPinned,
+      color: data.color,
+      archieve: data.archieve,
+      isDeleted: data.isDeleted,
+      reminder: data.reminder,
+      user_id: decoded.user_id
+    };
+    await db.collection("notes").add(noteData).then(function (docRef) {
+      // await db.collection("notes").doc().set(noteData).then(function(docRef){  
+      if (labels.length > 0) {
+        labels.forEach(function (labelData) {
+          console.log("label name", labelData.label);
+          let labelDoc = db.collection("labels").doc(labelData.id);
+          labelDoc.update({
+            note_id: firebase.firestore.FieldValue.arrayUnion(docRef.id)
+          });
+        });
+      }
+    });
     let result = true;
     return result;
   } catch (error) {
@@ -104,7 +145,10 @@ export async function getNote() {
     const token = localStorage.usertoken;
     const decoded = jwt_decode(token);
     var noteData = [];
-    await db.collection("notes").where("user_id", "==", decoded.user_id).get()
+    await db
+      .collection("notes")
+      .where("user_id", "==", decoded.user_id)
+      .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           noteData.push(doc);
@@ -118,114 +162,167 @@ export async function getNote() {
   }
 }
 
-// editNote and updata in firebase 
+// editNote and updata in firebase
 export async function editNote(noteData) {
-  await db.collection("notes").doc(noteData.noteId).update({
-    "title": noteData.title,
-    "description": noteData.description,
-    // "color": noteData.color
-  })
+  await db
+    .collection("notes")
+    .doc(noteData.noteId)
+    .update({
+      title: noteData.title,
+      description: noteData.description
+      // "color": noteData.color
+    })
     .then(res => {
       res = true;
-      return res
+      return res;
     })
     .catch(error => {
-      console.log(error.message)
-      return error.message
-    })
-
+      console.log(error.message);
+      return error.message;
+    });
 }
 
 export async function pinNotes(noteData) {
   if (noteData.isPinned) {
-    await db.collection("notes").doc(noteData.noteId).update({
-      "isPinned": noteData.isPinned,
-    }).then(res => {
-      console.log("res", res);
-      res = true;
-      return res
-    })
-      .catch(error => {
-        console.log(error.message)
-        return error.message
+    await db
+      .collection("notes")
+      .doc(noteData.noteId)
+      .update({
+        isPinned: noteData.isPinned
       })
+      .then(res => {
+        console.log("res", res);
+        res = true;
+        return res;
+      })
+      .catch(error => {
+        console.log(error.message);
+        return error.message;
+      });
   } else {
-    await db.collection("notes").doc(noteData.noteId).update({
-      "isPinned": noteData.isPinned,
-    }).then(res => {
-      res = true;
-      return res
-    })
-      .catch(error => {
-        console.log(error.message)
-        return error.message
+    await db
+      .collection("notes")
+      .doc(noteData.noteId)
+      .update({
+        isPinned: noteData.isPinned
       })
+      .then(res => {
+        res = true;
+        return res;
+      })
+      .catch(error => {
+        console.log(error.message);
+        return error.message;
+      });
   }
-
 }
 export async function archiveTheNote(noteData) {
   console.log("n.lhjkljl", noteData);
-  let data = noteData.noteId
+  let data = noteData.noteId;
   console.log("the databacj", data);
-  await db.collection("notes").doc(noteData.noteId).update({
-    "archieve": noteData.archieve,
-  })
-    .then(res => {
-      res = true
-
-      return res
-    }).catch(error => {
-      return error.message
+  await db
+    .collection("notes")
+    .doc(noteData.noteId)
+    .update({
+      archieve: noteData.archieve
     })
+    .then(res => {
+      res = true;
 
+      return res;
+    })
+    .catch(error => {
+      return error.message;
+    });
 }
 
 export async function addNoteToTrash(noteData) {
-  // let data = noteData.noteId
-  // console.log('the addTrash did ', noteData.isDeleted);
-
-  await db.collection("notes").doc(noteData.noteId).update({
-    isDeleted: noteData.isDeleted,
-  })
+  await db.collection("notes").doc(noteData.noteId)
+    .update({
+      isDeleted: noteData.isDeleted
+    })
     .then(res => {
       res = true;
-      return res
-    }).catch(function (error) {
-      return error.message
+      return res;
+    })
+    .catch(function (error) {
+      return error.message;
     });
 }
 export async function deleteNote(noteData) {
-  await db.collection("notes").doc(noteData.noteId).delete()
+  await db
+    .collection("notes")
+    .doc(noteData.noteId)
+    .delete()
     .then(res => {
       res = true;
-      return res
-    }).catch(function (error) {
-      return error.message
+      return res;
+    })
+    .catch(function (error) {
+      return error.message;
     });
 }
 export async function restoreNote(noteData) {
-  await db.collection("notes").doc(noteData.noteId).update({
-    isDeleted: false
-  })
+  await db
+    .collection("notes")
+    .doc(noteData.noteId)
+    .update({
+      isDeleted: false
+    })
     .then(res => {
       res = true;
-      return res
-    }).catch(function (error) {
-      return error.message
+      return res;
+    })
+    .catch(function (error) {
+      return error.message;
     });
 }
 
 export async function colorChange(noteData) {
-  await db.collection("notes").doc(noteData.id).update({
-    color: noteData.color
-  })
+  await db
+    .collection("notes")
+    .doc(noteData.id)
+    .update({
+      color: noteData.color
+    })
     .then(res => {
       res = true;
-      return res
-    }).catch(function (error) {
-      return error.message
+      return res;
+    })
+    .catch(function (error) {
+      return error.message;
     });
 }
-
-
+export async function saveLabel(data) {
+  try {
+    const token = localStorage.usertoken;
+    const decoded = jwt_decode(token);
+    const labelData = {
+      label: data.label,
+      isDeleted: false,
+      note_id: [],
+      user_id: decoded.user_id
+    };
+    await db
+      .collection("labels")
+      .doc()
+      .set(labelData);
+    var labels = [];
+    await db
+      .collection("labels")
+      .where("user_id", "==", decoded.user_id)
+      .where("note_id", "==", [])
+      .where("isDeleted", "==", false)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          labels.push({ id: doc.id, label: doc.data().label });
+        });
+      });
+    return labels;
+  } catch (error) {
+    console.log(error);
+    return error.message;
+  }
+}
 

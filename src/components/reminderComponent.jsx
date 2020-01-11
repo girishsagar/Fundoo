@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
     Tooltip,
-    Card,
+    Card, Chip
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
@@ -12,6 +12,8 @@ import ColorComponent from "./colorNote";
 import { getNote, archiveTheNote, colorChange } from "../controller/userController";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import More from "./more";
+
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 class ReminderComponent extends Component {
     constructor(props) {
         super(props);
@@ -27,7 +29,8 @@ class ReminderComponent extends Component {
             isDeleted: false,
             archieve: false,
             isPinned: false,
-            anchorEl: null
+            anchorEl: null,
+            reminder: null,
         };
     }
     menuOpen = () => {
@@ -42,32 +45,18 @@ class ReminderComponent extends Component {
     };
     componentDidMount() {
         this.handleGetNotes();
+        console.log('reminder4444')
     }
     handleGetNotes = () => {
         getNote()
             .then(res => {
                 this.setState({
                     notes: res
-                });
-                console.log("res in notesData archive", this.state.notes);
+                })
             })
             .catch(err => {
                 console.log("err", err);
             });
-    };
-
-    handleTitle = event => {
-        let title = event.target.value;
-        this.setState({
-            title: title
-        });
-    };
-
-    handleDescription = event => {
-        let description = event.target.value;
-        this.setState({
-            description: description
-        });
     };
 
     paletteProps = async (e, id) => {
@@ -104,11 +93,12 @@ class ReminderComponent extends Component {
     render() {
         return (
             <div className={this.props.noteStyle}>
-                <div className="_notes"  >
+                <div className="_notes">
                     <div className="_notes_" style={{ marginTop: "95px", flexWrap: "wrap", }}>
                         {this.state.notes.map(key => {
-                            if (key.data().reminder !== null) {
+                            if ((key.data().reminder !== null) && (key.data().archieve === false)) {
                                 return (
+
                                     <div className="notes_" >
                                         <Card
                                             className="get_Nottes_card"
@@ -138,6 +128,17 @@ class ReminderComponent extends Component {
                                                     </div>
                                                     <div>{key.data().description}</div>
 
+                                                </div>
+                                                <div>
+                                                    {this.state.reminder !== null ? (
+                                                        <Chip
+                                                            style={{ display: "flex", marginLeft: "-1em" }}
+                                                            icon={<AccessTimeIcon />}
+                                                            label={this.data().reminder}
+                                                            onDelete={this.removeReminder}
+                                                            variant="outlined"
+                                                        />
+                                                    ) : null}
                                                 </div>
                                                 <div>
                                                     <img

@@ -13,6 +13,7 @@ import ColorComponent from "./colorNote";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import { editNote, getNote, pinNotes, archiveTheNote, colorChange } from "../controller/userController";
 import Dialog from "@material-ui/core/Dialog";
+import Reminder from "./reminder"
 // import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import More from "./more";
 
@@ -53,9 +54,12 @@ class Getnote extends Component {
       reminder: "",
     };
   }
-  handleReminderDate = (date) => {
-    this.setState({ reminder: date })
-  }
+  handleReminderDate = date => {
+    this.setState({ reminder: date });
+  };
+  removeReminder = () => {
+    this.setState({ reminder: null });
+  };
   menuOpen = () => {
     this.setState({ open: !this.state.open });
   };
@@ -132,6 +136,7 @@ class Getnote extends Component {
       noteId: this.state.noteId,
       title: this.state.title,
       description: this.state.description,
+      reminder: this.reminder
 
     };
     console.log("result of editData", data);
@@ -190,6 +195,7 @@ class Getnote extends Component {
       this.handleGetNotes();
     }
   }
+
   handlePin(noteId) {
     this.setState({
       isPinned: !this.state.isPinned
@@ -283,14 +289,15 @@ class Getnote extends Component {
                               {key.data().description}
                             </div>
                             <div>
-                              <p>{this.state.reminder !== null &&
-                                <Chip style={{ display: "flex", marginLeft: "-1em" }}
+                              {this.state.reminder !== null ?
+                                <Chip
                                   icon={<AccessTimeIcon />}
                                   label={key.data().reminder}
                                   onDelete={this.removeReminder}
                                   variant="outlined"
                                 />
-                              }</p></div>
+                                : null}
+                            </div>
                           </div>
                           <div>
                             <Avatar style={{ background: "#d2cece" }}>
@@ -334,9 +341,16 @@ class Getnote extends Component {
 
                         <div className="getnoteicons">
                           <div >
-                            <Tooltip title="Reminder">
+                            {/* <Tooltip title="Reminder">
                               <AddAlertOutlinedIcon />
-                            </Tooltip>
+                            </Tooltip> */}
+                            <Reminder
+                              anchorEl={this.state.anchorEl}
+                              closeMenu={this.handleClose}
+                              handleGetNotes={this.handleGetNotes}
+                              handleReminderDate={this.handleReminderDate}
+                            />
+
                           </div>
 
                           <div>

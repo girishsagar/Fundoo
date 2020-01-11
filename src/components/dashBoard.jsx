@@ -81,7 +81,7 @@ class Dashboard extends Component {
             <Archive noteStyle={noteStyle} />
           </div>
 
-          :  (this.state.archive) && (!this.state.trash) && (!this.state.reminder) ?
+          :  (!this.state.archive) && (this.state.trash) && (!this.state.reminder) ?
           <div>
             <Navigation handleView={this.handleView}
               view={this.state.listView}

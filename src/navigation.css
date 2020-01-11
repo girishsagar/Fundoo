@@ -42,19 +42,6 @@
   align-items: center;
   margin-left: 100px;
 }
-/* @media screen and (min-width:601px){
-  .Menu_Button{
-display: flex;
-  }
-  .appicons {
-    display: flex;
-}
-.search_main_div{
-  display: flex;
-  justify-content:center;
-  
-}
-} */
 
 /* drawernavigation */
 .notes {
@@ -200,8 +187,6 @@ display: flex;
   cursor: pointer;
   padding: 5px;
 }
-.sip {
-}
 /* --------------- mediaQuery for create note------------------- */
 
 @media screen and (max-width: 360px) {
@@ -320,3 +305,10 @@ display: flex;
   flex-wrap: wrap;
 }
 /* -------------->Media Query for appBar<-------------------- */
+.getnoteicons {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.getnoteicons:hover.getnoteicons {
+  overflow: visible;
+}

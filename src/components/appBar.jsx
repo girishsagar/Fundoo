@@ -77,15 +77,15 @@ class Navigation extends Component {
     this.props.handleView();
   };
   render() {
-    
+
     let viewIcon = !this.props.view ? (
       <Tooltip title="List View">
-     
-        <SvgGrid/>
+
+        <SvgGrid />
       </Tooltip>
     ) : (
         <Tooltip title="Grid View">
-           <ViewStreamOutlinedIcon />
+          <ViewStreamOutlinedIcon />
         </Tooltip>
       );
 
@@ -101,7 +101,7 @@ class Navigation extends Component {
                   </IconButton>
                 </div>
                 <div >
-                  <img src={require("../assets/keep.png")} className="keep_image" alt={this.props.alt}/>
+                  <img src={require("../assets/keep.png")} className="keep_image" alt={this.props.alt} />
                 </div>
                 <div>FUNDOO </div>
               </div>
@@ -127,7 +127,6 @@ class Navigation extends Component {
                       {viewIcon}
                     </IconButton>
                     <IconButton>
-                      {/* <SvgSetting /> */}
                     </IconButton>
                   </div>
                 </div>
@@ -142,7 +141,7 @@ class Navigation extends Component {
             </Toolbar>
           </AppBar>
           <DrawerNav open={this.state.open} handleArchive={this.props.handleArchive}
-            handleNote={this.props.handleNote} handleTrash={this.props.handleTrash} handleReminder={this.props.handleReminder}/>
+            handleNote={this.props.handleNote} handleTrash={this.props.handleTrash} handleReminder={this.props.handleReminder} />
           <Dropdown
             anchorEl={this.state.anchorEl}
             closeMenu={this.handleClose} />
