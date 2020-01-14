@@ -6,22 +6,28 @@ import Notes from "./note";
 import Archive from './archive'
 import Trash from "./trash"
 import ReminderComponent from "./reminderComponent"
+import PieChart from 'react-minimal-pie-chart';
+import { geNoteCount, getAllLabel } from "../controller/userController"
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       noteArray: [],
       color: "",
+      isPinned: false,
       note: true,
-      archive: false,
+      archieve: false,
       isDeleted: false,
       trash: false,
       getNotesProps: false,
       listView: false,
       reminder: false,
-
+      archieveCount: 0,
+      pinnedCount: 0,
+      trashCount: 0,
     };
   }
+
   handleView = () => {
     this.setState({ listView: !this.state.listView })
   }
@@ -50,17 +56,39 @@ class Dashboard extends Component {
       getNotesProps: getDataProps
     })
   }
+  componentDidMount() {
+    this.getLabels()
+  }
+  getLabels = () => {
+    getAllLabel().then(res => {
+      this.setState({ labels: res })
+    })
+    geNoteCount().then(res => {
+      console.log(res)
+      this.setState({
+        pinnedCount: res.isPinned,
+        archieveCount: res.archieve,
+        trashCount: res.trash
+      })
+    })
+  }
   render() {
     let noteStyle = this.state.listView ? "girdnotes" : "listcss"
     return (
+
       (!this.state.archive) && (!this.state.trash) && (!this.state.reminder) ?
+
         <div>
+
           <Navigation handleArchive={this.handleArchive}
             handleNote={this.handleNote}
             handleTrash={this.handleTrash}
             handleView={this.handleView}
             view={this.state.listView}
-            handleReminder={this.handleReminder} />
+            handleReminder={this.handleReminder}
+            pinnedCount={this.state.pinnedCount}
+            archieveCount={this.state.archieveCount}
+            trashCount={this.state.trashCount} />
 
           <Notes initiateGetNotes={this.initiateGetNotes} colorChange={this.colorChange}
             color={this.state.color} />
@@ -77,32 +105,40 @@ class Dashboard extends Component {
               handleView={this.handleView}
               view={this.state.listView}
               noteStyle={noteStyle}
-              handleReminder={this.handleReminder} />
+              handleReminder={this.handleReminder}
+              pinnedCount={this.state.pinnedCount}
+              archieveCount={this.state.archieveCount}
+              trashCount={this.state.trashCount} />
             <Archive noteStyle={noteStyle} />
           </div>
+          : (!this.state.archive) && (this.state.trash) && (!this.state.reminder) ?
+            <div>
+              <Navigation handleView={this.handleView}
+                view={this.state.listView}
+                handleArchive={this.handleArchive}
+                handleNote={this.handleNote}
+                handleTrash={this.handleTrash}
+                handleReminder={this.handleReminder}
+                pinnedCount={this.state.pinnedCount}
+                archieveCount={this.state.archieveCount}
+                trashCount={this.state.trashCount} />
+              <Trash />
+            </div>
+            :
+            <div>
+              <Navigation handleView={this.handleView}
+                view={this.state.listView}
+                handleArchive={this.handleArchive}
+                handleNote={this.handleNote}
+                handleTrash={this.handleTrash}
+                handleReminder={this.handleReminder}
+                pinnedCount={this.state.pinnedCount}
+                archieveCount={this.state.archieveCount}
+                trashCount={this.state.trashCount} />
+              <ReminderComponent />
+            </div>
 
-          :  (!this.state.archive) && (this.state.trash) && (!this.state.reminder) ?
-          <div>
-            <Navigation handleView={this.handleView}
-              view={this.state.listView}
-              handleArchive={this.handleArchive}
-              handleNote={this.handleNote}
-              handleTrash={this.handleTrash}
-              handleReminder={this.handleReminder} />
-            <Trash />
-          </div>
-          : 
-          <div>
-            <Navigation handleView={this.handleView}
-              view={this.state.listView}
-              handleArchive={this.handleArchive}
-              handleNote={this.handleNote}
-              handleTrash={this.handleTrash}
-              handleReminder={this.handleReminder} />
-            <ReminderComponent  />
-          </div>
     );
   }
 }
-
 export default withRouter(Dashboard);

@@ -326,3 +326,74 @@ export async function saveLabel(data) {
   }
 }
 
+/**
+ * Count the number of notes and pinned 
+ */
+export async function geNoteCount() {
+  try {
+    const token = localStorage.usertoken
+    const decoded = jwt_decode(token)
+    let isPinned,archieve,trash
+    await db.collection("notes")
+      .where("user_id", "==", decoded.user_id)
+      .where("isPinned", "==", true).get().then(snap => {
+        isPinned = snap.size // will return the collection size
+      });
+  
+    await db.collection("notes")
+      .where("user_id", "==", decoded.user_id)
+      .where("archieve", "==", true).get().then(snap => {
+        archieve = snap.size // will return the collection size
+      });
+    await db.collection("notes")
+      .where("user_id", "==", decoded.user_id)
+      .where("isDeleted", "==", true).get().then(snap => {
+        trash = snap.size // will return the collection size
+      });
+    const result = {
+      // pinned: pinnedNote,
+      // unpinned: unpinnedNote,
+      // archieve: archieveNote,
+      // trash: trashNote
+    isPinned:isPinned,
+    archieve:archieve,
+    trash:trash
+    }
+    return result
+  }
+  catch (error) {
+    console.log(error)
+    return error.message
+  }
+}
+
+
+export async function getAllLabel(){
+  try{
+   const token = localStorage.usertoken
+ const decoded = jwt_decode(token)
+ var labels = [];
+ await db.collection("labels")
+     .where("user_id", "==", decoded.user_id)
+     .where("isDeleted","==",false).get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          labels.push({id:doc.id,label:doc.data().label})
+       });
+   })
+   return labels
+ }
+ catch (error) {
+   console.log(error)
+   return error.message
+ }
+}
+
+
+  // await db.collection("notes")
+    //   .where("user_id", "==", decoded.user_id)
+    //   .where("isPinned", "==", false)
+    //   .where("archive", "==", false)
+    //   .where("isDeleted", "==", false)
+    //   .get().then(snap => {
+    //     unpinnedNote = snap.size // will return the collection size
+    //   });

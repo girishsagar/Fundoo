@@ -4,7 +4,7 @@ import {
   Card,
   InputBase,
   Button,
-  IconButton,Avatar
+  IconButton, Avatar, Chip
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
@@ -12,12 +12,15 @@ import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import ColorComponent from "./colorNote";
-import { getNote, archiveTheNote, editNote, colorChange } from "../controller/userController";
+import { getNote, archiveTheNote, editNote, colorChange, pinNotes } from "../controller/userController";
 import Dialog from "@material-ui/core/Dialog";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import More from "./more";
+import SvgPin from "../icons/svgPin"
+import SvgPinned from "../icons/svgUnpin"
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 class Archive extends Component {
   constructor(props) {
     super(props);
@@ -146,6 +149,29 @@ class Archive extends Component {
         console.log('the notearchive is edited ', err);
       })
   }
+  handlePin(noteId) {
+    this.setState({
+      isPinned: !this.state.isPinned
+    });
+    let data = {
+      noteId: noteId,
+      isPinned: this.state.isPinned
+    };
+    console.log("data in pin notres", data);
+    pinNotes(data)
+      .then(res => {
+        console.log("result of  pinnote", res);
+        this.handleGetNotes();
+      })
+      .catch(err => {
+        console.log("err in pinnote component ", err);
+      });
+  }
+
+  handleClosePin = () => {
+    this.setState({ isPinned: false });
+  };
+
   render() {
     let archieveIcon = !this.archive ? (
       <IconButton onClick={this.archiveNote}>
@@ -195,7 +221,6 @@ class Archive extends Component {
                           background: key.data().color
                         }}
                       >
-                        {/* {svg} */}
                         <div
                           style={{
                             display: "flex",
@@ -206,18 +231,23 @@ class Archive extends Component {
                           <div>
                             <div>
                               {key.data().title}
-                              {/* <RoomOutlinedIcon onClick={() => this.handlePin(key.id)} /> */}
                             </div>
                             <div>{key.data().description}</div>
-
+                            <div>
+                              {key.data().reminder !== null ?
+                                <Chip
+                                  style={{ display: "flex", marginTop: "5em" }}
+                                  icon={<AccessTimeIcon />}
+                                  label={key.data().reminder}
+                                  onDelete={this.removeReminder}
+                                  variant="outlined" />
+                                : null}
+                            </div>
                           </div>
                           <div>
-                            <Avatar style={{ background: "#d2cece", marginLeft: "-25px" }}>
-                              <img
-                                src={require("../assets/unpin.svg")}
-                                style={{ width: "18px" }}
-                                onClick={() => this.handlePin(key.id)}
-                              />
+                            <Avatar style={{ background: "#d2cece", marginLeft: "-25px" }}
+                              onClick={() => this.handlePin(key.id)}>
+                              {key.data().isPinned === true ? < SvgPinned /> : <SvgPin />}
                             </Avatar>
                           </div>
                         </div>

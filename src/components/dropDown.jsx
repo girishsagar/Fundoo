@@ -34,6 +34,7 @@ class Dropdown extends Component {
   };
   render() {
     return (
+
       <Menu
         id="simple-menu"
         anchorEl={this.props.anchorEl}
@@ -43,10 +44,10 @@ class Dropdown extends Component {
         <div className="down">
           <MuiThemeProvider theme={thm}>
             <div className="drop">
-              <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+              {/* <MenuItem onClick={this.handleClose}>Profile</MenuItem>
               <MenuItem onClick={this.handleClose}>My account</MenuItem>
               <MenuItem onClick={this.handleClose}>Settings</MenuItem>
-              <MenuItem onClick={this.Signout}>Logout</MenuItem>
+              <MenuItem onClick={this.Signout}>Logout</MenuItem> */}
             </div>
           </MuiThemeProvider>
         </div>

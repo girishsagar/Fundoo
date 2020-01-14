@@ -4,6 +4,8 @@ import { Tooltip, Button, Menu, MenuItem, IconButton, } from "@material-ui/core"
 import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
+import SvgPin from "../icons/svgPin"
+import SvgPinned from "../icons/svgUnpin"
 class Reminder extends Component {
     constructor(props) {
         super(props)
@@ -23,7 +25,6 @@ class Reminder extends Component {
         this.reminderMenuClose()
         let date = new Date().toDateString();
         let reminder = date + ", 8:00 PM";
-        // await this.setState({ reminder: reminder })
         this.props.handleReminderDate(reminder)
     }
 
@@ -32,7 +33,6 @@ class Reminder extends Component {
         let tomorrow = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
         let date = tomorrow.toDateString();
         let reminder1 = date + ", 8:00 PM";
-        //await this.setState({ reminder: reminder1 })
         this.props.handleReminderDate(reminder1)
     }
 

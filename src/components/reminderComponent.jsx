@@ -9,11 +9,14 @@ import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import ColorComponent from "./colorNote";
-import { getNote, archiveTheNote, colorChange } from "../controller/userController";
+import { getNote, archiveTheNote, colorChange, pinNotes } from "../controller/userController";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import More from "./more";
 import Reminder from "./reminder"
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import SvgPin from "../icons/svgPin"
+import SvgPinned from "../icons/svgUnpin"
+
 class ReminderComponent extends Component {
     constructor(props) {
         super(props);
@@ -96,6 +99,30 @@ class ReminderComponent extends Component {
     removeReminder = () => {
         this.setState({ reminder: null });
     };
+    handlePin(noteId) {
+        this.setState({
+            isPinned: !this.state.isPinned
+        });
+        let data = {
+            noteId: noteId,
+            isPinned: this.state.isPinned
+        };
+        console.log("data in pin notres", data);
+        pinNotes(data)
+            .then(res => {
+                console.log("result of  pinnote", res);
+                this.handleGetNotes();
+            })
+            .catch(err => {
+                console.log("err in pinnote component ", err);
+            });
+    }
+
+    handleClosePin = () => {
+        this.setState({ isPinned: false });
+    };
+
+
     render() {
         return (
             <div className={this.props.noteStyle}>
@@ -147,12 +174,9 @@ class ReminderComponent extends Component {
                                                 </div>
 
                                                 <div>
-                                                    <Avatar style={{ background: "#d2cece", marginLeft: "-25px" }}>
-                                                        <img
-                                                            src={require("../assets/unpin.svg")}
-                                                            style={{ width: "18px" }}
-                                                            onClick={() => this.handlePin(key.id)}
-                                                        />
+                                                    <Avatar style={{ background: "#d2cece", marginLeft: "-25px" }}
+                                                        onClick={() => this.handlePin(key.id)}>
+                                                        {key.data().isPinned === true ? < SvgPinned /> : <SvgPin />}
                                                     </Avatar>
 
                                                 </div>

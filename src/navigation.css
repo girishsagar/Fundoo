@@ -323,3 +323,9 @@
     min-width: 320px;
   }
 }
+.signout-button{
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}

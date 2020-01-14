@@ -14,8 +14,6 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import { editNote, getNote, pinNotes, archiveTheNote, colorChange } from "../controller/userController";
 import Dialog from "@material-ui/core/Dialog";
 import Reminder from "./reminder"
-
-// import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import More from "./more";
 import SvgPin from "../icons/svgPin"
 import SvgPinned from "../icons/svgUnpin"
@@ -242,8 +240,7 @@ class Getnote extends Component {
       );
     let iconDispaly = !this.state.showIcon
       ? "getNote-icons-hide"
-      : "getNote-icons";
-      // let svgPin = !this.state.isPinned ? <SvgPin /> : <SvgPinned />
+      : "getNote-icons"
     return (
       <div className={this.props.noteStyle}>
         <div className="_notes" >
@@ -253,13 +250,10 @@ class Getnote extends Component {
                 if ((key.data().archieve === false) && (key.data().isDeleted === false)) {
                   console.log("the dele is ", key.data().isDeleted);
                   console.log("data", key.data().isPinned);
-                  console.log("The archive js ", key.data().archive);
-
+                  console.log("The archive js ", key.data().archive);                               
                   return (
                     <div className="notes_">
                       <Card
-                        // style={{ backgroundColor: this.props.color }}
-                        // className="get_Nottes_card"
                         style={{
                           width: "250px",
                           minHeight: "135px",
@@ -282,14 +276,12 @@ class Getnote extends Component {
                           <div>
                             <div>
                               {key.data().title}
-                              {/* <RoomOutlinedIcon onClick={() => this.handlePin(key.id)} /> */}
                             </div>
 
                             <div style={{ marginTop: "25px" }}>
                               {key.data().description}
                             </div>
                             <div>
-                              {/* {this.state.reminder !== null ? */}
                               {key.data().reminder !== null ?
                                 <Chip
                                   icon={<AccessTimeIcon />}
@@ -302,18 +294,9 @@ class Getnote extends Component {
                             </div>
                           </div>
                           <div>
-                            {/* <Avatar style={{ background: "#d2cece", marginLeft: "-25px" }}>
-                              <img
-                                src={require("../assets/unpin.svg")}
-                                style={{ width: "18px" }}
-                                onClick={() => this.handlePin(key.id)}
-                              /> */}
-                            {/* </Avatar> */}
-
-                            <Avatar  style={{ background: "#d2cece", marginLeft: "-25px"}}
+                          <Avatar  style={{ background: "#d2cece", marginLeft: "-25px"}}
                              onClick={()=>this.handlePin(key.id)}>
-                            {key.data().isPinned===true ?< SvgPinned/>:<SvgPin/> }
-                              
+                            {key.data().isPinned===true ?< SvgPinned/>:<SvgPin/> } 
                             </Avatar>
                           </div>
                         </div>
@@ -348,9 +331,12 @@ class Getnote extends Component {
 
                         <div className="getnoteicons">
                           <div >
-                            <Tooltip title="Reminder">
-                              <AddAlertOutlinedIcon />
-                            </Tooltip>
+                                <Reminder
+                    anchorEl={this.state.anchorEl}
+                    closeMenu={this.handleClose}
+                    handleGetNotes={this.handleGetNotes}
+                    handleReminderDate={this.handleReminderDate}
+                  />
 
                           </div>
 
@@ -432,7 +418,6 @@ class Getnote extends Component {
                     <div className="imageAndClose">
                       <div className="dialogIcon">
                         <div>
-                          {/* <AddAlertOutlinedIcon /> */}
                           <Reminder
                             anchorEl={this.state.anchorEl}
                             closeMenu={this.handleClose}

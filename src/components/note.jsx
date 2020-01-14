@@ -31,7 +31,8 @@ import Reminder from "./reminder";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import CancelIcon from "@material-ui/icons/Cancel";
 import AddIcon from "@material-ui/icons/Add";
-
+import SvgPin from "../icons/svgPin"
+import SvgPinned from "../icons/svgUnpin"
 class Notes extends Component {
   constructor(props) {
     super(props);
@@ -343,20 +344,12 @@ class Notes extends Component {
           <div className="card_open">
             <Card className="card1" style={{ backgroundColor: this.props.color }}>
               {!this.state.isPinned ? (
-                <div className="unpin">
-                  <img
-                    src={require("../assets/unpin.svg")}
-                    style={{ width: "25px" }}
-                    alt="unpin"
-                    onClick={this.handleOpenPin}
-                  />
+                <div className="unpin" onClick={this.handleOpenPin}>
+                  <SvgPin />
                 </div>
               ) : (
                   <div className="pin" alt="pin" onClick={this.handleClosePin}>
-                    <img
-                      src={require("../assets/pin.png")}
-                      style={{ width: "25px" }}
-                    />
+                    <SvgPinned />
                   </div>
                 )}
               <div>
@@ -493,7 +486,7 @@ class Notes extends Component {
                       "{this.state.label}"
                   </div>
                   </Popover>
-                
+
                 </div>
                 <div>
                   <Tooltip title="Undo">

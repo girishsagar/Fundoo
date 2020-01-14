@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { IconButton, AppBar, Toolbar, Tooltip } from "@material-ui/core";
+import { IconButton, AppBar, Toolbar, Tooltip, Menu, Button } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import { withRouter } from "react-router-dom";
@@ -12,6 +12,9 @@ import Dropdown from "./dropDown";
 import Avatar from "@material-ui/core/Avatar";
 import SvgGrid from "../icons/grid";
 import ViewStreamOutlinedIcon from '@material-ui/icons/ViewStreamOutlined';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import StopIcon from '@material-ui/icons/Stop';
+import PieChart from 'react-minimal-pie-chart';
 const thm = createMuiTheme({
   overrides: {
     MuiAppBar: {
@@ -76,8 +79,12 @@ class Navigation extends Component {
   showListView = () => {
     this.props.handleView();
   };
-  render() {
 
+  Signout = () => {
+    this.props.history.push("/login");
+  };
+
+  render() {
     let viewIcon = !this.props.view ? (
       <Tooltip title="List View">
         <SvgGrid />
@@ -89,6 +96,7 @@ class Navigation extends Component {
       );
 
     return (
+
       <div className="nav">
         <MuiThemeProvider theme={thm}>
           <AppBar >
@@ -134,18 +142,61 @@ class Navigation extends Component {
                 <div className="name">
                   <Avatar onClick={this.menuItem} aria-owns="simple-menu">
                     G{" "}
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={this.state.anchorEl}
+                      keepMounted
+                      open={Boolean(this.state.anchorEl)}
+                      onClose={this.accountMenuClose}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}>
+                      <div>
+                        <PieChart
+                          data={[
+                            { title: 'Pinned Note', value: this.props.pinnedCount, color: '#03fcdf' },
+                            { title: 'Archieve Note', value: this.props.archieveCount, color: '#ca03fc' },
+                            { title: 'Trash Note', value: this.props.trashCount, color: '#FFC154' },
+                          ]} />
+                      </div>
+                      <div className="piechart-icon">
+                        <span className="chart-span"><StopIcon style={{ color: "#03fcdf" }} />Pinned({this.props.pinnedCount})</span>
+                        <span className="chart-span"><StopIcon style={{ color: "#ca03fc" }} />Archieve({this.props.archieveCount})</span>
+                        <span className="chart-span"><StopIcon style={{ color: "#FFC154" }} />Trash({this.props.trashCount})</span>
+                      </div>
+                      <div className="signout-button">
+                        <Button aria-owns="simple-menu"
+                          variant="outlined"
+                          color="primary"
+                          startIcon={<ExitToAppIcon />}
+                          onClick={this.Signout}>
+                          SignOut
+</Button>
+                      </div>
+
+                    </Menu>
                   </Avatar>
+
+
                 </div>
               </div>
             </Toolbar>
           </AppBar>
           <DrawerNav open={this.state.open} handleArchive={this.props.handleArchive}
-            handleNote={this.props.handleNote} handleTrash={this.props.handleTrash} handleReminder={this.props.handleReminder} />
+            handleNote={this.props.handleNote} handleTrash={this.props.handleTrash}
+            handleReminder={this.props.handleReminder} />
           <Dropdown
             anchorEl={this.state.anchorEl}
             closeMenu={this.handleClose} />
         </MuiThemeProvider>
+
       </div>
+
     );
   }
 }
