@@ -345,6 +345,7 @@ export async function geNoteCount() {
       .where("archieve", "==", true).get().then(snap => {
         archieve = snap.size // will return the collection size
       });
+      
     await db.collection("notes")
       .where("user_id", "==", decoded.user_id)
       .where("isDeleted", "==", true).get().then(snap => {
@@ -389,11 +390,3 @@ export async function getAllLabel(){
 }
 
 
-  // await db.collection("notes")
-    //   .where("user_id", "==", decoded.user_id)
-    //   .where("isPinned", "==", false)
-    //   .where("archive", "==", false)
-    //   .where("isDeleted", "==", false)
-    //   .get().then(snap => {
-    //     unpinnedNote = snap.size // will return the collection size
-    //   });

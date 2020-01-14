@@ -6,8 +6,6 @@ import {
   Button,
   IconButton,
   Chip,
-  FormControlLabel,
-  Checkbox,
   Menu,
   MenuItem,
   Popover
@@ -23,7 +21,7 @@ import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
-import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
+
 import UndoTwoToneIcon from "@material-ui/icons/UndoTwoTone";
 import RedoTwoToneIcon from "@material-ui/icons/RedoTwoTone";
 import { saveNote, getNote, pinNotes, saveLabel } from "../controller/userController";
@@ -56,7 +54,7 @@ class Notes extends Component {
       displayButton: "button-hide",
       label: "",
       openReminderMenu: false,
-      labels: []
+      labels: [],
     };
   }
 
@@ -78,6 +76,7 @@ class Notes extends Component {
         console.log("result label", res);
         this.setState({ labels: res, label: "", displayButton: "button-hide" });
         //  this.props.updateLabel();
+        this.handleGetNotes()
       });
     }
   };
@@ -368,6 +367,7 @@ class Notes extends Component {
                   value={this.state.description}
                 />
               </div>
+              {labels}
               <div>
                 <p>
                   {this.state.reminder !== null ? (

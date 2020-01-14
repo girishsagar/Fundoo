@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Tooltip, Card, InputBase, Button, IconButton, Avatar, Chip } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import { createMuiTheme } from "@material-ui/core";
@@ -53,6 +52,7 @@ class Getnote extends Component {
       showIcon: false,
       anchorEl: null,
       reminder: "",
+      labels:[]
     };
   }
 
@@ -250,7 +250,9 @@ class Getnote extends Component {
                 if ((key.data().archieve === false) && (key.data().isDeleted === false)) {
                   console.log("the dele is ", key.data().isDeleted);
                   console.log("data", key.data().isPinned);
-                  console.log("The archive js ", key.data().archive);                               
+                  console.log("The archive js ", key.data().archive);       
+                  console.log("The labels are ",key.id.labels);
+                                          
                   return (
                     <div className="notes_">
                       <Card
@@ -292,6 +294,7 @@ class Getnote extends Component {
                                 />
                                 : null}
                             </div>
+                            {key.data().labels}
                           </div>
                           <div>
                           <Avatar  style={{ background: "#d2cece", marginLeft: "-25px"}}

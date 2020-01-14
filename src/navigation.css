@@ -309,7 +309,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
-/* -------------->Media Query for appBar<-------------------- */
+
 .getnoteicons {
   white-space: nowrap;
   overflow: hidden;
@@ -329,3 +329,13 @@
   align-items: center;
   justify-content: center;
 }
+.chart-span{
+
+}
+.piechart-icon{
+
+}
+.change_colors{
+
+}
+/* -------------->Media Query for appBar<-------------------- */

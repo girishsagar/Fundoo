@@ -8,7 +8,7 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import DrawerNav from "./drawerNavigation";
-import Dropdown from "./dropDown";
+// import Dropdown from "./dropDown";
 import Avatar from "@material-ui/core/Avatar";
 import SvgGrid from "../icons/grid";
 import ViewStreamOutlinedIcon from '@material-ui/icons/ViewStreamOutlined';
@@ -67,15 +67,19 @@ class Navigation extends Component {
   menuOpen = () => {
     this.setState({ open: !this.state.open });
   };
+
   menuItem = e => {
     this.setState({ anchorEl: e.currentTarget });
   };
+
   handleClose = event => {
     this.setState({ anchorEl: null });
   };
+
   reload = () => {
     window.location.reload();
   };
+
   showListView = () => {
     this.props.handleView();
   };
@@ -142,12 +146,13 @@ class Navigation extends Component {
                 <div className="name">
                   <Avatar onClick={this.menuItem} aria-owns="simple-menu">
                     G{" "}
+                    </Avatar>
                     <Menu
                       id="simple-menu"
                       anchorEl={this.state.anchorEl}
                       keepMounted
                       open={Boolean(this.state.anchorEl)}
-                      onClose={this.accountMenuClose}
+                      onClose={this.handleClose}
                       anchorOrigin={{
                         vertical: 'bottom',
                         horizontal: 'left',
@@ -178,11 +183,8 @@ class Navigation extends Component {
                           SignOut
 </Button>
                       </div>
-
                     </Menu>
-                  </Avatar>
-
-
+                
                 </div>
               </div>
             </Toolbar>
@@ -190,13 +192,8 @@ class Navigation extends Component {
           <DrawerNav open={this.state.open} handleArchive={this.props.handleArchive}
             handleNote={this.props.handleNote} handleTrash={this.props.handleTrash}
             handleReminder={this.props.handleReminder} />
-          <Dropdown
-            anchorEl={this.state.anchorEl}
-            closeMenu={this.handleClose} />
         </MuiThemeProvider>
-
       </div>
-
     );
   }
 }

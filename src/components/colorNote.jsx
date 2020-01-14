@@ -51,12 +51,10 @@ class ColorComponent extends Component {
             return (
                 <div className="color-map" >
                     <Tooltip title={key.name}>
-
                         <IconButton style={{ backgroundColor: key.colorCode, border: "silver 2px solid" }}
                             value={key.colorCode}
                             onClick={this.handleChangeColor}>
                         </IconButton>
-
                     </Tooltip>
                 </div>
             )
@@ -68,7 +66,6 @@ class ColorComponent extends Component {
                         <ColorLensOutlinedIcon onClick={(event) => this.handleClick(event)} cursor="pointer" />
                     </ClickAwayListener>
                 </Tooltip>
-                
                 <div className="Change" Style={{width: "25em", display: "flex", flexDirection: "row", margin: "25px"}}>
 
                     <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl} className="paint"
@@ -76,7 +73,6 @@ class ColorComponent extends Component {
                             zIndex: "9999", width: "25em", display: "flex", flexDirection: "row", margin: "25px"
                         }}
                     >
-
                         <Paper className="color-styles">
                             {colorChange}
                         </Paper>

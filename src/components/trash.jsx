@@ -17,12 +17,12 @@ class Trash extends Component {
             notes: [],
             isDeleted: "",
             snackbarOpen: false,
-            snackbarMsg: ""
+            snackbarMsg: "",
         }
     }
     snackbarClose = e => {
         this.setState({ snackbarOpen: false });
-    };
+      };
 
     componentDidMount() {
         this.handleGetNotes();

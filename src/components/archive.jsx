@@ -15,12 +15,12 @@ import ColorComponent from "./colorNote";
 import { getNote, archiveTheNote, editNote, colorChange, pinNotes } from "../controller/userController";
 import Dialog from "@material-ui/core/Dialog";
 import ArchiveIcon from "@material-ui/icons/Archive";
-import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import More from "./more";
 import SvgPin from "../icons/svgPin"
 import SvgPinned from "../icons/svgUnpin"
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import Reminder from "./reminder"
 class Archive extends Component {
   constructor(props) {
     super(props);
@@ -32,13 +32,13 @@ class Archive extends Component {
       noteId: "",
       title: "",
       description: "",
-      color: "",
       isDeleted: false,
       archieve: false,
       isPinned: false,
       pin_open: false,
       showIcon: false,
-      anchorEl: null
+      anchorEl: null,
+      reminder:null,
     };
   }
   menuOpen = () => {
@@ -171,38 +171,32 @@ class Archive extends Component {
   handleClosePin = () => {
     this.setState({ isPinned: false });
   };
-
+  handleReminderDate = date => {
+    this.setState({ reminder: date });
+  };
+  removeReminder = () => {
+    this.setState({ reminder: null });
+  };
   render() {
-    let archieveIcon = !this.archive ? (
-      <IconButton onClick={this.archiveNote}>
-        <Tooltip title="Archieve">
-          <ArchiveIcon />
-        </Tooltip>
-      </IconButton>
-    ) : (
-        <IconButton onClick={this.archiveNote}>
-          <Tooltip title="UnArchieve">
-            <UnarchiveIcon />
-          </Tooltip>
-        </IconButton>
-      );
-
-    let archieveIconShow = !this.state.showIcon ? (
-      <IconButton></IconButton>
-    ) : (
-        archieveIcon
-      );
-    let iconDispaly = !this.state.showIcon
-      ? "getNote-icons-hide"
-      : "getNote-icons";
+    // let archieveIcon = !this.archive ? (
+    //   <IconButton onClick={this.archiveNote}>
+    //     <Tooltip title="Archieve">
+    //       <ArchiveIcon />
+    //     </Tooltip>
+    //   </IconButton>
+    // ) : (
+    //     <IconButton onClick={this.archiveNote}>
+    //       <Tooltip title="UnArchieve">
+    //         <UnarchiveIcon />
+    //       </Tooltip>
+    //     </IconButton>
+    //   );
     return (
       <div className={this.props.noteStyle}>
         <div className="_notes"  >
           {!this.state.open ? (
             <div className="_notes_" style={{ marginTop: "95px", flexWrap: "wrap", }}>
               {this.state.notes.map(key => {
-                console.log("data", key.data().isPinned);
-                console.log("The archive js ", key.data().archive);
                 if ((key.data().archieve === true) && (key.data().isDeleted === false)) {
                   return (
                     <div className="notes_" >
@@ -236,7 +230,7 @@ class Archive extends Component {
                             <div>
                               {key.data().reminder !== null ?
                                 <Chip
-                                  style={{ display: "flex", marginTop: "5em" }}
+                                  style={{ display: "flex", marginLeft: "-6em", marginTop: "5em" }}
                                   icon={<AccessTimeIcon />}
                                   label={key.data().reminder}
                                   onDelete={this.removeReminder}
@@ -281,9 +275,16 @@ class Archive extends Component {
                         </div>
                         <div className="getnoteicons">
                           <div>
-                            <Tooltip title="Reminder">
+                            {/* <Tooltip title="Reminder">
                               <AddAlertOutlinedIcon />
-                            </Tooltip>
+                            </Tooltip> */}
+
+                            <Reminder
+                              anchorEl={this.state.anchorEl}
+                              closeMenu={this.handleClose}
+                              handleGetNotes={this.handleGetNotes}
+                              handleReminderDate={this.handleReminderDate}
+                            />
                           </div>
                           <div>
                             <Tooltip title="Collbrate">

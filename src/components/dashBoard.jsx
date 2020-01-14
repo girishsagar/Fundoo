@@ -6,7 +6,6 @@ import Notes from "./note";
 import Archive from './archive'
 import Trash from "./trash"
 import ReminderComponent from "./reminderComponent"
-import PieChart from 'react-minimal-pie-chart';
 import { geNoteCount, getAllLabel } from "../controller/userController"
 class Dashboard extends Component {
   constructor(props) {
@@ -60,9 +59,9 @@ class Dashboard extends Component {
     this.getLabels()
   }
   getLabels = () => {
-    getAllLabel().then(res => {
-      this.setState({ labels: res })
-    })
+    // getAllLabel().then(res => {
+    //   this.setState({ labels: res })
+    // })
     geNoteCount().then(res => {
       console.log(res)
       this.setState({
