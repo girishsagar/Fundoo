@@ -46,10 +46,10 @@ class Dashboard extends Component {
     this.setState({ reminder: true, archive: false, note: false, trash: false })
   }
   colorChange = (e) => {
-    // console.log("aaaaaaaaaaa"+e)
     this.setState({ color: e })
     console.log("AAAAAAAAAAAAAAA" + e)
   }
+
   initiateGetNotes = (getDataProps) => {
     console.log("getDataProps", getDataProps);
     this.setState({
@@ -59,10 +59,13 @@ class Dashboard extends Component {
   componentDidMount() {
     this.getLabels()
   }
+
   getLabels = () => {
-    getAllLabel().then(res => {
-      this.setState({ labels: res })
-    })
+    // getAllLabel().then(res => {
+    //   this.setState({ labels: res })
+    // })
+    // console.log("the labelled uis ",this.state.labels);
+    
     geNoteCount().then(res => {
       console.log(res)
       this.setState({
@@ -88,10 +91,11 @@ class Dashboard extends Component {
             handleReminder={this.handleReminder}
             pinnedCount={this.state.pinnedCount}
             archieveCount={this.state.archieveCount}
-            trashCount={this.state.trashCount} />
+            trashCount={this.state.trashCount}
+        />
 
           <Notes initiateGetNotes={this.initiateGetNotes} colorChange={this.colorChange}
-            labelData={this.state.labels} updateLabel={this.getLabels} color={this.state.color} />
+            labelData={this.state.labels}  color={this.state.color} />
           <Getnote getNotes={this.state.getNotesProps} color={this.state.color}
             noteStyle={noteStyle} />
         </div>

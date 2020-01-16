@@ -6,56 +6,55 @@
  * @version :12.11.1 (node)
  * @since :7-dec-2019
  */
+
 import React, { Component } from "react";
 import { Card, TextField, Button, IconButton, Avatar } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { withRouter } from "react-router-dom";
 import { Snackbar } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import { userlogin } from "../controller/userController";
-
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 const thm = createMuiTheme({
   overrides: {
     MuiAvatar: {
       root: {
+        left: "10px",
         width: "60px",
         height: "60px"
       },
       colorDefault: {
-        backgroundColor: "black"
+        backgroundColor: "red",
+        marginLeft: "17px",
+        marginTop: "-4px",
+        left: "7em"
       }
     },
     MuiSvgIcon: {
       root: {
-        color: "red",
-        width: "200px",
-        height: "41px"
+        color: "white",
+        width: "220px",
+        height: "40px",
+        left: "150px"
       }
     }
   }
 });
-/**
- * @class : Login
- * @description : loging class is extend from parent calss React Component
- */
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       Email: "",
       password: "",
-      // openSnackBar: false,
-      // SnackbarMsg: ""
-      snackbarOpen: false,
-      snackbarMsg: ""
+      snackbarMsg: "",
+      showPassword: false,
+      snackbarOpen: false
     };
   }
-  // snackbarClose = e => {
-  //   this.setState({ snackbarOpen: false });
-  // };
   snackbarClose = e => {
-    this.setState({snackbarOpen: false});
+    this.setState({
+      snackbarOpen: false
+    });
   };
   onRegister = () => {
     this.props.history.push("/register");
@@ -63,26 +62,11 @@ class Login extends Component {
   onforgetpass = () => {
     this.props.history.push("/forget");
   };
-
-  // handleEmail = event => {
-  //   let Email = event.target.value;
-  //   this.setState({
-  //     Email: Email
-  //   });
-  // };
   handleEmail = event => {
     let Email = event.target.value;
     this.setState({
       Email: Email
     });
-    if (
-      Email == !/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.state.Email)
-    ) {
-      this.setState({
-        snackbarOpen: true,
-        snackbarMsg: "Give valid Email-id..!"
-      });
-    }
   };
   handlepassword = event => {
     let password = event.target.value;
@@ -90,17 +74,23 @@ class Login extends Component {
       password: password
     });
   };
-
   handleSubmit = () => {
     if (this.state.Email === "") {
       this.setState({
         snackbarOpen: true,
-        snackbarMsg: " Email cannot be empty"
+        snackbarMsg: "Email cann't be empty..!!"
+      });
+    } else if (
+      !/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.state.Email)
+    ) {
+      this.setState({
+        snackbarOpen: true,
+        snackbarMsg: "Invalid Email..!"
       });
     } else if (this.state.password === "") {
       this.setState({
         snackbarOpen: true,
-        snackbarMsg: " passoword cannot be empty "
+        snackbarMsg: "Password cann't be empty..!!"
       });
     } else if (this.state.password.length < 6) {
       this.setState({
@@ -117,7 +107,7 @@ class Login extends Component {
         if (err) {
           this.setState({
             snackbarOpen: true,
-            snackbarMsg: err,
+            snackbarMsg: "err..!",
             Email: "",
             password: ""
           });
@@ -125,115 +115,112 @@ class Login extends Component {
           if (data === "success") {
             this.setState({
               snackbarOpen: true,
-              snackbarMsg: "Sign In SucessFull "
+              snackbarMsg: "Login successfully!!"
             });
           }
           //Setting a time out for responsing an a page 4 sec
-          // setTimeout(() => {
+          setTimeout(() => {
+            // this.props.history.push("/dashBoard");
             this.props.history.push("/dashBoard");
-            // this.props.histroy.push(/dashBoard);
-          // }, 2000);
+            // this.props.histroy.push("/dashBoard");
+          }, 2000);
         }
       });
     }
   };
-  //form field of page
   render() {
     return (
-      <div className="loginpage">
-        <Card className="login-card">
-          <MuiThemeProvider theme={thm}>
-            <div className="avatar">
-              <Avatar>
-                <LockOutlinedIcon />
-              </Avatar>
-            </div>
-            <div className="loge">Sign in</div>
-
-            <div className="input-field">
-              <TextField
-                // id="Email"
-                name="Email"
-                label="Email"
-                variant="standard"
-                autoFocus
-                fullWidth
-                required
-                onChange={event => this.handleEmail(event)}
-                //  onChange={event => this.setState.handleEmail(event.target.value)}
-              />
-              <div>
+      <div className="fullcard">
+        <div className="allinone">
+          <Card className="loginCard">
+            <MuiThemeProvider theme={thm}>
+              <div
+                className="fundoo"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  fontStyle: "italic"
+                }}
+              >
+                {/* <h1 style={{ display: "flex", justifyContent: "center" }}>
+                  <span style={{ color: "#2196f3" }}>f</span>
+                  <span style={{ color: "#b71c1c" }}>u</span>
+                  <span style={{ color: "#ffc107" }}>n</span>
+                  <span style={{ color: "#1976d2" }}>d</span>
+                  <span style={{ color: "#43a047" }}>o</span>
+                  <span style={{ color: "#b71c1c" }}>o</span>
+                </h1> */}
+              </div>
+              <div className="avatar">
+                <Avatar>
+                  <LockOutlinedIcon />
+                </Avatar>
+              </div>
+              <div className="login-h2">
+                <h1>Sign in</h1>
+              </div>
+              <div className="loginEmail">
                 <TextField
                   required
-                  id="password"
-                  name="password"
-                  label="Password"
-                  variant="standard"
-                  type="password"
                   fullWidth
+                  // id="outlined-email-input"
+                  label="Enter Email"
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  margin="normal"
+                  variant="standard"
+                  onChange={event => this.handleEmail(event)}
+                />
+              </div>
+              <div className="loginPassword">
+                <TextField
+                  required
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  name="password"
+                  margin="normal"
+                  variant="standard"
                   onChange={event => this.handlepassword(event)}
                 />
               </div>
-              <div className="loginbutton">
+              <div className="loginButton">
                 <Button
-                  fullWidth
-                  variant="contained"
                   color="primary"
+                  variant="contained"
+                  fullWidth
                   onClick={this.handleSubmit}
                 >
                   Login
                 </Button>
               </div>
-              <div className="regbutton">
-                <Button
-                  variant="contained"
-                  fullWidth
-                  color="primary"
-                  onClick={this.onRegister}
-                >
-                  Register?
+              <div className="accountbutton">
+                <Button color="primary" onClick={this.onRegister}>
+                  Create Account
+                </Button>
+                <Button onClick={this.onforgetpass} color="secondary">
+                  Reset Password??
                 </Button>
               </div>
-              <div className="lfbutton">
-                <Button onClick={this.onforgetpass} color="primary">
-                  Forgot Password??
-                </Button>
-              </div>
-            </div>
-          </MuiThemeProvider>
-        </Card>
-
-        {/* <Snackbar
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center"
-          }}
-          open={this.state.snackbarOpen}
-          autoHideDuration={2000}
-          onClose={this.snackbarClose}
-          message={<span id="message-id">{this.state.snackbarMsg}</span>}
-          action={[
-            <IconButton onClick={this.handleClose}>
-              <CloseIcon onClick={this.snackbarClose} />
-            </IconButton>
-          ]}
-        /> */}
-
-<Snackbar
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center"
-          }}
-          open={this.state.snackbarOpen}
-          autoHideDuration={5000}
-          onClose={this.snackbarClose}
-          message={<span id="message-id">{this.state.snackbarMsg}</span>}
-          action={[
-            <IconButton onClick={this.handleClose}>
-              <CloseIcon onClick={this.snackbarClose} />
-            </IconButton>
-          ]}
-        />
+            </MuiThemeProvider>
+          </Card>
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center"
+            }}
+            open={this.state.snackbarOpen}
+            autoHideDuration={2000}
+            onClose={this.snackbarClose}
+            message={<span id="message-id">{this.state.snackbarMsg}</span>}
+            action={[
+              <IconButton onClick={this.handleClose}>
+                <CloseIcon onClick={this.snackbarClose} />
+              </IconButton>
+            ]}
+          />
+        </div>
       </div>
     );
   }

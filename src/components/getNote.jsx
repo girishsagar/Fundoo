@@ -52,7 +52,10 @@ class Getnote extends Component {
       showIcon: false,
       anchorEl: null,
       reminder: "",
-      label: []
+      date: "",
+      time: "",
+      openReminderMenu: false,
+      labels: []
     };
   }
 
@@ -74,6 +77,7 @@ class Getnote extends Component {
 
   componentDidMount() {
     this.handleGetNotes();
+    this.getLabels();
   }
 
   handleColorClose = () => {
@@ -212,24 +216,33 @@ class Getnote extends Component {
       });
   }
 
+
   handleReminderDate = date => {
     this.setState({ reminder: date });
   };
+
   removeReminder = () => {
     this.setState({ reminder: null });
   };
-  // componentDidMount() {
-  //   this.getLabels()
-  // }
   getLabels = () => {
     getAllLabel().then(res => {
+      console.log('label resuly',res);
+      
       this.setState({ labels: res })
     })
+    // console.log("the labelled is ",this.state.labels);
+    .catch(err => {
+      console.log("err", err);
+    });
   }
-  // removeLabel = e => {
+    // removeLabel = e => {
   //   const labels = this.state.labels.filter(key => key.id !== e.target.id);
   //   this.setState({ labels: labels });
   // };
+
+  removeLabel = () => {
+    this.setState({ labels: null })
+  }
   render() {
     let archieveIcon = !this.archive ? (
       <IconButton onClick={this.archiveNote}>
@@ -264,7 +277,7 @@ class Getnote extends Component {
                   console.log("the dele is ", key.data().isDeleted);
                   console.log("data", key.data().isPinned);
                   console.log("The archive js ", key.data().archive);
-                  console.log("The labels are ", key.id.label);
+                  console.log("The labels are ", key.data().labels);
                   console.log("the all data uis ", key.data());
                   return (
                     <div className="notes_">
@@ -307,14 +320,24 @@ class Getnote extends Component {
                                 />
                                 : null}
                             </div>
-                            {/* <div>{key.id.label}</div> */}
-                            <Chip
-            labels={key.data().label}
-            id={key.id}
-            onDelete={event => this.removeLabel(event)}
-            deleteIcon={<CancelIcon id={key.id} />}
-            variant="outlined"
-          />
+                                <div>
+                              {key.id.labels}
+                                </div>
+                            {this.state.labels.map(item=>{
+                              console.log('The items labels are',item);
+                              
+                              return(
+                                <Chip
+                                labels={item.label}
+                                id={item.id}
+                                onDelete={event => this.removeLabel(event)}
+                                deleteIcon={<CancelIcon id={item.id} />}
+                                variant="outlined"
+                              />
+                              )
+                            })}
+                             
+
                           </div>
 
                           <div>

@@ -1,3 +1,4 @@
+
 /**
  * importing all firebase,EventEmitter
  * @description:doing an email-validation and email verification
@@ -79,33 +80,6 @@ export async function Signout() {
   localStorage.removeItem("usertoken");
 }
 
-// export async function saveNote1(data, labels) {
-//   try {
-//     console.log("data in controller", data);
-//     const token = localStorage.usertoken;
-//     const decoded = jwt_decode(token);
-//     // console.log('kjdkjsdk')
-//     console.log("color", data.color);
-//     const noteData = {
-//       title: data.title,
-//       description: data.description,
-//       isPinned: data.isPinned,
-//       color: data.color,
-//       archieve: data.archieve,
-//       isDeleted: data.isDeleted,
-//       reminder: data.reminder,
-//       user_id: decoded.user_id
-//     };
-//     db.collection("notes")
-//       .doc()
-//       .set(noteData);
-//     let result = true;
-//     return result;
-//   } catch (error) {
-//     console.log(error);
-//     return error;
-//   }
-// }
 export async function saveNote(data, labels) {
   try {
     const token = localStorage.usertoken;
@@ -200,10 +174,7 @@ export async function pinNotes(noteData) {
         return error.message;
       });
   } else {
-    await db
-      .collection("notes")
-      .doc(noteData.noteId)
-      .update({
+    await db.collection("notes").doc(noteData.noteId).update({
         isPinned: noteData.isPinned
       })
       .then(res => {
@@ -331,7 +302,7 @@ export async function geNoteCount() {
   try {
     const token = localStorage.usertoken
     const decoded = jwt_decode(token)
-    let isPinned,archieve,trash
+    let isPinned,archieve,trash,others
     await db.collection("notes")
       .where("user_id", "==", decoded.user_id)
       .where("isPinned", "==", true).get().then(snap => {
@@ -343,17 +314,16 @@ export async function geNoteCount() {
       .where("archieve", "==", true).get().then(snap => {
         archieve = snap.size // will return the collection size
       });
-      
     await db.collection("notes")
       .where("user_id", "==", decoded.user_id)
       .where("isDeleted", "==", true).get().then(snap => {
         trash = snap.size // will return the collection size
       });
     const result = {
-      // unpinned: unpinnedNote,
     isPinned:isPinned,
     archieve:archieve,
-    trash:trash
+    trash:trash,
+    others:others
     }
     return result
   }
@@ -369,15 +339,18 @@ export async function getAllLabel(){
    const token = localStorage.usertoken
  const decoded = jwt_decode(token)
  var labels = [];
- await db.collection("labels")
+ await  db.collection("labels")
      .where("user_id", "==", decoded.user_id)
      .where("isDeleted","==",false).get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-          labels.push({id:doc.id,label:doc.data().label})
+          labels.push({id:doc.id, label:doc.data().label})
        });
    })
+   console.log("the backend po0f date is 0",labels);
+   
    return labels
  }
+ 
  catch (error) {
    console.log(error)
    return error.message

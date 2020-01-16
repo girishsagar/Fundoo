@@ -38,7 +38,7 @@ class Archive extends Component {
       pin_open: false,
       showIcon: false,
       anchorEl: null,
-      reminder:null,
+      reminder: null,
     };
   }
   menuOpen = () => {

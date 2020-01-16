@@ -146,45 +146,47 @@ class Navigation extends Component {
                 <div className="name">
                   <Avatar onClick={this.menuItem} aria-owns="simple-menu">
                     G{" "}
-                    </Avatar>
-                    <Menu
-                      id="simple-menu"
-                      anchorEl={this.state.anchorEl}
-                      keepMounted
-                      open={Boolean(this.state.anchorEl)}
-                      onClose={this.handleClose}
-                      anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                      }}
-                      transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                      }}>
-                      <div>
-                        <PieChart
-                          data={[
-                            { title: 'Pinned Note', value: this.props.pinnedCount, color: '#03fcdf' },
-                            { title: 'Archieve Note', value: this.props.archieveCount, color: '#ca03fc' },
-                            { title: 'Trash Note', value: this.props.trashCount, color: '#FFC154' },
-                          ]} />
-                      </div>
-                      <div className="piechart-icon">
-                        <span className="chart-span"><StopIcon style={{ color: "#03fcdf" }} />Pinned({this.props.pinnedCount})</span>
-                        <span className="chart-span"><StopIcon style={{ color: "#ca03fc" }} />Archieve({this.props.archieveCount})</span>
-                        <span className="chart-span"><StopIcon style={{ color: "#FFC154" }} />Trash({this.props.trashCount})</span>
-                      </div>
-                      <div className="signout-button">
-                        <Button aria-owns="simple-menu"
-                          variant="outlined"
-                          color="primary"
-                          startIcon={<ExitToAppIcon />}
-                          onClick={this.Signout}>
-                          SignOut
+                  </Avatar>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={this.state.anchorEl}
+                    keepMounted
+                    open={Boolean(this.state.anchorEl)}
+                    onClose={this.handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}>
+                    <div>
+                      <PieChart
+                        data={[
+                          { title: 'Pinned Note', value: this.props.pinnedCount, color: '#03fcdf' },
+                          { title: 'Archieve Note', value: this.props.archieveCount, color: '#ca03fc' },
+                          { title: 'Trash Note', value: this.props.trashCount, color: '#FFC154' },
+                          // { title: 'Others', value: this.props.others, color: '#BFB23F' },
+                        ]} />
+                    </div>
+                    <div className="piechart-icon">
+                      <span className="chart-span"><StopIcon style={{ color: "#03fcdf" }} />Pinned({this.props.pinnedCount})</span>
+                      <span className="chart-span"><StopIcon style={{ color: "#ca03fc" }} />Archieve({this.props.archieveCount})</span>
+                      <span className="chart-span"><StopIcon style={{ color: "#FFC154" }} />Trash({this.props.trashCount})</span>
+                      {/* <span className="chart-span"><StopIcon style={{ color: "#BFB23" }} />others({this.props.others})</span> */}
+                    </div>
+                    <div className="signout-button">
+                      <Button aria-owns="simple-menu"
+                        variant="outlined"
+                        color="primary"
+                        startIcon={<ExitToAppIcon />}
+                        onClick={this.Signout}>
+                        SignOut
 </Button>
-                      </div>
-                    </Menu>
-                
+                    </div>
+                  </Menu>
+
                 </div>
               </div>
             </Toolbar>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, TextField, IconButton, Button,Avatar} from "@material-ui/core";
+import { Card, TextField, IconButton, Button, Avatar } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { Snackbar } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -7,26 +7,26 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { forgotPassword } from "../controller/userController";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 const thm = createMuiTheme({
-    overrides: {
-      MuiAvatar: {
-        root: {
-          left: "10px",
-          width: "80px",
-          height: "100px"
-        },
-        colorDefault: {
-          backgroundColor: "white"
-        }
+  overrides: {
+    MuiAvatar: {
+      root: {
+        left: "10px",
+        width: "80px",
+        height: "100px"
       },
-      MuiSvgIcon: {
-        root: {
-          color: "red",
-          width: "200px",
-          height: "70px"
-        }
+      colorDefault: {
+        backgroundColor: "white"
+      }
+    },
+    MuiSvgIcon: {
+      root: {
+        color: "red",
+        width: "200px",
+        height: "70px"
       }
     }
-  });
+  }
+});
 class forget extends Component {
   constructor(props) {
     super(props);
@@ -48,7 +48,7 @@ class forget extends Component {
       Email: Email
     });
     if (
-      Email ==!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.state.Email)
+      Email == !/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.state.Email)
     ) {
       this.setState({
         snackbarOpen: true,
@@ -77,45 +77,40 @@ class forget extends Component {
           });
         });
         setTimeout(() => {
-          this.props.history.push("/login");
-        
-        }, 2000);
+                   this.props.history.push("/login");
+                  
+                }, 2000);
     }
   };
   render() {
     return (
-      <div className="SignUp">
-        <Card className="forgot-card">
-        <MuiThemeProvider theme={thm}>
-        <div className="avatar">
-              <Avatar>
-                <LockOutlinedIcon />
-              </Avatar>                                                                                                                     
-            </div>
-          <div className="loge">Forget Password</div>
-          <TextField
-            required="true"
-            id="Email"
-            name="Email"
-            label="Email"
-            variant="standard"
-            type="text"
-            fullWidth
-            autoFocus
-            onChange={event => this.handleEmail(event)}
-          />
-          <div className="resetbutton">
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={this.submit}
-            >
-              Reset Password
-            </Button>
-
+      <div className="forgotpass-page">
+        <Card className="forgotpass-card">
+          <div className="forgotpass-h2">
+            <h2>Enter Your Email</h2>
           </div>
-          </MuiThemeProvider>
+
+          <div className="forgotpass-email">
+            <TextField
+              required
+              fullWidth
+              variant="outlined"
+              id="email-input"
+              label="Enter Email"
+              type="email"
+              name="email"
+              margin="normal"
+              onChange={event => this.handleEmail(event)}
+            />
+          </div>
+          <div className="forgotpass-button">
+            <Button color="primary" variant="contained"   onClick={this.submit}>
+              Submit
+            </Button>
+            {/* <Button color="primary" variant="contained">
+              back
+            </Button> */}
+          </div>
         </Card>
 
         <Snackbar

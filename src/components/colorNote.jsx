@@ -68,12 +68,15 @@ class ColorComponent extends Component {
                 </Tooltip>
                 <div className="Change" Style={{width: "25em", display: "flex", flexDirection: "row", margin: "25px"}}>
 
-                    <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl} className="paint"
+                    <Popper 
+                    open={this.state.anchorEl} 
+                    anchorEl={this.state.anchorEl} 
+                    className="paint"
                         style={{
                             zIndex: "9999", width: "25em", display: "flex", flexDirection: "row", margin: "25px"
                         }}
                     >
-                        <Paper className="color-styles">
+                        <Paper className="color-styles" style={{display:"contents",width:"21em"}}>
                             {colorChange}
                         </Paper>
 

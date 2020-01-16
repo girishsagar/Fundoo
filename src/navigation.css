@@ -329,13 +329,11 @@
   align-items: center;
   justify-content: center;
 }
-.chart-span{
-
-}
-.piechart-icon{
-
-}
-.change_colors{
-
+.color-styles{
+  z-index: "9999";
+   width: "25em";
+    display: "flex";
+    flex-direction: row;
+     margin: "25px"
 }
 /* -------------->Media Query for appBar<-------------------- */

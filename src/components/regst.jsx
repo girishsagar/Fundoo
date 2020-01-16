@@ -1,3 +1,4 @@
+
 /**
  * @file: regest.jsx
  * @description: user registeration from having with a fields.
@@ -11,49 +12,8 @@ import { Card, TextField, IconButton, Button, Avatar } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { Snackbar } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import { registeration } from "../controller/userController";
-import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
-const thm = createMuiTheme({
-  overrides: {
-    MuiInputLabel: {
-      formControl: {
-        marginLeft: "3px",
-        fontSize: "20px",
-        fontFamily: "Cursive",
-        font: "bold"
-      }
-    },
-    MuiInputBase: {
-      input: {
-        fontFamily: "Cursive",
-        fontSize: "20px",
-        marginLeft: "1px",
-        borderSpacing: "10px"
-      }
-    },
-    MuiAvatar: {
-      root: {
-        left: "10px",
-        width: "60px",
-        height: "60px"
-      },
-      colorDefault: {
-        backgroundColor: "black",
-        marginLeft: "17px",
-        marginTop: "-4px"
-      }
-    },
-    MuiSvgIcon: {
-      root: {
-        color: "white",
-        width: "220px",
-        height: "40px",
-        left: "150px"
-      }
-    }
-  }
-});
+
 /**
  * @class : registraction extending from parent class React Component
  * @description: having a prop (property)/varible
@@ -70,19 +30,12 @@ class registration extends Component {
       snackbarMsg: ""
     };
   }
-  /**
-   * @function:snackbar
-   * @description:displaying the messaga/alertBox
-   */
+
   snackbarClose = e => {
     this.setState({
       snackbarOpen: false
     });
   };
-  /**
-   * @function: handlefirstName
-   * @description: the function will handle the textbox file and regx/validation
-   */
   handlefirstName = event => {
     let firstName = event.target.value;
     this.setState({
@@ -118,7 +71,7 @@ class registration extends Component {
       Email: Email
     });
     if (
-      Email === !/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.state.Email)
+      Email == !/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.state.Email)
     ) {
       this.setState({
         snackbarOpen: true,
@@ -133,18 +86,10 @@ class registration extends Component {
       password: password
     });
   };
-  /**
-   * @function :onLogin
-   * @description :it will navigate to the login page
-   */
+
   onLogin = () => {
     this.props.history.push("/Login");
   };
-  /**
-   * @function :submit
-   * @description:it will chech for the every textbox should be fill/ empty
-   * if it will empty it display the messag
-   */
   submit = () => {
     if (this.state.firstName === "") {
       this.setState({
@@ -166,7 +111,6 @@ class registration extends Component {
         snackbarOpen: true,
         snackbarMsg: " passoword cannot be empty "
       });
-      // passing an data to the firebase
     } else {
       const user = {
         firstName: this.state.firstName,
@@ -193,98 +137,109 @@ class registration extends Component {
 
   render() {
     return (
-      <div className="SignUp">
-        <MuiThemeProvider theme={thm}>
-          <Card className="sign-card">
-            <div className="avatar">
-              <Avatar>
-                <AccountCircleRoundedIcon />
-              </Avatar>
+      <div className="allineone">
+        <div className="registerPage">
+          <Card className="registerCard">
+            <div className="register-fundoo">
+              <h1 className="register-h1">
+                <span style={{ color: "#2196f3" }}>S</span>
+                <span style={{ color: "#b71c1c" }}>i</span>
+                <span style={{ color: "#ffc107" }}>g</span>
+                <span style={{ color: "#1976d2" }}>n</span>
+                <span style={{ color: "#43a047" }}>U</span>
+                <span style={{ color: "#b71c1c" }}>p</span>
+              </h1>
             </div>
-            <div className="loge">Sign Up</div>
-            <TextField
-              required
-              autoComplete="password"
-              id="FirstName"
-              name="FirstName"
-              label="FirstName"
-              variant="standard"
-              type="text"
-              fullWidth
-              autoFocus
-              onChange={event => this.handlefirstName(event)}
-            />
-            <TextField
-              required
-              id="lastName"
-              name="  lastName"
-              label=" LastName"
-              variant="standard"
-              type="text"
-              maxwidth
-              fullWidth
-              onChange={event => this.handlelastName(event)}
-            />
+            <div className="register-h2">
+              <h2>Crete New Account</h2>
+            </div>
+            {/* <div className="avatar">
+                <Avatar>
+                  <LockOutlinedIcon />
+                </Avatar>
+              </div> */}
+            <div className="register-names">
+              <TextField
+                required
+                autoComplete="password"
+                id="FirstName"
+                name="FirstName"
+                label="FirstName"
+                variant="standard"
+                type="text"
+                fullWidth
+                autoFocus
+                onChange={event => this.handlefirstName(event)}
+              />
+              <TextField
+                required
+                autoComplete="password"
+                id="LastName"
+                name="LasttName"
+                label="LastName"
+                variant="standard"
+                type="text"
+                fullWidth
+                autoFocus
+                onChange={event => this.handlelastName(event)}
+              />
+            </div>
+            <div className="register-email">
+              <TextField
+                required
+                name="Email"
+                label="Email"
+                variant="standard"
+                type="text"
+                fullWidth
+                onChange={event => this.handleEmail(event)}
+              />
+              <TextField
+                required
+                variant="outlined"
+                id="pass-input"
 
-            <TextField
-              required="true"
-              id="Email"
-              name="Email"
-              label="Email"
-              variant="standard"
-              type="text"
-              fullWidth
-              onChange={event => this.handleEmail(event)}
-            />
-            <TextField
-              required
-              id="lastName"
-              name="lastName"
-              label="Password"
-              variant="standard"
-              type="Password"
-              fullWidth
-              onChange={event => this.handlepassword(event)}
-            />
-
-            <div className="regbutton1">
+                label="Password"
+                type="Password"
+                fullWidth
+                onChange={event => this.handlepassword(event)}
+              />
+            </div>
+            <div className="register-submitButton">
               <Button
                 fullWidth
-                variant="contained"
                 color="primary"
                 onClick={this.submit}
+                variant="contained"
               >
-                Sign Up
+                submit
               </Button>
-            </div>
-            <div className="regbutton2">
               <Button
                 fullWidth
                 variant="contained"
                 color="primary"
                 onClick={this.onLogin}
               >
-                Login
+                Log in
               </Button>
             </div>
           </Card>
-        </MuiThemeProvider>
-
-        <Snackbar
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center"
-          }}
-          open={this.state.snackbarOpen}
-          autoHideDuration={5000}
-          onClose={this.snackbarClose}
-          message={<span id="message-id">{this.state.snackbarMsg}</span>}
-          action={[
-            <IconButton onClick={this.handleClose}>
-              <CloseIcon onClick={this.snackbarClose} />
-            </IconButton>
-          ]}
-        />
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center"
+            }}
+            open={this.state.snackbarOpen}
+            autoHideDuration={5000}
+            onClose={this.snackbarClose}
+            message={<span id="message-id">{this.state.snackbarMsg}</span>}
+            action={[
+              <IconButton onClick={this.handleClose}>
+                <CloseIcon onClick={this.snackbarClose} />
+              </IconButton>
+            ]}
+          />
+        </div>
       </div>
     );
   }
