@@ -8,7 +8,7 @@ import {
   Chip,
   Menu,
   MenuItem,
-  Popover
+  Popover,FormControl,Checkbox,FormControlLabel
 } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
@@ -21,10 +21,9 @@ import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
-
 import UndoTwoToneIcon from "@material-ui/icons/UndoTwoTone";
 import RedoTwoToneIcon from "@material-ui/icons/RedoTwoTone";
-import { saveNote, getNote, pinNotes, saveLabel } from "../controller/userController";
+import { saveNote, getNote, pinNotes, saveLabel,getAllLabel} from "../controller/userController";
 import Reminder from "./reminder";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import CancelIcon from "@material-ui/icons/Cancel";
@@ -75,7 +74,7 @@ class Notes extends Component {
       saveLabel(data).then(res => {
         console.log("result label", res);
         this.setState({ labels: res, label: "", displayButton: "button-hide" });
-        //  this.props.updateLabel();
+      // this.props.updateLabel();
         this.handleGetNotes()
       });
     }
@@ -202,7 +201,8 @@ class Notes extends Component {
               color: "",
               archieve: "",
               isDeleted: false,
-              reminder: null
+              reminder: null,
+              labels:""
             });
           } else {
             this.setState({
@@ -223,7 +223,6 @@ class Notes extends Component {
     });
 
     this.props.colorChange(e);
-    // console.log(this.state.color)
   };
 
   handleOpen = () => {

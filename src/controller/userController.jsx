@@ -79,33 +79,33 @@ export async function Signout() {
   localStorage.removeItem("usertoken");
 }
 
-export async function saveNote1(data, labels) {
-  try {
-    console.log("data in controller", data);
-    const token = localStorage.usertoken;
-    const decoded = jwt_decode(token);
-    // console.log('kjdkjsdk')
-    console.log("color", data.color);
-    const noteData = {
-      title: data.title,
-      description: data.description,
-      isPinned: data.isPinned,
-      color: data.color,
-      archieve: data.archieve,
-      isDeleted: data.isDeleted,
-      reminder: data.reminder,
-      user_id: decoded.user_id
-    };
-    db.collection("notes")
-      .doc()
-      .set(noteData);
-    let result = true;
-    return result;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-}
+// export async function saveNote1(data, labels) {
+//   try {
+//     console.log("data in controller", data);
+//     const token = localStorage.usertoken;
+//     const decoded = jwt_decode(token);
+//     // console.log('kjdkjsdk')
+//     console.log("color", data.color);
+//     const noteData = {
+//       title: data.title,
+//       description: data.description,
+//       isPinned: data.isPinned,
+//       color: data.color,
+//       archieve: data.archieve,
+//       isDeleted: data.isDeleted,
+//       reminder: data.reminder,
+//       user_id: decoded.user_id
+//     };
+//     db.collection("notes")
+//       .doc()
+//       .set(noteData);
+//     let result = true;
+//     return result;
+//   } catch (error) {
+//     console.log(error);
+//     return error;
+//   }
+// }
 export async function saveNote(data, labels) {
   try {
     const token = localStorage.usertoken;
@@ -118,10 +118,10 @@ export async function saveNote(data, labels) {
       archieve: data.archieve,
       isDeleted: data.isDeleted,
       reminder: data.reminder,
+      labels:data.labels,
       user_id: decoded.user_id
     };
-    await db.collection("notes").add(noteData).then(function (docRef) {
-      // await db.collection("notes").doc().set(noteData).then(function(docRef){  
+    await db.collection("notes").add(noteData).then(function (docRef) { 
       if (labels.length > 0) {
         labels.forEach(function (labelData) {
           console.log("label name", labelData.label);
@@ -304,9 +304,7 @@ export async function saveLabel(data) {
       user_id: decoded.user_id
     };
     await db
-      .collection("labels")
-      .doc()
-      .set(labelData);
+      .collection("labels").doc().set(labelData);
     var labels = [];
     await db
       .collection("labels")
@@ -352,10 +350,7 @@ export async function geNoteCount() {
         trash = snap.size // will return the collection size
       });
     const result = {
-      // pinned: pinnedNote,
       // unpinned: unpinnedNote,
-      // archieve: archieveNote,
-      // trash: trashNote
     isPinned:isPinned,
     archieve:archieve,
     trash:trash

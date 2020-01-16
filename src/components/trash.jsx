@@ -6,7 +6,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import { deleteNote, restoreNote } from "../controller/userController"
 import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
+import { Snackbar } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 class Trash extends Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class Trash extends Component {
             notes: [],
             isDeleted: "",
             snackbarOpen: false,
-            snackbarMsg: "",
+            snackbarMsg: ""
         }
     }
     snackbarClose = e => {
@@ -48,26 +48,25 @@ class Trash extends Component {
         deleteNote(data).then(res => {
             console.log(res)
             this.handleGetNotes()
-            if (res === true) {
+            if(res===true){
                 this.setState({
-                    snackbarMsg: "Deleted..!",
-                    snackbarOpen: true
+                    snackbarMsg: "Delted...!!",
+                    snackbarOpen: true,
                 })
-            }
-            else {
+            } else {
                 this.setState({
-                    snackbarMsg: res,
-                    snackbarOpen: true
-                })
+                  snackbarMsg: res,
+                  snackbarOpen: true
+                });
             }
         })
+       
             .catch(err => {
                 console.log("err", err);
             });
     }
     restoreFromTrash = (id) => {
         const data = {
-            //   id: this.props.data.id
             noteId: id
         }
         restoreNote(data).then(res => {
@@ -135,32 +134,21 @@ class Trash extends Component {
                                         </div>
                                     </Card>
                                     <Snackbar
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'left',
-                                        }}
-                                        open={this.state.snackbarOpen}
-                                        autoHideDuration={6000}
-                                        onClose={this.snackbarClose}
-                                        ContentProps={{
-                                            'aria-describedby': 'message-id',
-                                        }}
-                                        message={<span id="message-id">{this.state.snackbarMsg}</span>}
-                                        // message={<span id="message-id">Note archived</span>}
-                                        action={[
-                                            <Button key="undo" color="secondary" size="small"
-                                                onClick={this.handleClose}>UNDO
-                                              </Button>,
-                                            <IconButton
-                                                key="close"
-                                                aria-label="Close"
-                                                color="inherit"
-                                                onClick={this.handleClose}
-                                            >
-                                                <CloseIcon onClick={this.snackbarClose} />
-                                            </IconButton>,
-                                        ]}
-                                    />
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+            color: "white"
+          }}
+          open={this.state.snackbarOpen}
+          autoHideDuration={2000}
+          onClose={this.snackbarClose}
+          message={<span id="message-id">{this.state.snackbarMsg}</span>}
+          action={[
+            <IconButton onClick={this.handleClose}>
+              <CloseIcon onClick={this.snackbarClose} />
+            </IconButton>
+          ]}
+        />
                                 </div>
                             );
                         }

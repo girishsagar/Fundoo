@@ -178,19 +178,6 @@ class Archive extends Component {
     this.setState({ reminder: null });
   };
   render() {
-    // let archieveIcon = !this.archive ? (
-    //   <IconButton onClick={this.archiveNote}>
-    //     <Tooltip title="Archieve">
-    //       <ArchiveIcon />
-    //     </Tooltip>
-    //   </IconButton>
-    // ) : (
-    //     <IconButton onClick={this.archiveNote}>
-    //       <Tooltip title="UnArchieve">
-    //         <UnarchiveIcon />
-    //       </Tooltip>
-    //     </IconButton>
-    //   );
     return (
       <div className={this.props.noteStyle}>
         <div className="_notes"  >
@@ -232,6 +219,7 @@ class Archive extends Component {
                                 <Chip
                                   style={{ display: "flex", marginLeft: "-6em", marginTop: "5em" }}
                                   icon={<AccessTimeIcon />}
+                                  id={key.id}
                                   label={key.data().reminder}
                                   onDelete={this.removeReminder}
                                   variant="outlined" />
@@ -278,7 +266,6 @@ class Archive extends Component {
                             {/* <Tooltip title="Reminder">
                               <AddAlertOutlinedIcon />
                             </Tooltip> */}
-
                             <Reminder
                               anchorEl={this.state.anchorEl}
                               closeMenu={this.handleClose}

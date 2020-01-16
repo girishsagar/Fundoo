@@ -10,13 +10,13 @@ import ArchiveIcon from "@material-ui/icons/Archive";
 import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import ColorComponent from "./colorNote";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import { editNote, getNote, pinNotes, archiveTheNote, colorChange } from "../controller/userController";
+import { editNote, getNote, pinNotes, archiveTheNote, colorChange, getAllLabel } from "../controller/userController";
 import Dialog from "@material-ui/core/Dialog";
 import Reminder from "./reminder"
 import More from "./more";
 import SvgPin from "../icons/svgPin"
 import SvgPinned from "../icons/svgUnpin"
-
+import CancelIcon from "@material-ui/icons/Cancel";
 const thm = createMuiTheme({
   overrides: {
     MuiCard: {
@@ -52,7 +52,7 @@ class Getnote extends Component {
       showIcon: false,
       anchorEl: null,
       reminder: "",
-      labels:[]
+      label: []
     };
   }
 
@@ -192,6 +192,7 @@ class Getnote extends Component {
       this.handleGetNotes();
     }
   }
+
   handlePin(noteId) {
     this.setState({
       isPinned: !this.state.isPinned
@@ -217,7 +218,18 @@ class Getnote extends Component {
   removeReminder = () => {
     this.setState({ reminder: null });
   };
-
+  // componentDidMount() {
+  //   this.getLabels()
+  // }
+  getLabels = () => {
+    getAllLabel().then(res => {
+      this.setState({ labels: res })
+    })
+  }
+  // removeLabel = e => {
+  //   const labels = this.state.labels.filter(key => key.id !== e.target.id);
+  //   this.setState({ labels: labels });
+  // };
   render() {
     let archieveIcon = !this.archive ? (
       <IconButton onClick={this.archiveNote}>
@@ -247,12 +259,13 @@ class Getnote extends Component {
           {!this.state.open ? (
             <div className="_notes_">
               {this.state.notes.map(key => {
+
                 if ((key.data().archieve === false) && (key.data().isDeleted === false)) {
                   console.log("the dele is ", key.data().isDeleted);
                   console.log("data", key.data().isPinned);
-                  console.log("The archive js ", key.data().archive);       
-                  console.log("The labels are ",key.id.labels);
-                                          
+                  console.log("The archive js ", key.data().archive);
+                  console.log("The labels are ", key.id.label);
+                  console.log("the all data uis ", key.data());
                   return (
                     <div className="notes_">
                       <Card
@@ -294,12 +307,20 @@ class Getnote extends Component {
                                 />
                                 : null}
                             </div>
-                            {key.data().labels}
+                            {/* <div>{key.id.label}</div> */}
+                            <Chip
+            labels={key.data().label}
+            id={key.id}
+            onDelete={event => this.removeLabel(event)}
+            deleteIcon={<CancelIcon id={key.id} />}
+            variant="outlined"
+          />
                           </div>
+
                           <div>
-                          <Avatar  style={{ background: "#d2cece", marginLeft: "-25px"}}
-                             onClick={()=>this.handlePin(key.id)}>
-                            {key.data().isPinned===true ?< SvgPinned/>:<SvgPin/> } 
+                            <Avatar style={{ background: "#d2cece", marginLeft: "-25px" }}
+                              onClick={() => this.handlePin(key.id)}>
+                              {key.data().isPinned === true ? < SvgPinned /> : <SvgPin />}
                             </Avatar>
                           </div>
                         </div>
@@ -334,12 +355,12 @@ class Getnote extends Component {
 
                         <div className="getnoteicons">
                           <div >
-                                <Reminder
-                    anchorEl={this.state.anchorEl}
-                    closeMenu={this.handleClose}
-                    handleGetNotes={this.handleGetNotes}
-                    handleReminderDate={this.handleReminderDate}
-                  />
+                            <Reminder
+                              anchorEl={this.state.anchorEl}
+                              closeMenu={this.handleClose}
+                              handleGetNotes={this.handleGetNotes}
+                              handleReminderDate={this.handleReminderDate}
+                            />
 
                           </div>
 
@@ -389,6 +410,7 @@ class Getnote extends Component {
                   );
                 }
               })}
+
             </div>
           ) : (
               <div className="cd">

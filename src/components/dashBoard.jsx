@@ -24,6 +24,7 @@ class Dashboard extends Component {
       archieveCount: 0,
       pinnedCount: 0,
       trashCount: 0,
+      labels:[]
     };
   }
 
@@ -59,9 +60,9 @@ class Dashboard extends Component {
     this.getLabels()
   }
   getLabels = () => {
-    // getAllLabel().then(res => {
-    //   this.setState({ labels: res })
-    // })
+    getAllLabel().then(res => {
+      this.setState({ labels: res })
+    })
     geNoteCount().then(res => {
       console.log(res)
       this.setState({
@@ -90,7 +91,7 @@ class Dashboard extends Component {
             trashCount={this.state.trashCount} />
 
           <Notes initiateGetNotes={this.initiateGetNotes} colorChange={this.colorChange}
-            color={this.state.color} />
+            labelData={this.state.labels} updateLabel={this.getLabels} color={this.state.color} />
           <Getnote getNotes={this.state.getNotesProps} color={this.state.color}
             noteStyle={noteStyle} />
         </div>
