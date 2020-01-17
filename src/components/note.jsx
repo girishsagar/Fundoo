@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  Tooltip,
-  Card,
-  InputBase,
-  Button,
-  IconButton,
-  Chip,
+import {Tooltip, Card,InputBase, Button,IconButton, Chip,
   Menu,
   MenuItem,
   Popover,FormControl,Checkbox,FormControlLabel
@@ -74,7 +68,7 @@ class Notes extends Component {
       saveLabel(data).then(res => {
         console.log("result label", res);
         this.setState({ labels: res, label: "", displayButton: "button-hide" });
-      // this.props.updateLabel();
+       this.props.updateLabel();
         this.handleGetNotes()
       });
     }
@@ -355,16 +349,14 @@ class Notes extends Component {
                   multiline
                   placeholder="Ttitle"
                   onChange={this.changeTitle}
-                  value={this.state.title}
-                />
+                  value={this.state.title}/>
               </div>
               <div>
                 <InputBase
                   multiline
                   placeholder="Take a note..."
                   onChange={this.changeDescription}
-                  value={this.state.description}
-                />
+                  value={this.state.description}/>
               </div>
               {labels}
               <div>
@@ -375,8 +367,7 @@ class Notes extends Component {
                       icon={<AccessTimeIcon />}
                       label={this.state.reminder}
                       onDelete={this.removeReminder}
-                      variant="outlined"
-                    />
+                      variant="outlined"/>
                   ) : null}
                 </p>
               </div>
@@ -386,10 +377,8 @@ class Notes extends Component {
                     anchorEl={this.state.anchorEl}
                     closeMenu={this.handleClose}
                     handleGetNotes={this.handleGetNotes}
-                    handleReminderDate={this.handleReminderDate}
-                  />
+                    handleReminderDate={this.handleReminderDate}/>
                 </div>
-
                 <div>
                   <Tooltip title="Collbrate">
                     <PersonAddOutlinedIcon />
@@ -412,8 +401,7 @@ class Notes extends Component {
                   <IconButton
                     aria-controls="label-menu"
                     aria-haspopup="true"
-                    onClick={this.labelMenuOpen}
-                  >
+                    onClick={this.labelMenuOpen} >
                     <Tooltip title="More">
                       <MoreVertIcon />
                     </Tooltip>
@@ -431,8 +419,7 @@ class Notes extends Component {
                     anchorEl={this.state.labelAnchorEl}
                     keepMounted
                     open={Boolean(this.state.labelAnchorEl)}
-                    onClose={this.labelMenuClose}
-                  >
+                    onClose={this.labelMenuClose}>
                     <MenuItem
                       onClick={this.createLabelDialogOpen}
                       aria-controls="create-label-menu"
@@ -453,8 +440,7 @@ class Notes extends Component {
                     transformOrigin={{
                       vertical: "center",
                       horizontal: "center"
-                    }}
-                  >
+                    }}>
                     <div  className="label-input">
                     <div className="label-note">
                       <span>Label Note</span>
@@ -466,8 +452,7 @@ class Notes extends Component {
                           value={this.state.label}
                           onChange={this.handleLabel}
                           placeholder="Enter label Name"
-                          id="inputRoot"
-                        />
+                          id="inputRoot"/>
                       </div>
                       <div className="search_icon">
                         <SearchIcon />

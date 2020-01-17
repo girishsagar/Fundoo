@@ -194,7 +194,15 @@ class Archive extends Component {
                   return (
                     <div className="notes_" >
                       <Card
-                        className="get_Nottes_card" style={{ backgroundColor: this.props.color }}>
+                        className="get_Nottes_card" style={{ backgroundColor: this.props.color 
+                        ,width:"251px",
+                        minHeight:"100px",
+                        height:'auto',
+                        margin:"5px",
+                        padding:"10px",
+                        boxShadow:"0px 1px 7px 0px",
+                        marginTop:"10%",
+                        borderRadius:"15px" }}>
                         <div
                           style={{
                             display: "flex",

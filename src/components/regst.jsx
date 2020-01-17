@@ -1,4 +1,3 @@
-
 /**
  * @file: regest.jsx
  * @description: user registeration from having with a fields.

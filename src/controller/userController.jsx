@@ -1,7 +1,10 @@
 
 /**
- * importing all firebase,EventEmitter
- * @description:doing an email-validation and email verification
+ * @file :userController
+ * @description :firebase console to store the data/informartion backend
+ * @author :Girish Sagar <girishsagar51@gmail.com>
+ * @version :16.12.0 (react version)
+ * @since :18-dec-2019
  */
 import jwt from "jsonwebtoken";
 import firebase from "firebase";
@@ -17,12 +20,8 @@ export async function registeration(user) {
       Email: user.Email,
       password: user.password
     };
-    await firebase
-      .auth()
-      .createUserWithEmailAndPassword(user.Email, data.password);
-    db.collection("user")
-      .doc(firebase.auth().currentUser.uid)
-      .set(data);
+    await firebase.auth().createUserWithEmailAndPassword(user.Email, data.password);
+    db.collection("user").doc(firebase.auth().currentUser.uid).set(data);
     //passing an evnt emitter
     const emitter = new EventEmitter();
     function EmailVerification() {
@@ -37,20 +36,32 @@ export async function registeration(user) {
   }
 }
 /**
- * Login
+ * 
+ * @param {user} user 
+ * @param {cb} cb 
+ * @description :user login details email and password 
+ * @author :Girish Sagar <girishsagar51@gmail.com>
+ * @version :16.12.0 (react version)
+ * @since :19-dec-2019  
  */
 export async function userlogin(user, cb) {
   try {
-    let userlogin = await firebase
-      .auth()
-      .signInWithEmailAndPassword(user.Email, user.password);
+    let userlogin = await firebase.auth().signInWithEmailAndPassword(user.Email, user.password);
     const payload = {
       user_id: userlogin.user.uid,
       email: userlogin.user.email
     };
-    let token = jwt.sign(payload, "hsdyusd99d787sd7sjd89sdsd", {
+    /**
+     * @description: using an jwt tokens
+     */
+    // let token = jwt.sign({payload}, "hsdyusd99d787sd7sjd89sdsd", {
+      const jwtKey="myScreat";
+      let token = jwt.sign({payload}, jwtKey,{
+        algorithm:'HS256',
       expiresIn: 1440
     });
+    console.log("the screat key is ",token);
+    
     localStorage.setItem("usertoken", token);
     console.log(token);
     cb(null, userlogin);
@@ -60,8 +71,10 @@ export async function userlogin(user, cb) {
   }
 }
 /**
-Forget Password
- */
+ * 
+ * @param {*} Email 
+ * @description :user forget password they can rest with an registraction email-i
+ * */
 export async function forgotPassword(Email) {
   try {
     await firebase.auth().sendPasswordResetEmail(Email);
@@ -73,13 +86,17 @@ export async function forgotPassword(Email) {
   }
 }
 /**
- * SignOut 
+ * @file :signOut
+ * @description :sign out from an application 
  */
 export async function Signout() {
   await firebase.auth().firebaseAuthorization.signOut();
   localStorage.removeItem("usertoken");
 }
-
+/**
+ * @file : savaNote 
+ * @description :saving user enterd notes like title,descrption,color and label to the specific user id
+ */
 export async function saveNote(data, labels) {
   try {
     const token = localStorage.usertoken;
@@ -113,16 +130,16 @@ export async function saveNote(data, labels) {
     return error;
   }
 }
-
+/**
+ * @file ;getNote
+ * @description :displaying the notes like (title,color,descrption)of particular user
+ */
 export async function getNote() {
   try {
     const token = localStorage.usertoken;
     const decoded = jwt_decode(token);
     var noteData = [];
-    await db
-      .collection("notes")
-      .where("user_id", "==", decoded.user_id)
-      .get()
+    await db.collection("notes").where("user_id", "==", decoded.user_id).get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           noteData.push(doc);
@@ -135,16 +152,14 @@ export async function getNote() {
     return error.message;
   }
 }
-
-// editNote and updata in firebase
+/**
+ * @file ;editNote
+ * @description ;modifiy the old notes 
+ */
 export async function editNote(noteData) {
-  await db
-    .collection("notes")
-    .doc(noteData.noteId)
-    .update({
+  await db.collection("notes").doc(noteData.noteId).update({
       title: noteData.title,
       description: noteData.description
-      // "color": noteData.color
     })
     .then(res => {
       res = true;
@@ -155,12 +170,13 @@ export async function editNote(noteData) {
       return error.message;
     });
 }
-
+/**
+ * @file :pinNotes
+ * @description ;pin and unpin the notes of particular notes
+ */
 export async function pinNotes(noteData) {
   if (noteData.isPinned) {
-    await db
-      .collection("notes")
-      .doc(noteData.noteId)
+        await db.collection("notes").doc(noteData.noteId)
       .update({
         isPinned: noteData.isPinned
       })
@@ -187,26 +203,30 @@ export async function pinNotes(noteData) {
       });
   }
 }
+/**
+ * @file ;archiveTheNote
+ * @description :mark important  note in archive
+ *  */
 export async function archiveTheNote(noteData) {
   console.log("n.lhjkljl", noteData);
   let data = noteData.noteId;
   console.log("the databacj", data);
-  await db
-    .collection("notes")
-    .doc(noteData.noteId)
-    .update({
+  await db.collection("notes").doc(noteData.noteId).update({
       archieve: noteData.archieve
     })
     .then(res => {
       res = true;
-
       return res;
     })
     .catch(error => {
       return error.message;
     });
 }
-
+/**
+ * 
+ * @file :addNoteTrash
+ * @description ;remov
+ */
 export async function addNoteToTrash(noteData) {
   await db.collection("notes").doc(noteData.noteId)
     .update({
