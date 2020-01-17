@@ -144,12 +144,6 @@
 }
 
 .register-email {
-  /* padding-left: 10px;
-  padding-left: 100px;
-  padding-right: 100px; */
-  /* width: 46vw;
-  margin-left: 137px;
-  display: flex; */
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

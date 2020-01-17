@@ -3,7 +3,7 @@
  * @description :Displaying the archive notes.
  * @module:React js and firebase
  * @author :Girish Sagar <girishsagar51@gmail.com>
- * @version :12.11.1 (node)
+ * @version :16.12.0 (react version)
  * @since :17-dec-2019
  */
 import React, { Component } from "react";
@@ -21,7 +21,6 @@ import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import ColorComponent from "./colorNote";
 import { getNote, archiveTheNote, editNote, colorChange, pinNotes } from "../controller/userController";
 import Dialog from "@material-ui/core/Dialog";
-import ArchiveIcon from "@material-ui/icons/Archive";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import More from "./more";
 import SvgPin from "../icons/svgPin"
@@ -195,14 +194,12 @@ class Archive extends Component {
                   return (
                     <div className="notes_" >
                       <Card
-                        style={{ backgroundColor: this.props.color }}
-                        className="get_Nottes_card">
+                        className="get_Nottes_card" style={{ backgroundColor: this.props.color }}>
                         <div
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
-                            padding: "5px"
-                          }}>
+                            padding: "5px"}}>
                           <div>
                             <div>
                               {key.data().title}
@@ -235,11 +232,7 @@ class Archive extends Component {
                                 this.handleEditNote(
                                   key.id,
                                   key.data().title,
-                                  key.data().description,
-                                )
-                              }
-                            />
-
+                                  key.data().description)}/>
                             <div onClick={this.handleOpenDialogue}>
                               <InputBase
                                 value={key.description}
@@ -248,24 +241,17 @@ class Archive extends Component {
                                   this.handleEditNote(
                                     key.id,
                                     key.data().title,
-                                    key.data().description,
-                                  )
-                                }
-                              />
+                                    key.data().description)}/>
                             </div>
                           </div>
                         </div>
                         <div className="getnoteicons">
                           <div>
-                            {/* <Tooltip title="Reminder">
-                              <AddAlertOutlinedIcon />
-                            </Tooltip> */}
                             <Reminder
                               anchorEl={this.state.anchorEl}
                               closeMenu={this.handleClose}
                               handleGetNotes={this.handleGetNotes}
-                              handleReminderDate={this.handleReminderDate}
-                            />
+                              handleReminderDate={this.handleReminderDate}/>
                           </div>
                           <div>
                             <Tooltip title="Collbrate">
@@ -273,7 +259,7 @@ class Archive extends Component {
                             </Tooltip>
                           </div>
                           <div>
-                            <ColorComponent paletteProps={this.paletteProps} id={key.id} />
+                            <ColorComponent paletteProps={this.paletteProps} id={key.id}/>
                           </div>
                           <div>
                             <Tooltip title="Add image">
@@ -284,8 +270,7 @@ class Archive extends Component {
                             <Tooltip title="Un Archive">
                               <div
                                 style={{ cursor: "pointer" }}
-                                onClick={() => this.archiveNote(key.id)}
-                              >
+                                onClick={() => this.archiveNote(key.id)}>
                                 <ArchiveOutlinedIcon />
                               </div>
                             </Tooltip>
@@ -294,13 +279,12 @@ class Archive extends Component {
                             <Tooltip title="More">
                               <MoreVertOutlinedIcon
                                 onClick={this.menuItem}
-                                aria-owns="simple-menu" />
+                                aria-owns="simple-menu"/>
                             </Tooltip>
                             <More
                               anchorEl={this.state.anchorEl}
                               closeMenu={this.handleClose} id={key.id}
-                              handleGetNotes={this.handleGetNotes}
-                            />
+                              handleGetNotes={this.handleGetNotes}/>
                           </div>
                         </div>
                       </Card>
@@ -317,8 +301,7 @@ class Archive extends Component {
                   open={this.state.open}
                   onClose={this.handleOpenDialogue}
                   aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
+                  aria-describedby="alert-dialog-description">
                   <Card className="dialogCard">
                     <div className="editcard">
                       <div>
@@ -326,16 +309,14 @@ class Archive extends Component {
                           multiline
                           placeholder="Title"
                           value={this.state.title}
-                          onChange={this.handleTitle}
-                        />
+                          onChange={this.handleTitle}/>
                       </div>
                       <div className="inputNote">
                         <InputBase
                           multiline
                           placeholder="Take a note..."
                           value={this.state.description}
-                          onChange={this.handleDescription}
-                        />
+                          onChange={this.handleDescription}/>
                       </div>
                     </div>
                     <div className="imageAndClose">
@@ -348,23 +329,22 @@ class Archive extends Component {
                         </div>
                         <div>
                           <ColorComponent onChange={this.paletteProps}
-                            id={this.props.id} />
+                            id={this.props.id}/>
                         </div>
                         <div>
-                          <ImageOutlinedIcon />
+                          <ImageOutlinedIcon/>
                         </div>
                         <div>
-                          <ArchiveOutlinedIcon />
+                          <ArchiveOutlinedIcon/>
                         </div>
                         <div>
-                          <MoreVertOutlinedIcon />
+                          <MoreVertOutlinedIcon/>
                         </div>
                         <Button
                           className="button"
                           color="Primary"
                           onClick={this.saveEditNote}
-                          style={{ cursor: "pointer" }}
-                        >
+                          style={{ cursor: "pointer" }}>
                           Close
                         </Button>
                       </div>

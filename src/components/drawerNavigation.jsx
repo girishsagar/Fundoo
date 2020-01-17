@@ -1,3 +1,11 @@
+/**
+ * @file :drawerNavigation
+ * @description :side navigationbar  having a components archive,editLabels,trash and reminder
+ * @module:React js and firebase
+ * @author :Girish Sagar <girishsagar51@gmail.com>
+ * @version :16.12.0 (react version)
+ * @since :7-jan-2020
+ */
 import React from "react";
 import {Divider, Drawer,List, ListItem, ListItemIcon,  ListItemText, } from "@material-ui/core";
 import AddAlertIcon from "@material-ui/icons/AddAlert";
@@ -56,33 +64,31 @@ handleReminder=()=>{
           variant="persistent"
           overflow="auto"
           open={this.props.open}
-          width={250}
-        >
+          width={250}>
           <div className="dash_note">
             <List>
               <div>
               <MuiThemeProvider theme={thm}>
-                <div className="notes" onClick={this.handleNote } >
+                <div className="notes" onClick={this.handleNote }>
                   <ListItem button key="Note">
                     <ListItemIcon>
-                      <EmojiObjectsOutlinedIcon />
+                      <EmojiObjectsOutlinedIcon/>
                     </ListItemIcon>
-                    <ListItemText primary="Note" />
+                    <ListItemText primary="Note"/>
                   </ListItem>
                 </div>
-                <div className="Reminder"  onClick={this.handleReminder }>
+                <div className="Reminder"  onClick={this.handleReminder}>
                   <ListItem button key="Reminder">
                     <ListItemIcon>
-                      <AddAlertIcon   />
+                      <AddAlertIcon/>
                     </ListItemIcon>
-                    <ListItemText primary="Reminder" />{" "}
+                    <ListItemText primary="Reminder"/>
                   </ListItem>
                 </div>
-                <Divider />
+                <Divider/>
                 {labels}
                 <div className="labels">
-                
-                  <ListItem button key="Labels">
+                <ListItem button key="Labels">
                     <ListItemIcon>
                       <CreateOutlinedIcon />
                     </ListItemIcon>
@@ -102,18 +108,16 @@ handleReminder=()=>{
                 <div className="Trash" onClick={this.handleTrash}>
                   <ListItem button key="Trash">
                     <ListItemIcon>
-                      <DeleteOutlineOutlinedIcon  />
+                      <DeleteOutlineOutlinedIcon/>
                     </ListItemIcon>
-                    <ListItemText primary="Trash" />
+                    <ListItemText primary="Trash"/>
                   </ListItem>
                 </div>
               </MuiThemeProvider>
               </div>
             </List>
-            
           </div>
         </Drawer>
-      
       </div>
     );
   }

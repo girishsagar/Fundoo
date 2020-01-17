@@ -277,28 +277,28 @@ class Notes extends Component {
         );
       });
     }
-    // let labelData = "";
-    // if (this.props.labelData.length > 0) {
-    //   labelData = this.props.labelData.map(item => {
-    //     return (
-    //       <div>
-    //         <FormControlLabel
-    //           control={
-    //             <Checkbox
-    //               color="primary"
-    //               id={item.id}
-    //               name={item.label}
-    //               value={item.label}
-    //               onChange={event => this.handleCheckBoxClick(event)}
-    //             />
-    //           }
-    //           label={item.label}
-    //           labelPlacement="end"
-    //         />
-    //       </div>
-    //     );
-    //   });
-    // }
+    let labelData = "";
+    if (this.props.labelData.length > 0) {
+      labelData = this.props.labelData.map(item => {
+        return (
+          <div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  id={item.id}
+                  name={item.label}
+                  value={item.label}
+                  onChange={event => this.handleCheckBoxClick(event)}
+                />
+              }
+              label={item.label}
+              labelPlacement="end"
+            />
+          </div>
+        );
+      });
+    }
     return !this.state.cardOpen ? (
       <div className="new_card" onClick={this.handleOpen}>
         <Card className="create" style={{ boxShadow: "0px 0px 5px 1px" }}>
@@ -455,10 +455,11 @@ class Notes extends Component {
                       horizontal: "center"
                     }}
                   >
+                    <div  className="label-input">
                     <div className="label-note">
                       <span>Label Note</span>
                     </div>
-                    <div className="label-input">
+                    <div>
                       <div>
                         <InputBase
                           name="label"
@@ -468,21 +469,22 @@ class Notes extends Component {
                           id="inputRoot"
                         />
                       </div>
-                      <div>
+                      <div className="search_icon">
                         <SearchIcon />
                       </div>
                     </div>
-                    {/* <div>{labelData}</div> */}
+                  
+                    <div>{labelData}</div>
                     <div className={this.state.displayButton}>
                       <Button
                         variant="contained"
                         color="default"
                         startIcon={<AddIcon />}
-                        onClick={this.createLabel}
-                      >
+                        onClick={this.createLabel}>
                         Create
                     </Button>
                       "{this.state.label}"
+                  </div>
                   </div>
                   </Popover>
 

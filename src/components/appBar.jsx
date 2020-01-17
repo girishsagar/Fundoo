@@ -1,6 +1,9 @@
 /**
- * @ fileName: appbar
- * @description: navigation menu
+ * @file :appBar.jsx
+ * @description: navigation menu having a serchengine,refresh,charts(Graph) and profileicon
+ * @author :Girish Sagar <girishsagar51@gmail.com>
+ * @version :16.12.0 (react version)
+ * @since :14-jan-2020
  */
 import React, { Component } from "react";
 import { IconButton, AppBar, Toolbar, Tooltip, Menu, Button } from "@material-ui/core";
@@ -139,8 +142,6 @@ class Navigation extends Component {
                     <IconButton onClick={this.showListView}>
                       {viewIcon}
                     </IconButton>
-                    <IconButton>
-                    </IconButton>
                   </div>
                 </div>
               </div>
@@ -161,8 +162,7 @@ class Navigation extends Component {
                     }}
                     transformOrigin={{
                       vertical: 'top',
-                      horizontal: 'right',
-                    }}>
+                      horizontal: 'right',}}>
                     <div>
                       <PieChart
                         data={[

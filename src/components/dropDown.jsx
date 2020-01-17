@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  Menu,
-  MenuItem
-} from "@material-ui/core";
-// import { Signout } from "../controller/userController";
+import {MuiThemeProvider,  createMuiTheme, Menu,} from "@material-ui/core";
 const thm = createMuiTheme({
   overrides: {
     MuiDivider: {

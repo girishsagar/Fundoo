@@ -1,3 +1,11 @@
+/**
+ * @file:dashBoard.jsx
+ * @description ;all file of notes and chard board
+ * @module:React js and firebase
+ * @author :Girish Sagar <girishsagar51@gmail.com>
+ * @version :16.12.0 (react version)
+ * @since :03-jan-2020
+ */
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import Navigation from "./appBar";
@@ -78,11 +86,8 @@ class Dashboard extends Component {
   render() {
     let noteStyle = this.state.listView ? "girdnotes" : "listcss"
     return (
-
       (!this.state.archive) && (!this.state.trash) && (!this.state.reminder) ?
-
         <div>
-
           <Navigation handleArchive={this.handleArchive}
             handleNote={this.handleNote}
             handleTrash={this.handleTrash}
@@ -92,17 +97,13 @@ class Dashboard extends Component {
             pinnedCount={this.state.pinnedCount}
             archieveCount={this.state.archieveCount}
             trashCount={this.state.trashCount}
-            labeldata={this.state.labels}
-        />
-
+            labeldata={this.state.labels} />
           <Notes initiateGetNotes={this.initiateGetNotes} colorChange={this.colorChange}
             labelData={this.state.labels}  color={this.state.color} />
           <Getnote getNotes={this.state.getNotesProps} color={this.state.color}
-            noteStyle={noteStyle} />
+            noteStyle={noteStyle}/>
         </div>
-
         : (this.state.archive) && (!this.state.trash) && (!this.state.reminder) ?
-
           <div>
             <Navigation handleArchive={this.handleArchive}
               handleNote={this.handleNote}
@@ -115,7 +116,7 @@ class Dashboard extends Component {
               archieveCount={this.state.archieveCount}
               trashCount={this.state.trashCount} 
               labeldata={this.state.labels}/>
-            <Archive noteStyle={noteStyle} />labeldata={this.state.labels}labeldata={this.state.labels}
+            <Archive noteStyle={noteStyle} />
           </div>
           : (!this.state.archive) && (this.state.trash) && (!this.state.reminder) ?
             <div>
@@ -128,8 +129,8 @@ class Dashboard extends Component {
                 pinnedCount={this.state.pinnedCount}
                 archieveCount={this.state.archieveCount}
                 trashCount={this.state.trashCount}
-                labeldata={this.state.labels} />
-              <Trash />
+                labeldata={this.state.labels}/>
+              <Trash/>
             </div>
             :
             <div>
@@ -142,10 +143,9 @@ class Dashboard extends Component {
                 pinnedCount={this.state.pinnedCount}
                 archieveCount={this.state.archieveCount}
                 trashCount={this.state.trashCount}
-                labeldata={this.state.labels} />
-              <ReminderComponent />
+                labeldata={this.state.labels}/>
+              <ReminderComponent/>
             </div>
-
     );
   }
 }

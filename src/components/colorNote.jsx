@@ -1,3 +1,11 @@
+/**
+ * @file : colorNote.jsx
+ * @description : stotring  a colors in an array and passing to others components
+ * @module:React js and firebase
+ * @author :Girish Sagar <girishsagar51@gmail.com>
+ * @version :16.12.0 (react version)
+ * @since :25-dec-2019
+ */
 import React, { Component } from 'react'
 import { Tooltip, IconButton, Popper, Paper, ClickAwayListener, } from '@material-ui/core'
 import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
@@ -28,7 +36,6 @@ class ColorComponent extends Component {
             anchorEl: false
         })
     }
-
     handleChangeColor = (e) => {
         console.log("hiii" + e);
         this.props.paletteProps(e.target.value, this.props.id)
@@ -38,7 +45,6 @@ class ColorComponent extends Component {
             anchorEl: false
         })
     }
-
     handleClick(event) {
 
         this.setState({
@@ -46,7 +52,6 @@ class ColorComponent extends Component {
         });
     };
     render() {
-
         const colorChange = colorPalette.map((key) => {
             return (
                 <div className="color-map" >
@@ -60,26 +65,23 @@ class ColorComponent extends Component {
             )
         })
         return (
-            <div className="colorpalette-div"  >
+            <div className="colorpalette-div">
                 <Tooltip title="change color">
                     <ClickAwayListener onClickAway={this.handleClickAway}>
                         <ColorLensOutlinedIcon onClick={(event) => this.handleClick(event)} cursor="pointer" />
                     </ClickAwayListener>
                 </Tooltip>
-                <div className="Change" Style={{width: "25em", display: "flex", flexDirection: "row", margin: "25px"}}>
-
-                    <Popper 
-                    open={this.state.anchorEl} 
-                    anchorEl={this.state.anchorEl} 
-                    className="paint"
+                <div className="Change" Style={{ width: "25em", display: "flex", flexDirection: "row", margin: "25px" }}>
+                     <Popper
+                        open={this.state.anchorEl}
+                        anchorEl={this.state.anchorEl}
+                        className="paint"
                         style={{
-                            zIndex: "9999", width: "25em", display: "flex", flexDirection: "row", margin: "25px"
-                        }}
-                    >
-                        <Paper className="color-styles" style={{display:"contents",width:"21em"}}>
+                            zIndex: "9999", width: "25em", display: "flex", 
+                            flexDirection: "row", margin: "25px"}}>
+                        <Paper className="color-styles" style={{ display: "contents", width: "21em" }}>
                             {colorChange}
                         </Paper>
-
                     </Popper>
                 </div>
             </div>

@@ -25,7 +25,5 @@ yarn-error.log*
 /node_modules
 package-lock.json
 README.md
-firebaseConfig
-.vsCode
-
+/src/firebaseConfig.js
 

@@ -1,3 +1,10 @@
+/**
+ * @file :getNote.jsx
+ * @description :displaying all the notes including pinned,reminder notes
+ * @author :Girish Sagar <girishsagar51@gmail.com>
+ * @version :16.12.0 (react version)
+ * @since :20-dec-2019
+ */
 import React, { Component } from "react";
 import { Tooltip, Card, InputBase, Button, IconButton, Avatar, Chip } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
@@ -16,7 +23,6 @@ import Reminder from "./reminder"
 import More from "./more";
 import SvgPin from "../icons/svgPin"
 import SvgPinned from "../icons/svgUnpin"
-import CancelIcon from "@material-ui/icons/Cancel";
 const thm = createMuiTheme({
   overrides: {
     MuiCard: {
@@ -58,6 +64,7 @@ class Getnote extends Component {
       labels: []
     };
   }
+
 
   menuOpen = () => {
     this.setState({ open: !this.state.open });
@@ -109,6 +116,7 @@ class Getnote extends Component {
           notes: res
         });
         console.log("res in notesData", this.state.notes);
+        
       })
       .catch(err => {
         console.log("err", err);
@@ -230,7 +238,6 @@ class Getnote extends Component {
       
       this.setState({ labels: res })
     })
-    // console.log("the labelled is ",this.state.labels);
     .catch(err => {
       console.log("err", err);
     });
@@ -320,10 +327,6 @@ class Getnote extends Component {
                                 />
                                 : null}
                             </div>
-                                <div>
-                                </div>
-                            
-
                           </div>
 
                           <div>
