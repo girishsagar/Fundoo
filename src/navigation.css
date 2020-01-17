@@ -50,6 +50,7 @@
   align-items: center;
   border-radius: 400px;
   font-display: block;
+
 }
 .notes:hover {
   background-color: rgb(233, 233, 10);
@@ -267,6 +268,16 @@
   width: 76%;
   flex-wrap: wrap;
   justify-content: center;
+}
+.get_Nottes_card{
+  width: "220px";
+  min-Height: "100px";
+  height: "auto";
+  margin: "5px";
+  padding: "10px";
+  box-Shadow: "0px 1px 7px 0px";
+  margin-top: "10%";
+  border-radius: "15px";
 }
 ._notes_dash {
   display: flex;

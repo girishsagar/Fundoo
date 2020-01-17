@@ -1,3 +1,7 @@
+/**
+ * @ fileName: appbar
+ * @description: navigation menu
+ */
 import React, { Component } from "react";
 import { IconButton, AppBar, Toolbar, Tooltip, Menu, Button } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
@@ -8,7 +12,6 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import DrawerNav from "./drawerNavigation";
-// import Dropdown from "./dropDown";
 import Avatar from "@material-ui/core/Avatar";
 import SvgGrid from "../icons/grid";
 import ViewStreamOutlinedIcon from '@material-ui/icons/ViewStreamOutlined';
@@ -100,7 +103,6 @@ class Navigation extends Component {
       );
 
     return (
-
       <div className="nav">
         <MuiThemeProvider theme={thm}>
           <AppBar >
@@ -142,7 +144,7 @@ class Navigation extends Component {
                   </div>
                 </div>
               </div>
-              <div >
+              <div>
                 <div className="name">
                   <Avatar onClick={this.menuItem} aria-owns="simple-menu">
                     G{" "}
@@ -167,14 +169,12 @@ class Navigation extends Component {
                           { title: 'Pinned Note', value: this.props.pinnedCount, color: '#03fcdf' },
                           { title: 'Archieve Note', value: this.props.archieveCount, color: '#ca03fc' },
                           { title: 'Trash Note', value: this.props.trashCount, color: '#FFC154' },
-                          // { title: 'Others', value: this.props.others, color: '#BFB23F' },
                         ]} />
                     </div>
                     <div className="piechart-icon">
                       <span className="chart-span"><StopIcon style={{ color: "#03fcdf" }} />Pinned({this.props.pinnedCount})</span>
                       <span className="chart-span"><StopIcon style={{ color: "#ca03fc" }} />Archieve({this.props.archieveCount})</span>
                       <span className="chart-span"><StopIcon style={{ color: "#FFC154" }} />Trash({this.props.trashCount})</span>
-                      {/* <span className="chart-span"><StopIcon style={{ color: "#BFB23" }} />others({this.props.others})</span> */}
                     </div>
                     <div className="signout-button">
                       <Button aria-owns="simple-menu"
@@ -183,10 +183,9 @@ class Navigation extends Component {
                         startIcon={<ExitToAppIcon />}
                         onClick={this.Signout}>
                         SignOut
-</Button>
+                        </Button>
                     </div>
                   </Menu>
-
                 </div>
               </div>
             </Toolbar>

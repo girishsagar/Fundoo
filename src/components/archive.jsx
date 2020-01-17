@@ -1,10 +1,17 @@
+/**
+ * @fileName :archive.js
+ * @description :Displaying the archive notes.
+ * @module:React js and firebase
+ * @author :Girish Sagar <girishsagar51@gmail.com>
+ * @version :12.11.1 (node)
+ * @since :17-dec-2019
+ */
 import React, { Component } from "react";
 import {
   Tooltip,
   Card,
   InputBase,
-  Button,
-  IconButton, Avatar, Chip
+  Button,Avatar, Chip
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
@@ -180,7 +187,7 @@ class Archive extends Component {
   render() {
     return (
       <div className={this.props.noteStyle}>
-        <div className="_notes"  >
+        <div className="_notes">
           {!this.state.open ? (
             <div className="_notes_" style={{ marginTop: "95px", flexWrap: "wrap", }}>
               {this.state.notes.map(key => {
@@ -189,26 +196,13 @@ class Archive extends Component {
                     <div className="notes_" >
                       <Card
                         style={{ backgroundColor: this.props.color }}
-                        className="get_Nottes_card"
-                        style={{
-                          width: "220px",
-                          minHeight: "100px",
-                          height: "auto",
-                          margin: "5px",
-                          padding: "10px",
-                          boxShadow: "0px 1px 7px 0px",
-                          marginTop: "10%",
-                          borderRadius: "15px",
-                          background: key.data().color
-                        }}
-                      >
+                        className="get_Nottes_card">
                         <div
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
                             padding: "5px"
-                          }}
-                        >
+                          }}>
                           <div>
                             <div>
                               {key.data().title}
