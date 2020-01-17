@@ -4,7 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-
 # testing
 /coverage
 
@@ -26,6 +25,7 @@ yarn-error.log*
 /node_modules
 package-lock.json
 README.md
+firebaseConfig.js
+*.vsCode
 
-*.firebaseConfig.js
 
