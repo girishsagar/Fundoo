@@ -7,6 +7,7 @@ import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
+import LabelIcon from '@material-ui/icons/Label';
 const thm = createMuiTheme({
   overrides: {
     MuiDivider: {
@@ -39,6 +40,16 @@ handleReminder=()=>{
   this.props.handleReminder(); 
 }
  render() {
+  let labels = this.props.labeldata.map(item => {
+    return (
+      <ListItem button key="Label1">
+        <ListItemIcon>
+          <LabelIcon />
+        </ListItemIcon>
+        <ListItemText primary={item.label} />
+      </ListItem>
+    );
+  });
     return (        
       <div>
         <Drawer
@@ -68,7 +79,9 @@ handleReminder=()=>{
                   </ListItem>
                 </div>
                 <Divider />
+                {labels}
                 <div className="labels">
+                
                   <ListItem button key="Labels">
                     <ListItemIcon>
                       <CreateOutlinedIcon />

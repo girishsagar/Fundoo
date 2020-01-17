@@ -321,22 +321,8 @@ class Getnote extends Component {
                                 : null}
                             </div>
                                 <div>
-                              {key.id.labels}
                                 </div>
-                            {this.state.labels.map(item=>{
-                              console.log('The items labels are',item);
-                              
-                              return(
-                                <Chip
-                                labels={item.label}
-                                id={item.id}
-                                onDelete={event => this.removeLabel(event)}
-                                deleteIcon={<CancelIcon id={item.id} />}
-                                variant="outlined"
-                              />
-                              )
-                            })}
-                             
+                            
 
                           </div>
 

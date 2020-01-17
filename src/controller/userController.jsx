@@ -323,7 +323,7 @@ export async function geNoteCount() {
     isPinned:isPinned,
     archieve:archieve,
     trash:trash,
-    others:others
+
     }
     return result
   }

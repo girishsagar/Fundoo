@@ -61,10 +61,10 @@ class Dashboard extends Component {
   }
 
   getLabels = () => {
-    // getAllLabel().then(res => {
-    //   this.setState({ labels: res })
-    // })
-    // console.log("the labelled uis ",this.state.labels);
+    getAllLabel().then(res => {
+      this.setState({ labels: res })
+    })
+    console.log("the labelled uis ",this.state.labels);
     
     geNoteCount().then(res => {
       console.log(res)
@@ -92,6 +92,7 @@ class Dashboard extends Component {
             pinnedCount={this.state.pinnedCount}
             archieveCount={this.state.archieveCount}
             trashCount={this.state.trashCount}
+            labeldata={this.state.labels}
         />
 
           <Notes initiateGetNotes={this.initiateGetNotes} colorChange={this.colorChange}
@@ -112,8 +113,9 @@ class Dashboard extends Component {
               handleReminder={this.handleReminder}
               pinnedCount={this.state.pinnedCount}
               archieveCount={this.state.archieveCount}
-              trashCount={this.state.trashCount} />
-            <Archive noteStyle={noteStyle} />
+              trashCount={this.state.trashCount} 
+              labeldata={this.state.labels}/>
+            <Archive noteStyle={noteStyle} />labeldata={this.state.labels}labeldata={this.state.labels}
           </div>
           : (!this.state.archive) && (this.state.trash) && (!this.state.reminder) ?
             <div>
@@ -125,7 +127,8 @@ class Dashboard extends Component {
                 handleReminder={this.handleReminder}
                 pinnedCount={this.state.pinnedCount}
                 archieveCount={this.state.archieveCount}
-                trashCount={this.state.trashCount} />
+                trashCount={this.state.trashCount}
+                labeldata={this.state.labels} />
               <Trash />
             </div>
             :
@@ -138,7 +141,8 @@ class Dashboard extends Component {
                 handleReminder={this.handleReminder}
                 pinnedCount={this.state.pinnedCount}
                 archieveCount={this.state.archieveCount}
-                trashCount={this.state.trashCount} />
+                trashCount={this.state.trashCount}
+                labeldata={this.state.labels} />
               <ReminderComponent />
             </div>
 

@@ -193,7 +193,8 @@ class Navigation extends Component {
           </AppBar>
           <DrawerNav open={this.state.open} handleArchive={this.props.handleArchive}
             handleNote={this.props.handleNote} handleTrash={this.props.handleTrash}
-            handleReminder={this.props.handleReminder} />
+            handleReminder={this.props.handleReminder}
+            labeldata={this.props.labeldata} />
         </MuiThemeProvider>
       </div>
     );
