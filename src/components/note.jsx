@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import {Tooltip, Card,InputBase, Button,IconButton, Chip,
+import {
+  Tooltip, Card, InputBase, Button, IconButton, Chip,
   Menu,
   MenuItem,
-  Popover,FormControl,Checkbox,FormControlLabel
+  Popover, FormControl, Checkbox, FormControlLabel
 } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
@@ -17,7 +18,7 @@ import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import UndoTwoToneIcon from "@material-ui/icons/UndoTwoTone";
 import RedoTwoToneIcon from "@material-ui/icons/RedoTwoTone";
-import { saveNote, getNote, pinNotes, saveLabel,getAllLabel} from "../controller/userController";
+import { saveNote, getNote, pinNotes, saveLabel, getAllLabel } from "../controller/userController";
 import Reminder from "./reminder";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import CancelIcon from "@material-ui/icons/Cancel";
@@ -68,7 +69,7 @@ class Notes extends Component {
       saveLabel(data).then(res => {
         console.log("result label", res);
         this.setState({ labels: res, label: "", displayButton: "button-hide" });
-       this.props.updateLabel();
+        //  this.props.updateLabel();
         this.handleGetNotes()
       });
     }
@@ -196,7 +197,7 @@ class Notes extends Component {
               archieve: "",
               isDeleted: false,
               reminder: null,
-              labels:""
+              labels: ""
             });
           } else {
             this.setState({
@@ -239,7 +240,7 @@ class Notes extends Component {
   };
 
   removeReminder = () => {
-    this.setState({ reminder: null });
+    this.setState({ reminder: null })
   };
   handleCheckBoxClick = e => {
     if (e.target.checked) {
@@ -349,14 +350,14 @@ class Notes extends Component {
                   multiline
                   placeholder="Ttitle"
                   onChange={this.changeTitle}
-                  value={this.state.title}/>
+                  value={this.state.title} />
               </div>
               <div>
                 <InputBase
                   multiline
                   placeholder="Take a note..."
                   onChange={this.changeDescription}
-                  value={this.state.description}/>
+                  value={this.state.description} />
               </div>
               {labels}
               <div>
@@ -367,7 +368,7 @@ class Notes extends Component {
                       icon={<AccessTimeIcon />}
                       label={this.state.reminder}
                       onDelete={this.removeReminder}
-                      variant="outlined"/>
+                      variant="outlined" />
                   ) : null}
                 </p>
               </div>
@@ -377,7 +378,7 @@ class Notes extends Component {
                     anchorEl={this.state.anchorEl}
                     closeMenu={this.handleClose}
                     handleGetNotes={this.handleGetNotes}
-                    handleReminderDate={this.handleReminderDate}/>
+                    handleReminderDate={this.handleReminderDate} />
                 </div>
                 <div>
                   <Tooltip title="Collbrate">
@@ -397,7 +398,8 @@ class Notes extends Component {
                     <ArchiveOutlinedIcon onClick={this.createArchieveNote} />
                   </Tooltip>
                 </div>
-                <div>
+
+                <div className="full_label">
                   <IconButton
                     aria-controls="label-menu"
                     aria-haspopup="true"
@@ -411,10 +413,7 @@ class Notes extends Component {
                       vertical: "bottom",
                       horizontal: "center"
                     }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "left"
-                    }}
+
                     id="label-menu"
                     anchorEl={this.state.labelAnchorEl}
                     keepMounted
@@ -428,51 +427,47 @@ class Notes extends Component {
                   </MenuItem>
                     <MenuItem>Add Darawing</MenuItem>
                   </Menu>
-                  <Popover
-                    id="create-label-menu"
-                    anchorEl={this.state.createLabelAnchorEl}
-                    open={Boolean(this.state.createLabelAnchorEl)}
-                    onClose={this.createLabelDialogClose}
-                    anchorOrigin={{
-                      vertical: "center",
-                      horizontal: "center"
-                    }}
-                    transformOrigin={{
-                      vertical: "center",
-                      horizontal: "center"
-                    }}>
-                    <div  className="label-input">
-                    <div className="label-note">
-                      <span>Label Note</span>
-                    </div>
-                    <div>
-                      <div>
-                        <InputBase
-                          name="label"
-                          value={this.state.label}
-                          onChange={this.handleLabel}
-                          placeholder="Enter label Name"
-                          id="inputRoot"/>
-                      </div>
-                      <div className="search_icon">
-                        <SearchIcon />
-                      </div>
-                    </div>
-                  
-                    <div>{labelData}</div>
-                    <div className={this.state.displayButton}>
-                      <Button
-                        variant="contained"
-                        color="default"
-                        startIcon={<AddIcon />}
-                        onClick={this.createLabel}>
-                        Create
-                    </Button>
-                      "{this.state.label}"
-                  </div>
-                  </div>
-                  </Popover>
+                  <div className="lc">
+                    <Popover style={{ height: "250px" }}
+                      id="create-label-menu"
+                      anchorEl={this.state.createLabelAnchorEl}
+                      open={Boolean(this.state.createLabelAnchorEl)}
+                      onClose={this.createLabelDialogClose}>
+                      <div className="label-input">
+                        <div className="label-note">
+                          <span>Label Note</span>
+                        </div>
+                        <div>
+                          <div>
+                            <InputBase
+                              name="label"
+                              value={this.state.label}
+                              onChange={this.handleLabel}
+                              placeholder="Enter label Name"
+                              id="inputRoot" />
 
+                          </div>
+                          <div className="search_icon">
+                            <SearchIcon />
+                          </div>
+                        </div>
+
+                        <div className="label1">
+                          {labelData}
+                        </div>
+                        <div className={this.state.displayButton}>
+                          <Button
+                            variant="contained"
+                            color="default"
+                            startIcon={<AddIcon />}
+                            onClick={this.createLabel}>
+                            Create
+                    </Button>
+                          "{this.state.label}"
+                  </div>
+                      </div>
+                    </Popover>
+                  </div>
                 </div>
                 <div>
                   <Tooltip title="Undo">

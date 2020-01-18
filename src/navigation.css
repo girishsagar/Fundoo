@@ -251,7 +251,10 @@
   margin-left: 20px;
   font-weight: bold;
 }
-
+.dash_note{
+  overflow-y: 'scroll';
+  height:100%
+}
 .base {
   display: flex;
 }
@@ -285,9 +288,9 @@
   justify-content: center;
   margin-top: 100px;
 }
-.notes_{
+.notes_ {
   width: "250px";
-  min-Height: "135px";
+  min-height: "135px";
   height: "auto";
   margin: "5px";
   padding: "10px";
@@ -328,7 +331,7 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  width: "750px",
+  width: "750px";
 }
 
 .getnoteicons {
@@ -357,17 +360,35 @@
   flex-direction: row;
   margin: "25px";
 }
-.label-input {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-}
+
 .search_icon {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 10em;
   margin-top: -2em;
+}
+/*
+tody 
+ */
+.edit_label {
+  width: 20em;
+  padding: 18px;
+  margin-top: 12em;
+  margin-left: 23em;
+}
+.close_icon {
+  display: flex;
+  justify-content: baseline;
+  padding: 10px;
+}
+.label-input {
+  display: contents;
+  align-content: center;
+  overflow: auto;
+}
+.label-note {
+  margin-top: 1em;
+  margin-left: 10px;
 }
 /* -------------->Media Query for appBar<-------------------- */

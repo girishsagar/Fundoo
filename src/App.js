@@ -17,6 +17,7 @@ import archive from "./components/archive"
 import more from "./components/more"
 import trash from "./components/trash";
 import reminder from "./components/reminderComponent"
+import editLabel from "./components/editLabel"
 class App extends Component {
   render() {
     return (
@@ -37,6 +38,7 @@ class App extends Component {
           <Route path="/more" component={more}></Route>
           <Route path="/trash" component={trash}></Route>
         <Route path="/reminder" component={reminder}></Route>
+        <Route patyh="/editLabel" component={editLabel}></Route>
         </Switch>
       </Router>
     );

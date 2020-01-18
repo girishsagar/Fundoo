@@ -61,7 +61,7 @@ class Getnote extends Component {
       date: "",
       time: "",
       openReminderMenu: false,
-      labels: []
+      labels: null,
     };
   }
 
@@ -242,11 +242,6 @@ class Getnote extends Component {
       console.log("err", err);
     });
   }
-    // removeLabel = e => {
-  //   const labels = this.state.labels.filter(key => key.id !== e.target.id);
-  //   this.setState({ labels: labels });
-  // };
-
   removeLabel = () => {
     this.setState({ labels: null })
   }
@@ -270,9 +265,9 @@ class Getnote extends Component {
     ) : (
         archieveIcon
       );
-    let iconDispaly = !this.state.showIcon
-      ? "getNote-icons-hide"
-      : "getNote-icons"
+    // let iconDispaly = !this.state.showIcon
+    //   ? "getNote-icons-hide"
+    //   : "getNote-icons"
     return (
       <div className={this.props.noteStyle}>
         <div className="_notes" >
@@ -394,9 +389,7 @@ class Getnote extends Component {
                             <Tooltip title="Archive">
                               <div
                                 style={{ cursor: "pointer" }}
-                                onClick={() => this.archiveNote(key.id)}
-                              >
-                                {/* {archieveIconShow} */}
+                                onClick={() => this.archiveNote(key.id)}>
                                 <ArchiveOutlinedIcon />
                               </div>
                             </Tooltip>
